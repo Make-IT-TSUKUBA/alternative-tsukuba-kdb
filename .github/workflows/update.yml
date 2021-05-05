@@ -1,0 +1,32 @@
+name: CSV scheduled update
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # At 00:00 on Sun
+jobs:
+  update:
+    runs-on: ubuntu-latest
+      matrix:
+        python-version: [3.8]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install -U pip
+          pip install requests
+      - name: Download CSV
+        run: |
+          cd .github && python download.py && cd ..
+      - name: Make JSON
+        run: |
+          python make-json/csv-json.py ".github/csv/kdb-$(date +%Y%m%d).csv" make-json/list.txt False
+      - name: Commit
+      run: |
+        git add .
+        git commit -m "update: $(date +%Y%m%d)"
+        git push origin master
