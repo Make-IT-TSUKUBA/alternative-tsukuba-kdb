@@ -15,7 +15,7 @@ jobs:
         run: |
           git config user.name Make-IT-TSUKUBA
           git config user.email "${{ secrets.MAIL }}" # 要設定
-          git remote set-url origin https://Make-IT-TSUKUBA:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin "https://Make-IT-TSUKUBA:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git checkout master
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
