@@ -4,6 +4,8 @@ import requests
 
 
 class PostDict(TypedDict):
+    """Dict for requesting with POST to KdB
+    """
     index: str
     locale: str
     nendo: int
@@ -27,7 +29,12 @@ class PostDict(TypedDict):
 
 
 class KdbDownloader():
-    def __init__(self, year: int = 2021):
+    def __init__(self, year: int = 2021) -> None:
+        """Initializer
+
+        Args:
+            year (int, optional): a year of syllabus. Defaults to 2021.
+        """
         requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += "HIGH:!DH"
         self.year = year
         self.post: PostDict = {
@@ -54,29 +61,47 @@ class KdbDownloader():
         }
 
     def get_post(self) -> PostDict:
+        """Get a copy of PostDict
+
+        Returns:
+            PostDict: Dict for requesting with POST to KdB
+        """
         return self.post.copy()
 
     def download(self, filename: str) -> None:
+        """Download KdB data
+
+        Args:
+            filename (str): [description]
+        """
         self.__download()
         open(filename, "w", encoding="utf-8").write(self.response_text)
 
     def __download(self) -> None:
+        """Helper for downloading
+        """
         self.__start_session()
         self.__search_kdb()
         self.__download_csv()
 
     def __start_session(self) -> None:
+        """Helper for starting session to KdB
+        """
         kdb_url = "https://kdb.tsukuba.ac.jp/"
         self.session = requests.session()
         self.response = self.session.get(kdb_url)
 
     def __search_kdb(self) -> None:
+        """Helper for searching
+        """
         search_post = self.get_post()
         search_post["_eventId"] = "searchOpeningCourse"
         self.response = self.session.post(self.response.url, data=search_post)
         self.do_url = self.response.url
 
     def __download_csv(self) -> None:
+        """Helper for downloading csv
+        """
         csv_post = self.get_post()
         csv_post["_eventId"] = "output"
         csv_post["outputFormat"] = 0
@@ -84,6 +109,8 @@ class KdbDownloader():
 
 
 def main() -> None:
+    """Main
+    """
     import datetime
     import os
 
