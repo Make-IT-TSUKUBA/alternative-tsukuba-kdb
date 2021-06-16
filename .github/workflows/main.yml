@@ -25,7 +25,7 @@ jobs:
           pip install requests
       - name: Synchronize the csv file with an up-to-date one
         run: |
-          cd make-json
+          cd src
           python download.py
           python csv-json.py ../csv/kdb-$(date +%Y%m%d).csv list.txt False
           cd ..
