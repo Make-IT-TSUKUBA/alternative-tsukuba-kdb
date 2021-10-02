@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<title>筑波大学 KdBっぽいなにか</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="筑波大学 KdBっぽいなにか" />
+		<meta
+			name="keywords"
+			content="筑波大学,シラバス,KbB,alternative-tsukuba-kdb,alternative-kdb"
+		/>
+		<meta name="author" content="いなにわうどん" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:creator" content="@kyoto_mast21" />
+		<meta name="twitter:site" content="@kyoto_mast21" />
+		<meta
+			property="og:url"
+			content="https://make-it-tsukuba.github.io/alternative-tsukuba-kdb/"
+		/>
+		<meta property="og:title" content="alternative-tsukuba-kdb" />
+		<meta property="og:description" content="筑波大学 KdBっぽいなにか" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- <link rel="icon" href="favicon.ico" />
+		<meta property="og:image" content="favicon.ico" /> -->
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+	<script defer src="main.js"></script></head>
+
+	<body>
+		<header id="top">
+			<div class="content">
+				<form>
+					<p>
+						<span class="h4">キーワード</span>
+						<input
+							type="text"
+							placeholder="科目番号は前方一致、その他は正規表現に対応"
+							id="keyword"
+						/><!--
+					--><a href="#" id="submit" class="button right">検索</a>
+						<span id="keyword-options">
+							<label
+								><input type="checkbox" id="check-name" checked />科目名</label
+							>
+							<label
+								><input type="checkbox" id="check-no" checked />科目番号</label
+							>
+							<label><input type="checkbox" id="check-room" />教室</label>
+							<label><input type="checkbox" id="check-person" />教員名</label>
+							<label><input type="checkbox" id="check-abstract" />概要</label>
+							<label
+								><input type="checkbox" id="check-bookmark" />お気に入り</label
+							>
+						</span>
+					</p>
+					<p id="requirement">
+						<span class="h4">要件</span>
+						<select id="req-a" class="requirement">
+							<option value="null">指定なし</option> </select
+						><!--
+					--><select id="req-b" class="requirement"></select
+						><!--
+					--><select id="req-c" class="requirement"></select
+						><!--
+					--><a href="#" id="clear" class="button right sub">検索条件をクリア</a>
+					</p>
+					<div id="period">
+						<p>
+							<span class="h4">学期</span>
+							<label
+								><input
+									type="radio"
+									name="season"
+									value="null"
+									checked
+								/>―</label
+							>
+							<label><input type="radio" name="season" value="春" />春</label>
+							<label><input type="radio" name="season" value="秋" />秋</label>
+							／
+							<label
+								><input
+									type="radio"
+									name="module"
+									value="null"
+									checked
+								/>―</label
+							>
+							<label><input type="radio" name="module" value="A" />A</label>
+							<label><input type="radio" name="module" value="B" />B</label>
+							<label><input type="radio" name="module" value="C" />C</label>
+						</p>
+						<p>
+							<span class="h4">曜日・時限</span>
+							<span id="selected-periods">指定なし</span
+							><!--
+						--><a id="display-timetable" class="button right sub"></a>
+						</p>
+					</div>
+					<div id="period-sp">
+						<p>
+							<select id="select-module">
+								<option value="null">すべて</option>
+								<option>春A</option>
+								<option>春B</option>
+								<option>春C</option>
+								<option>秋A</option>
+								<option>秋B</option>
+								<option>秋C</option> </select
+							><!--
+						--><span class="module">モジュール</span
+							><!--
+						--><a id="display-timetable-sp" class="button sub">曜日・時限を選択</a>
+						</p>
+					</div>
+					<p>
+						<span class="h4">実施形態</span>
+						<label
+							><input type="radio" name="online" value="null" checked />―</label
+						>
+						<label><input type="radio" name="online" value="対面" />対面</label>
+						<label
+							><input
+								type="radio"
+								name="online"
+								value="オンデマンド"
+							/>オンデマンド</label
+						>
+						<label
+							><input
+								type="radio"
+								name="online"
+								value="同時双方向"
+							/>同時双方向</label
+						>
+					</p>
+					<p>
+						<span class="h4">標準履修年次</span>
+						<label
+							><input type="radio" name="year" value="null" checked />―</label
+						>
+						<label><input type="radio" name="year" value="1" />1</label>
+						<label><input type="radio" name="year" value="2" />2</label>
+						<label><input type="radio" name="year" value="3" />3</label>
+						<label><input type="radio" name="year" value="4" />4</label>
+						<label><input type="radio" name="year" value="5" />5</label>
+						<label><input type="radio" name="year" value="6" />6</label>
+					</p>
+					<p>
+						<a href="#" id="clear-sp" class="button sub">検索条件をクリア</a>
+						<a href="#" id="submit-sp" class="button">検索</a>
+					</p>
+				</form>
+			</div>
+		</header>
+
+		<div id="timetable">
+			<div class="content"></div>
+			<p class="manual">ドラッグで複数選択</p>
+			<p class="special">
+				<label><input type="checkbox" id="check-concentration" />集中</label>
+				<label><input type="checkbox" id="check-negotiable" />応談</label>
+				<label><input type="checkbox" id="check-asneeded" />随時</label><br />
+				<label><input type="checkbox" />ブックマークを除外</label>
+			</p>
+		</div>
+
+		<div id="page">
+			<main>
+				<table id="body">
+					<thead>
+						<tr>
+							<th>科目番号／科目名</th>
+							<th>単位／年次</th>
+							<th>学期／時期</th>
+							<th>教室</th>
+							<th>担当</th>
+							<th>実施形態</th>
+							<th>概要</th>
+							<th>備考</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</main>
+			<footer>
+				Source code is available on
+				<a href="https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb"
+					>GitHub</a
+				>.<br />
+				Contributed by
+				<a href="https://github.com/inaniwaudon">いなにわうどん</a>,
+				<a href="https://github.com/frodo821">frodo821</a>,
+				<a href="https://github.com/eggplants">eggplants</a>,
+				<a href="https://github.com/maru2213">maru2213</a>,
+				<a href="https://github.com/itsu-dev">Itsu</a>,
+				<a href="https://github.com/Mimori256">Mimori256</a> et al.<!--
+			--><span style="margin: 0 1rem;">/</span
+				><!--
+			--><a href="javascript:void(0)" id="download">CSVダウンロード</a><br />
+
+				<span id="updated-date"></span> 時点での 筑波大学KdB（<a
+					href="https://kdb.tsukuba.ac.jp/"
+					>https://kdb.tsukuba.ac.jp/</a
+				>）のデータに基づきます。
+			</footer>
+		</div>
+
+		<div id="bookmark-info">
+			<h4>ブックマークに追加できます</h4>
+			<p>
+				ブックマークした科目は<br />
+				右側の時間割に表示され、<br />
+				履修の仮組みに利用可能です。
+			</p>
+		</div>
+
+		<div id="bookmark-timetable">
+			<div class="main">
+				<header>
+					<div id="current-status">
+						<!--
+					--><a class="previous">〈</a
+						><!--
+					--><span class="module"></span
+						><!--
+					--><a class="next">〉</a
+						><!--
+					--><span class="credit"></span
+						><!--
+				-->
+					</div>
+					<!--
+				--><a id="close-bookmark-table">×</a>
+				</header>
+				<div class="content">
+					<ul class="no tile">
+						<li>1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+						<li>5</li>
+						<li>6</li>
+					</ul>
+					<div class="table-wrapper">
+						<div class="display-area">
+							<ul class="table-list"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="tile">
+				<p>
+					<!--必修
+				<select>
+					<option>情報学群</option>
+				</select>
+				<select>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+					<option>6</option>
+				</select>
+				<a id="export-twinte">Twin:teにエクスポート</a>
+				<a id="timetable-tweet">ツイート</a>-->
+					<a id="clear-bookmarks">すべて削除</a>
+				</p>
+			</footer>
+		</div>
+	</body>
+</html>
