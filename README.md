@@ -9,3 +9,4 @@ This web site can be used at <https://make-it-tsukuba.github.io/alternative-tsuk
 It is approved by The College of Media arts, Science and Technology (MAST) in University of Tsukuba.
 
 <https://www.mast.tsukuba.ac.jp/lecture/timetable.html>
+ 
