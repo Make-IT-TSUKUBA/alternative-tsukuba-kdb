@@ -8,6 +8,9 @@ import { onBookmarkChanged } from '../bookmark';
  */
 export function renderSubjectAsTableRow(subject: Subject): HTMLTableRowElement {
   const tr = document.createElement('tr');
+  tr.setAttribute("itemscope", "")
+  tr.setAttribute("itemtype", "https://schema.org/Course")
+
   const lineBreak = () => document.createElement('br');
 
   const anchorOfficial = createAnchorOfficial(subject);
@@ -24,22 +27,22 @@ export function renderSubjectAsTableRow(subject: Subject): HTMLTableRowElement {
 
   tr.append(
     createColumn(
-      subject.code,
+      courseCodeElement(subject.code),
       lineBreak(),
-      subject.name,
+      courseNameElement(subject.name),
       lineBreak(),
       anchorOfficial,
       anchorMirror,
       bookmarkCheckbox
     ),
-    createColumn(`${subject.credit.toFixed(1)}単位`, lineBreak(), `${subject.year}年次`),
+    createColumn(courseCreditElement(subject.credit), lineBreak(), `${subject.year}年次`),
     createColumn(subject.termStr, lineBreak(), subject.periodStr),
     createColumn(...subject.room.split(/,/g).flatMap((it) => [it, lineBreak()])),
     createColumn(...subject.person.split(/,/g).flatMap((it) => [it, lineBreak()])),
     subject.classMethods.length < 1
       ? createColumn('不詳')
       : createColumn(...subject.classMethods.flatMap((it) => [it, lineBreak()])),
-    createColumn(subject.abstract),
+    createColumn(courseAbstractElement(subject.abstract)),
     createColumn(subject.note)
   );
 
@@ -54,6 +57,30 @@ function createColumn(...content: (string | Node)[]) {
   const td = document.createElement('td');
   td.append(...content);
   return td;
+}
+
+const courseCodeElement = (courseCode: string) => {
+  const span = document.createElement('span');
+  span.className = 'course-code';
+  span.innerText = courseCode
+  span.setAttribute("itemprop", "courseCode")
+  return span;
+}
+
+const courseNameElement = (courseName: string) => {
+  const span = document.createElement('span');
+  span.className = 'course-name';
+  span.innerText = courseName
+  span.setAttribute("itemprop", "name")
+  return span;
+}
+
+const courseCreditElement = (courseCredit: number) => {
+  const span = document.createElement('span');
+  span.className = 'course-credit';
+  span.innerText = `${courseCredit.toFixed(1)}単位`
+  span.setAttribute("itemprop", "numberOfCredits")
+  return span;
 }
 
 const createAnchorOfficial = (subject: Subject) => {
@@ -79,6 +106,14 @@ const createAnchorMirror = (code: string, name: string) => {
   });
   return anchor;
 };
+
+const courseAbstractElement = (abstract: string) => {
+  const p = document.createElement('p');
+  p.className = 'course-note';
+  p.innerText = abstract
+  p.setAttribute("itemprop", "abstract")
+  return p;
+}
 
 export function renderSubjectForMobile(subject: Subject, isFirst: boolean) {
   const div = document.createElement('div');
