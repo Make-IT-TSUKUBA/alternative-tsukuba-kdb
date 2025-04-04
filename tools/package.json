@@ -1,0 +1,27 @@
+{
+	"name": "tools",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"download:undergrad": "tsx src/download-undergrad.ts",
+		"download:grad": "tsx src/download-grad.ts",
+		"code-types:undergrad": "tsx src/code-types-undergrad.ts",
+		"code-types:grad": "tsx src/code-types-grad.ts",
+		"check": "biome check --write .",
+		"check:ci": "biome ci ."
+	},
+	"dependencies": {
+		"csv-parse": "^5.6.0",
+		"glob": "^11.0.1",
+		"iconv-lite": "^0.6.3",
+		"puppeteer": "^24.4.0",
+		"yaml": "^2.7.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"commander": "^13.1.0",
+		"tsx": "^4.19.3",
+		"typescript": "^5.8.2"
+	}
+}

@@ -151,3 +151,8 @@ cython_debug/
 
 dst/
 tmp/
+
+# Node.js
+node_modules/
+
+dst/
