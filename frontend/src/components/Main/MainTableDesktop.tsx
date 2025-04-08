@@ -73,20 +73,20 @@ const LoadingTd = styled.td`
 interface MainTableDesktopProps {
   subjects: Subject[];
   filteredSubjects: Subject[];
-  bookmarks: Set<string>;
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLTableRowElement | null>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
+  bookmarksHas: (subjectCode: string) => boolean;
   switchBookmark: (subjectCode: string) => void;
 }
 
 const MainTableDesktop = ({
   subjects,
   filteredSubjects,
-  bookmarks,
   hasMore,
   loadingRef,
   setSearchOptions,
+  bookmarksHas,
   switchBookmark,
 }: MainTableDesktopProps) => {
   return (
@@ -106,7 +106,7 @@ const MainTableDesktop = ({
         {subjects.map((subject) => (
           <SubjectTr
             subject={subject}
-            bookmarks={bookmarks}
+            bookmarksHas={bookmarksHas}
             switchBookmark={switchBookmark}
             setSearchOptions={setSearchOptions}
             key={subject.code}

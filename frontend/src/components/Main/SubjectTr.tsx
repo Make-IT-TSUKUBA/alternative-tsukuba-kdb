@@ -72,9 +72,24 @@ const Anchor = styled.a`
   }
 `;
 
+const YearSelect = styled.select`
+  height: 24px;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: inherit;
+  margin-left: 8px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: ${shallowShadow};
+  display: flex;
+  box-sizing: border-box;
+  appearance: none;
+`;
+
 interface SubjectTrProps {
   subject: Subject;
-  bookmarks: Set<string>;
+  bookmarksHas: (subjectCode: string) => boolean;
   switchBookmark: (subjectCode: string) => void;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
@@ -82,7 +97,7 @@ interface SubjectTrProps {
 const SubjectTr = React.memo(
   ({
     subject,
-    bookmarks,
+    bookmarksHas,
     switchBookmark,
     setSearchOptions,
   }: SubjectTrProps) => {
@@ -103,11 +118,18 @@ const SubjectTr = React.memo(
 							<span>ポップアップ</span>
 						</Link>*/}
             <Star
-              enabled={bookmarks.has(subject.code)}
+              enabled={bookmarksHas(subject.code)}
               onClick={() => switchBookmark(subject.code)}
             >
               ★
             </Star>
+            {bookmarksHas(subject.code) && (
+              <YearSelect>
+                {[2021, 2022, 2023, 2024, 2025].map((year) => (
+                  <option key={year}>{year}</option>
+                ))}
+              </YearSelect>
+            )}
           </BottomRow>
         </Td>
         <Td>
@@ -151,7 +173,7 @@ const SubjectTr = React.memo(
         <Td>{subject.note}</Td>
       </tr>
     );
-  },
+  }
 );
 
 export default SubjectTr;

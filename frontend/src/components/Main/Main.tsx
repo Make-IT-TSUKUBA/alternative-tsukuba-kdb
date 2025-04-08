@@ -29,7 +29,7 @@ const Main = ({
   usedBookmark,
   setSearchOptions,
 }: MainProps) => {
-  const { bookmarks, switchBookmark } = usedBookmark;
+  const { bookmarksHas, switchBookmark } = usedBookmark;
 
   const [displayedCount, setDisplayedCount] = useState(0);
   const [initial, setInitial] = useState(true);
@@ -38,17 +38,17 @@ const Main = ({
 
   const displayedSubjects = useMemo(
     () => filteredSubjects.slice(0, displayedCount),
-    [filteredSubjects, displayedCount],
+    [filteredSubjects, displayedCount]
   );
 
   const hasMore = useMemo(
     () => displayedCount < filteredSubjects.length,
-    [displayedCount, filteredSubjects],
+    [displayedCount, filteredSubjects]
   );
 
   const subjects = useMemo(
     () => (initial ? initialSubjects : displayedSubjects),
-    [initial, displayedSubjects],
+    [initial, displayedSubjects]
   );
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const Main = ({
           setDisplayedCount((prev) => prev + ONCE_COUNT);
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
     if (loadingDesktopRef.current) {
       observer.observe(loadingDesktopRef.current);
@@ -83,18 +83,18 @@ const Main = ({
       <MainTableDesktop
         subjects={subjects}
         filteredSubjects={filteredSubjects}
-        bookmarks={bookmarks}
         hasMore={hasMore}
         loadingRef={loadingDesktopRef}
         setSearchOptions={setSearchOptions}
+        bookmarksHas={bookmarksHas}
         switchBookmark={switchBookmark}
       />
       <Mobile
         subjects={subjects}
         filteredSubjects={filteredSubjects}
-        bookmarks={bookmarks}
         hasMore={hasMore}
         loadingRef={loadingMobileRef}
+        bookmarksHas={bookmarksHas}
         switchBookmark={switchBookmark}
       />
     </Wrapper>

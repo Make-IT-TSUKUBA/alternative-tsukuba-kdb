@@ -44,13 +44,13 @@ const globalStyle = css`
 
 const App = () => {
   const [searchOptions, setSearchOptions] = useState<SearchOptions>(
-    createSearchOptions(),
+    createSearchOptions()
   );
   const [filteredSubjects, setFilteredSubjects] = useState<Subject[]>([]);
   const [timetableTermCode, setTimetableTermCode] = useState(0);
 
   const usedBookmark = useBookmark(timetableTermCode, setTimetableTermCode);
-  const { bookmarks, bookmarkTimeslotTable } = usedBookmark;
+  const { bookmarkTimeslotTable, bookmarksHas } = usedBookmark;
 
   useEffect(() => {
     // 検索結果を更新
@@ -58,11 +58,11 @@ const App = () => {
       kdb.subjectMap,
       kdb.subjectCodeList,
       searchOptions,
-      bookmarks,
       bookmarkTimeslotTable,
+      bookmarksHas
     );
     setFilteredSubjects(subjects);
-  }, [searchOptions, bookmarks, bookmarkTimeslotTable]);
+  }, [searchOptions, bookmarkTimeslotTable, bookmarksHas]);
 
   return (
     <>

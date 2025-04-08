@@ -67,8 +67,8 @@ export const searchSubjects = (
   subjectMap: Record<string, Subject>,
   subjectCodeList: string[],
   searchOptions: SearchOptions,
-  bookmarks: Set<string>,
-  bookmarkTimeslotTable: TimeslotTable
+  bookmarkTimeslotTable: TimeslotTable,
+  bookmarksHas: (subjectCode: string) => boolean
 ) => {
   const subjects: Subject[] = [];
   const nameSet = new Set<string>();
@@ -84,9 +84,9 @@ export const searchSubjects = (
         subject,
         searchOptions,
         nameSet,
-        bookmarks,
         enableTimeslotBits,
-        disableTimeslotBits
+        disableTimeslotBits,
+        bookmarksHas
       )
     ) {
       subjects.push(subject);
@@ -100,9 +100,9 @@ const matchesSearchOptions = (
   subject: Subject,
   options: SearchOptions,
   codeSet: Set<string>,
-  bookmarks: Set<string>,
   enableTimeslotBits: bigint,
-  disableTimeslotBits: bigint
+  disableTimeslotBits: bigint,
+  bookmarksHas: (subjectCode: string) => boolean
 ) => {
   // 標準履修年次
   const matchesYear = (() => {
@@ -136,7 +136,7 @@ const matchesSearchOptions = (
 
   // ブックマーク
   const matchesBookmark = (() => {
-    const bookmarked = bookmarks.has(subject.code);
+    const bookmarked = bookmarksHas(subject.code);
     return (
       options.filter === "all" ||
       (options.filter === "bookmark" && bookmarked) ||
