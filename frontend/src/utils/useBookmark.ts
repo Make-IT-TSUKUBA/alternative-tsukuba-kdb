@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 
-import { kdb, type Subject } from "./subject";
+import { CURRENT_YEAR, kdb, type Subject } from "./subject";
 import {
   createEmptyTimeslotTable,
   fillTimetable,
@@ -10,7 +10,6 @@ import {
 
 const BOOKMARK_KEY = "kdb_bookmarks";
 const BOOKMARKS_VERSION = 1;
-const CURRENT_YEAR = 2025;
 
 const bookmarkSubjectSchema = z.object({
   year: z.number(),
@@ -35,10 +34,13 @@ const createEmptyBookmarks = (): Bookmarks => {
 
 const getBookmarks = (): Bookmarks => {
   const value = localStorage.getItem(BOOKMARK_KEY);
+
+  // データが存在しない場合は空のブックマークを返す
   if (value === null) {
     return createEmptyBookmarks();
   }
 
+  // 新バージョンのデータを読込
   try {
     const result = bookmarksSchema.safeParse(JSON.parse(value));
     return result.success ? result.data : createEmptyBookmarks();
@@ -47,7 +49,7 @@ const getBookmarks = (): Bookmarks => {
   }
 
   try {
-    // 古いバージョンのデータ（科目番号カンマ区切り）を読み込む
+    // 旧バージョンのデータ（科目番号カンマ区切り）を変換
     const array =
       value !== null
         ? decodeURIComponent(value)
@@ -74,12 +76,16 @@ export const useBookmark = (
 ) => {
   const [bookmarks, setBookmarks] = useState<Bookmarks>(createEmptyBookmarks());
 
-  // 全タームを通した単位数の合計
+  // 今年度の単位数の合計
   const totalCredits = useMemo(() => {
     let credits = 0;
-    for (const code of Object.keys(bookmarks.subjects)) {
+    for (const [code, bookmarkSubject] of Object.entries(bookmarks.subjects)) {
       const subject = kdb.subjectMap[code];
-      if (subject) {
+      if (
+        subject &&
+        bookmarkSubject.year === CURRENT_YEAR &&
+        !bookmarkSubject.ta
+      ) {
         credits += subject.credit;
       }
     }
@@ -97,9 +103,12 @@ export const useBookmark = (
     let credits = 0;
     let timeslots = 0;
 
-    for (const code of Object.keys(bookmarks.subjects)) {
+    for (const [code, bookmarkSubject] of Object.entries(bookmarks.subjects)) {
       const subject = kdb.subjectMap[code];
       if (!subject) {
+        continue;
+      }
+      if (bookmarkSubject.year !== CURRENT_YEAR) {
         continue;
       }
 
@@ -120,7 +129,9 @@ export const useBookmark = (
           }
         }
       }
-      credits += subject.credit;
+      if (!bookmarkSubject.ta) {
+        credits += subject.credit;
+      }
       timeslots += getTimeslotsLength(subjectTimeslotTable);
     }
     return [table, subjectTable, credits, timeslots];
@@ -128,6 +139,12 @@ export const useBookmark = (
 
   const bookmarksHas = useCallback(
     (subjectCode: string) => subjectCode in bookmarks.subjects,
+    [bookmarks]
+  );
+
+  const getBookmarkSubject = useCallback(
+    (subjectCode: string): BookmarkSubject | undefined =>
+      bookmarks.subjects[subjectCode],
     [bookmarks]
   );
 
@@ -145,6 +162,25 @@ export const useBookmark = (
       if (termCode !== undefined) {
         setTimetableTermCode(termCode);
       }
+    }
+    setBookmarks(newBookmarks);
+    saveBookmarks(newBookmarks);
+  };
+
+  const updateBookmark = (
+    subjectCode: string,
+    value: Partial<BookmarkSubject>
+  ) => {
+    const newBookmarks = structuredClone(bookmarks);
+    const bookmarkSubject = newBookmarks.subjects[subjectCode];
+    if (!bookmarkSubject) {
+      return;
+    }
+    if (value.year !== undefined) {
+      bookmarkSubject.year = value.year;
+    }
+    if (value.ta !== undefined) {
+      bookmarkSubject.ta = value.ta;
     }
     setBookmarks(newBookmarks);
     saveBookmarks(newBookmarks);
@@ -178,7 +214,9 @@ export const useBookmark = (
     currentCredits,
     currentTimeslots,
     bookmarksHas,
+    getBookmarkSubject,
     switchBookmark,
+    updateBookmark,
     clearBookmarks,
     exportToTwinte,
   };

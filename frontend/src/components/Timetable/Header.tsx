@@ -23,7 +23,7 @@ const Left = styled.div`
 `;
 
 const TermName = styled.div`
-  width: 60px;
+  width: 56px;
   text-align: center;
   font-size: 20px;
 `;
@@ -37,6 +37,10 @@ const Details = styled.div`
 const Move = styled.a`
   line-height: 22px;
   font-size: 18px;
+
+  &[data-prev] {
+    margin-left: -8px;
+  }
 
   &[data-next] {
     margin-right: -10px;
@@ -104,7 +108,11 @@ const Header = ({
   return (
     <Wrapper onClick={() => setOpened((prev) => !prev)}>
       <Left>
-        <Move onClick={moveBefore} data-disabled={termCode - 1 < 0}>
+        <Move
+          data-prev="true"
+          onClick={moveBefore}
+          data-disabled={termCode - 1 < 0}
+        >
           〈
         </Move>
         <TermName>

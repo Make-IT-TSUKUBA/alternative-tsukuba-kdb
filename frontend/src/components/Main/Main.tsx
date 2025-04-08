@@ -85,9 +85,8 @@ const Main = ({
         filteredSubjects={filteredSubjects}
         hasMore={hasMore}
         loadingRef={loadingDesktopRef}
+        usedBookmark={usedBookmark}
         setSearchOptions={setSearchOptions}
-        bookmarksHas={bookmarksHas}
-        switchBookmark={switchBookmark}
       />
       <Mobile
         subjects={subjects}

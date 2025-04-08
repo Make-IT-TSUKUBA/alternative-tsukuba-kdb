@@ -8,7 +8,8 @@ import {
   colorPurpleGradient,
   shallowShadow,
 } from "@/utils/style";
-import type { Subject } from "@/utils/subject";
+import { CURRENT_YEAR, type Subject } from "@/utils/subject";
+import type { useBookmark } from "@/utils/useBookmark";
 
 const Td = styled.td`
   vertical-align: top;
@@ -89,18 +90,19 @@ const YearSelect = styled.select`
 
 interface SubjectTrProps {
   subject: Subject;
-  bookmarksHas: (subjectCode: string) => boolean;
-  switchBookmark: (subjectCode: string) => void;
+  usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
 
 const SubjectTr = React.memo(
-  ({
-    subject,
-    bookmarksHas,
-    switchBookmark,
-    setSearchOptions,
-  }: SubjectTrProps) => {
+  ({ subject, usedBookmark, setSearchOptions }: SubjectTrProps) => {
+    const { bookmarksHas, getBookmarkSubject, switchBookmark, updateBookmark } =
+      usedBookmark;
+
+    const bookmarkSubject = getBookmarkSubject(subject.code);
+
+    const years = [...Array(9)].map((_, i) => CURRENT_YEAR + i - 4);
+
     // TODO: 科目区分を科目番号の隣に表示（情報学群 のように）
 
     return (
@@ -123,12 +125,33 @@ const SubjectTr = React.memo(
             >
               ★
             </Star>
-            {bookmarksHas(subject.code) && (
-              <YearSelect>
-                {[2021, 2022, 2023, 2024, 2025].map((year) => (
-                  <option key={year}>{year}</option>
-                ))}
-              </YearSelect>
+            {bookmarkSubject && (
+              <>
+                <YearSelect
+                  value={bookmarkSubject.year}
+                  onChange={(e) =>
+                    updateBookmark(subject.code, {
+                      year: Number.parseInt(e.currentTarget.value),
+                    })
+                  }
+                >
+                  {years.map((year) => (
+                    <option key={year}>{year}</option>
+                  ))}
+                </YearSelect>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={bookmarkSubject.ta}
+                    onChange={(e) =>
+                      updateBookmark(subject.code, {
+                        ta: e.currentTarget.checked,
+                      })
+                    }
+                  />{" "}
+                  TA
+                </label>
+              </>
             )}
           </BottomRow>
         </Td>

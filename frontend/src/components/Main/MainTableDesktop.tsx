@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import type { SearchOptions } from "@/utils/search";
 import { colorPurpleDark, mobileMedia } from "@/utils/style";
 import { type Subject, kdb } from "@/utils/subject";
+import type { useBookmark } from "@/utils/useBookmark";
 import SubjectTr from "./SubjectTr";
 
 const Table = styled.table`
@@ -75,9 +76,8 @@ interface MainTableDesktopProps {
   filteredSubjects: Subject[];
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLTableRowElement | null>;
+  usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
-  bookmarksHas: (subjectCode: string) => boolean;
-  switchBookmark: (subjectCode: string) => void;
 }
 
 const MainTableDesktop = ({
@@ -85,9 +85,8 @@ const MainTableDesktop = ({
   filteredSubjects,
   hasMore,
   loadingRef,
+  usedBookmark,
   setSearchOptions,
-  bookmarksHas,
-  switchBookmark,
 }: MainTableDesktopProps) => {
   return (
     <Table>
@@ -106,8 +105,7 @@ const MainTableDesktop = ({
         {subjects.map((subject) => (
           <SubjectTr
             subject={subject}
-            bookmarksHas={bookmarksHas}
-            switchBookmark={switchBookmark}
+            usedBookmark={usedBookmark}
             setSearchOptions={setSearchOptions}
             key={subject.code}
           />
