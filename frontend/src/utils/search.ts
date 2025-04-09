@@ -77,12 +77,15 @@ export const searchSubjects = (
     searchOptions.excludesBookmark ? bookmarkTimeslotTable : []
   );
 
+  const regex = buildRegExp(searchOptions.keyword)
+
   for (let i = 0; i < subjectCodeList.length; i++) {
     const subject = subjectMap[subjectCodeList[i]];
     if (
       matchesSearchOptions(
         subject,
         searchOptions,
+        regex,
         nameSet,
         bookmarks,
         enableTimeslotBits,
@@ -99,6 +102,7 @@ export const searchSubjects = (
 const matchesSearchOptions = (
   subject: Subject,
   options: SearchOptions,
+  keywordRegex: RegExp | string,
   codeSet: Set<string>,
   bookmarks: Set<string>,
   enableTimeslotBits: bigint,
@@ -148,7 +152,7 @@ const matchesSearchOptions = (
   const matchesSameName = !options.exceptSameName || !codeSet.has(subject.name);
 
   return (
-    matchesKeyword(subject, options) &&
+    matchesKeyword(subject, options, keywordRegex) &&
     matchesTerm(subject, options) &&
     matchesTimeslot(
       subject,
@@ -201,7 +205,7 @@ const matchesSoftly = (base: string, regex: string | RegExp): RegExpMatchArray |
   }
 }
 
-const matchesKeyword = (subject: Subject, options: SearchOptions) => {
+const matchesKeyword = (subject: Subject, options: SearchOptions, regex: RegExp | string) => {
   // 何の条件も設定されていない場合は true
   if (
     !options.containsCode &&
@@ -218,8 +222,6 @@ const matchesKeyword = (subject: Subject, options: SearchOptions) => {
   if (options.keyword === "") {
     return true;
   }
-
-  const regex = buildRegExp(options.keyword);
 
   // 科目番号は前方一致
   const matchesCode =

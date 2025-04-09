@@ -52,16 +52,25 @@ const App = () => {
   const usedBookmark = useBookmark(timetableTermCode, setTimetableTermCode);
   const { bookmarks, bookmarkTimeslotTable } = usedBookmark;
 
+  /** debounce 時間 */
+  const DEBOUNCE_TIME = 100;
+
   useEffect(() => {
-    // 検索結果を更新
-    const subjects = searchSubjects(
-      kdb.subjectMap,
-      kdb.subjectCodeList,
-      searchOptions,
-      bookmarks,
-      bookmarkTimeslotTable,
-    );
-    setFilteredSubjects(subjects);
+    const timer = setTimeout(() => {
+      // 検索結果を更新
+      const subjects = searchSubjects(
+        kdb.subjectMap,
+        kdb.subjectCodeList,
+        searchOptions,
+        bookmarks,
+        bookmarkTimeslotTable,
+      );
+      setFilteredSubjects(subjects);
+    }, DEBOUNCE_TIME);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [searchOptions, bookmarks, bookmarkTimeslotTable]);
 
   return (
