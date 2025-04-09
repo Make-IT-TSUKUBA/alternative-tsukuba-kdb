@@ -53,7 +53,7 @@ const App = () => {
   const { bookmarks, bookmarkTimeslotTable } = usedBookmark;
 
   /** debounce 時間 */
-  const DEBOUNCE_TIME = 150;
+  const DEBOUNCE_TIME = 100;
 
   useEffect(() => {
     const timer = setTimeout(() => {
