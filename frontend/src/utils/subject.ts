@@ -192,7 +192,7 @@ export const initialSubjects = kdb.subjectCodeList
 // UTF-8（BOM 付き）の CSV ファイルに出力
 export const outputSubjectsToCSV = (
   subjects: Subject[],
-  a: HTMLAnchorElement | null
+  a: HTMLAnchorElement | null,
 ) => {
   const escaped = /,|\r?\n|\r|"/;
   const e = /"/g;
@@ -233,10 +233,10 @@ export const outputSubjectsToCSV = (
     csvRows.push(
       row
         .map((field) =>
-          escaped.test(field) ? `"${field.replace(e, '""')}"` : field
+          escaped.test(field) ? `"${field.replace(e, '""')}"` : field,
         )
         .join(",")
-        .replace('\n",', '",')
+        .replace('\n",', '",'),
     );
   }
 

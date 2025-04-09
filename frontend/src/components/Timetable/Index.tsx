@@ -210,7 +210,7 @@ const TimetableElement = ({
 
   const [opened, setOpened] = useState(!isMobile);
   const [timetable, setTimetable] = useState<Timetable<Subject[]>>(
-    fillTimetable<Subject[]>([])
+    fillTimetable<Subject[]>([]),
   );
   const [currentCredits, setCurrentCredits] = useState(0);
   const [currentTimeslots, setCurrentTimeslots] = useState(0);
@@ -254,7 +254,7 @@ const TimetableElement = ({
 
       // タームコードを含むグループを探索
       const termIndex = subject.termCodes.findIndex((codes) =>
-        codes.includes(termCode)
+        codes.includes(termCode),
       );
       if (termIndex === -1) {
         continue;
