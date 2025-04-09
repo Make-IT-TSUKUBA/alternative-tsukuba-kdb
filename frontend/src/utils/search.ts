@@ -165,7 +165,7 @@ const matchesSearchOptions = (
 };
 
 /** 失敗した正規表現のキャッシュ*/
-const regExpCaches: string[] = [];
+const regExpCaches: Set<string> = new Set();
 
 /**
  * エラーに寛容に正規表現を構築する
@@ -189,14 +189,14 @@ const matchesSoftly = (base: string, regex: string | RegExp): RegExpMatchArray |
 
   // 失敗キャッシュがあればそれを返す
   const keyword = typeof regex === 'string' ? regex : regex.source;
-  if (regExpCaches.includes(regex as string)) {
+  if (regExpCaches.has(regex as string)) {
     return base.includes(regex as string) ? [base] : null;
   }
 
   try {
     return base.match(regex);
   } catch {
-    regExpCaches.push(keyword);
+    regExpCaches.add(keyword);
     return base.includes(keyword) ? [base] : null;
   }
 }
