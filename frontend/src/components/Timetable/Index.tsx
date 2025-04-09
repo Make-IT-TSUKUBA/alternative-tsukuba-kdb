@@ -205,7 +205,7 @@ const TimetableElement = ({
 }: TimetableProps) => {
   const {
     bookmarkSubjectTable,
-    totalCredits,
+    totalYearCredits,
     currentCredits,
     currentTimeslots,
     switchBookmark,
@@ -238,7 +238,7 @@ const TimetableElement = ({
         termCode={termCode}
         currentCredits={currentCredits}
         currentTimeslots={currentTimeslots}
-        totalCredits={totalCredits}
+        totalYearCredits={totalYearCredits}
         setOpened={setOpened}
         setTermCode={setTermCode}
       />

@@ -5,8 +5,8 @@ import type { SearchOptions } from "@/utils/search";
 import { mobileMedia } from "@/utils/style";
 import { ONCE_COUNT, type Subject, initialSubjects } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
-import MainTableDesktop from "./MainTableDesktop";
 import Mobile from "./Mobile";
+import CoursePlan from "./CoursePlan";
 
 const Wrapper = styled.main`
   width: 1100px;
@@ -80,7 +80,15 @@ const Main = ({
 
   return (
     <Wrapper>
-      <MainTableDesktop
+      {/*<MainTableDesktop
+        subjects={subjects}
+        filteredSubjects={filteredSubjects}
+        hasMore={hasMore}
+        loadingRef={loadingDesktopRef}
+        usedBookmark={usedBookmark}
+        setSearchOptions={setSearchOptions}
+      />*/}
+      <CoursePlan
         subjects={subjects}
         filteredSubjects={filteredSubjects}
         hasMore={hasMore}

@@ -76,20 +76,23 @@ export const useBookmark = (
 ) => {
   const [bookmarks, setBookmarks] = useState<Bookmarks>(createEmptyBookmarks());
 
-  // 今年度の単位数の合計
-  const totalCredits = useMemo(() => {
+  //
+  const [
+    totalCredits, // 全ての単位数の合計
+    totalYearCredits, // 今年度の単位数の合計
+  ] = useMemo(() => {
     let credits = 0;
+    let yearCredits = 0;
     for (const [code, bookmarkSubject] of Object.entries(bookmarks.subjects)) {
       const subject = kdb.subjectMap[code];
-      if (
-        subject &&
-        bookmarkSubject.year === CURRENT_YEAR &&
-        !bookmarkSubject.ta
-      ) {
+      if (subject && !bookmarkSubject.ta) {
         credits += subject.credit;
+        if (bookmarkSubject.year === CURRENT_YEAR) {
+          yearCredits += subject.credit;
+        }
       }
     }
-    return credits;
+    return [credits, yearCredits];
   }, [bookmarks]);
 
   const [
@@ -211,6 +214,7 @@ export const useBookmark = (
     bookmarkTimeslotTable,
     bookmarkSubjectTable,
     totalCredits,
+    totalYearCredits,
     currentCredits,
     currentTimeslots,
     bookmarksHas,

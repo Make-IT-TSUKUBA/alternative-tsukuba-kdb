@@ -8,26 +8,9 @@ import {
   colorPurpleGradient,
   shallowShadow,
 } from "@/utils/style";
-import { CURRENT_YEAR, type Subject } from "@/utils/subject";
+import type { Subject } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
-
-const Td = styled.td`
-  vertical-align: top;
-  padding: 4px 8px 4px 0;
-  border-bottom: solid 1px #ccc;
-
-  &:nth-of-type(6),
-  &:nth-of-type(7) {
-    line-height: 1.3em;
-    font-size: 0.6rem;
-  }
-`;
-
-const BottomRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
+import { BottomRow, Star, Td, YearSelect, years } from "./parts";
 
 const Link = styled.a`
   height: 24px;
@@ -53,16 +36,6 @@ const Link = styled.a`
   }
 `;
 
-const Star = styled.a<{ enabled: boolean }>`
-  line-height: 1;
-  color: ${(props) => (props.enabled ? colorPurple : "#aaa")};
-  font-size: 1.2rem;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
 const Anchor = styled.a`
   color: #666;
   text-decoration-color: #ddd;
@@ -71,21 +44,6 @@ const Anchor = styled.a`
   &:hover {
     opacity: 0.8;
   }
-`;
-
-const YearSelect = styled.select`
-  height: 24px;
-  text-decoration: none;
-  font-size: 14px;
-  font-family: inherit;
-  margin-left: 8px;
-  padding: 0 8px;
-  border: none;
-  border-radius: 4px;
-  box-shadow: ${shallowShadow};
-  display: flex;
-  box-sizing: border-box;
-  appearance: none;
 `;
 
 interface SubjectTrProps {
@@ -101,8 +59,6 @@ const SubjectTr = React.memo(
 
     const bookmarkSubject = getBookmarkSubject(subject.code);
 
-    const years = [...Array(9)].map((_, i) => CURRENT_YEAR + i - 4);
-
     // TODO: 科目区分を科目番号の隣に表示（情報学群 のように）
 
     return (
@@ -111,7 +67,6 @@ const SubjectTr = React.memo(
           {subject.code}
           <br />
           {subject.name}
-          <br />
           <BottomRow>
             <Link href={subject.syllabusHref} target="_blank">
               <span>シラバス</span>
