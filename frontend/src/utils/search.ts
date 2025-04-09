@@ -164,6 +164,43 @@ const matchesSearchOptions = (
   );
 };
 
+/** 失敗した正規表現のキャッシュ*/
+const regExpCaches: Set<string> = new Set();
+
+/**
+ * エラーに寛容に正規表現を構築する
+ * @param keyword
+ */
+const buildRegExp = (keyword: string): RegExp | string => {
+  try {
+    return new RegExp(keyword, "i");
+  } catch {
+    return keyword;
+  }
+}
+
+/**
+ * エラーに寛容にマッチ検索する
+ * @param base
+ * @param regex
+ */
+const matchesSoftly = (base: string, regex: string | RegExp): RegExpMatchArray | null => {
+  // 不正な正規表現等によってエラーが起きれば，単純に文字列どうしの部分一致をとる
+
+  // 失敗キャッシュがあればそれを返す
+  const keyword = typeof regex === 'string' ? regex : regex.source;
+  if (regExpCaches.has(regex as string)) {
+    return base.includes(regex as string) ? [base] : null;
+  }
+
+  try {
+    return base.match(regex);
+  } catch {
+    regExpCaches.add(keyword);
+    return base.includes(keyword) ? [base] : null;
+  }
+}
+
 const matchesKeyword = (subject: Subject, options: SearchOptions) => {
   // 何の条件も設定されていない場合は true
   if (
@@ -182,39 +219,33 @@ const matchesKeyword = (subject: Subject, options: SearchOptions) => {
     return true;
   }
 
-  try {
-    const regex = new RegExp(options.keyword, "i");
+  const regex = buildRegExp(options.keyword);
 
-    // 科目番号は前方一致
-    const matchesCode =
-      options.containsCode && subject.code.startsWith(options.keyword);
+  // 科目番号は前方一致
+  const matchesCode =
+    options.containsCode && subject.code.startsWith(options.keyword);
 
-    const matchesName = options.containsName && subject.name.match(regex);
-    const matchesRoom = options.containsRoom && subject.room.match(regex);
+  const matchesName = options.containsName && matchesSoftly(subject.name, regex);
+  const matchesRoom = options.containsRoom && matchesSoftly(subject.room, regex);
 
-    // 教員名はスペースを無視して検索
-    // すなわち、"情報太郎" または "情報　太郎" で検索した場合も、"情報 太郎" にヒットさせる
-    const matchesPerson =
+  // 教員名はスペースを無視して検索
+  // すなわち、"情報太郎" または "情報　太郎" で検索した場合も、"情報 太郎" にヒットさせる
+  const matchesPerson =
       options.containsPerson &&
-      subject.person
-        .replace(" ", "")
-        .match(new RegExp(options.keyword.replace(/[ 　]/, ""), "i")) != null;
+      matchesSoftly(subject.person.replace(" ", ""), buildRegExp(options.keyword.replace(/[ 　]/, ""))) != null;
 
-    const matchesAbstract =
-      options.containsAbstract && subject.abstract.match(regex);
-    const matchesNote = options.containsNote && subject.note.match(regex);
+  const matchesAbstract =
+      options.containsAbstract && matchesSoftly(subject.abstract, regex);
+  const matchesNote = options.containsNote && matchesSoftly(subject.note, regex);
 
-    return (
-      matchesCode ||
-      matchesName ||
-      matchesRoom ||
-      matchesPerson ||
-      matchesAbstract ||
-      matchesNote
-    );
-  } catch {
-    return false;
-  }
+  return (
+    matchesCode ||
+    matchesName ||
+    matchesRoom ||
+    matchesPerson ||
+    matchesAbstract ||
+    matchesNote
+  );
 };
 
 const matchesTerm = (subject: Subject, options: SearchOptions) => {
