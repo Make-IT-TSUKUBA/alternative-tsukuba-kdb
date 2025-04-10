@@ -151,7 +151,7 @@ const SubjectTr = React.memo(
         <Td>{subject.note}</Td>
       </tr>
     );
-  },
+  }
 );
 
 export default SubjectTr;

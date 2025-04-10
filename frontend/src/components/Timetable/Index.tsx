@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useMedia } from "react-use";
 
 import {
@@ -198,159 +198,157 @@ interface TimetableProps {
   setTermCode: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const TimetableElement = ({
-  usedBookmark,
-  termCode,
-  setTermCode,
-}: TimetableProps) => {
-  const { bookmarks, switchBookmark, clearBookmarks, exportToTwinte } =
-    usedBookmark;
+const TimetableElement = React.memo(
+  ({ usedBookmark, termCode, setTermCode }: TimetableProps) => {
+    const { bookmarks, switchBookmark, clearBookmarks, exportToTwinte } =
+      usedBookmark;
 
-  const isMobile = useMedia(`(width < ${mobileWidth})`);
+    const isMobile = useMedia(`(width < ${mobileWidth})`);
 
-  const [opened, setOpened] = useState(!isMobile);
-  const [timetable, setTimetable] = useState<Timetable<Subject[]>>(
-    fillTimetable<Subject[]>([])
-  );
-  const [currentCredits, setCurrentCredits] = useState(0);
-  const [currentTimeslots, setCurrentTimeslots] = useState(0);
+    const [opened, setOpened] = useState(!isMobile);
+    const [timetable, setTimetable] = useState<Timetable<Subject[]>>(
+      fillTimetable<Subject[]>([])
+    );
+    const [currentCredits, setCurrentCredits] = useState(0);
+    const [currentTimeslots, setCurrentTimeslots] = useState(0);
 
-  // 全タームを通した単位数の合計
-  const totalCredits = useMemo(() => {
-    let credits = 0;
-    for (const bookmark of bookmarks) {
-      const subject = kdb.subjectMap[bookmark];
-      if (subject) {
-        credits += subject.credit;
-      }
-    }
-    return credits;
-  }, [bookmarks]);
-
-  const getColor = (subject: Subject, no: number) => {
-    // 実施形態と重なりで色を決定
-    const isFaceToFace = subject.classMethods.includes("対面");
-    const isOndemand = subject.classMethods.includes("オンデマンド");
-    const isInteractive = subject.classMethods.includes("同時双方向");
-
-    const isOnlyFaceToFace = isFaceToFace && !isOndemand && !isInteractive;
-    const isOnlyOnline = !isFaceToFace && (isOndemand || isInteractive);
-    const baseH = isOnlyFaceToFace ? 320 : isOnlyOnline ? 200 : 260;
-    const h = baseH;
-    const s = 100 - no * 40;
-    return `hsla(${h}, ${s}%, 90%, 1.0)`;
-  };
-
-  useEffect(() => {
-    const table = fillTimetable<Subject[]>([]);
-    let credits = 0;
-    let timeslots = 0;
-
-    for (const bookmark of bookmarks) {
-      const subject = kdb.subjectMap[bookmark];
-      if (!subject) {
-        continue;
-      }
-
-      // タームコードを含むグループを探索
-      const termIndex = subject.termCodes.findIndex((codes) =>
-        codes.includes(termCode)
-      );
-      if (termIndex === -1) {
-        continue;
-      }
-      const subjectTable = subject.timeslotTables[termIndex];
-      for (let day = 0; day < table.length; day++) {
-        for (let period = 0; period < table[day].length; period++) {
-          // 科目がコマを含めば追加
-          if (subjectTable[day][period]) {
-            table[day][period].push(subject);
-          }
+    // 全タームを通した単位数の合計
+    const totalCredits = useMemo(() => {
+      let credits = 0;
+      for (const bookmark of bookmarks) {
+        const subject = kdb.subjectMap[bookmark];
+        if (subject) {
+          credits += subject.credit;
         }
       }
-      credits += subject.credit;
-      timeslots += getTimeslotsLength(subjectTable);
-    }
-    setTimetable(table);
-    setCurrentCredits(credits);
-    setCurrentTimeslots(timeslots);
-  }, [bookmarks, termCode]);
+      return credits;
+    }, [bookmarks]);
 
-  return (
-    <Wrapper>
-      <Header
-        opened={opened}
-        termCode={termCode}
-        currentCredits={currentCredits}
-        currentTimeslots={currentTimeslots}
-        totalCredits={totalCredits}
-        setOpened={setOpened}
-        setTermCode={setTermCode}
-      />
-      <TimetableWrapper data-closed={!opened}>
-        <PeriodColumn>
-          <Day />
-          {[...Array(maxPeriod)].map((_, i) => (
-            <PeriodItem key={i}>
-              {i + 1}
-              <Time>
-                {times[i][0]}
-                <br />
-                {times[i][1]}
-              </Time>
-            </PeriodItem>
-          ))}
-        </PeriodColumn>
-        <Main>
-          {daysofweek.map((day, dayi) => (
-            <MainColumn key={day}>
-              <Day>
-                <span>{day}</span>
-              </Day>
-              {[...Array(maxPeriod)].map((_, period) => (
-                <Item key={period}>
-                  {timetable[dayi][period].map((subject, subjecti) => (
-                    <SubjectTile
-                      background={getColor(subject, subjecti)}
-                      top={subjecti * 2}
-                      key={subject.code}
-                    >
-                      <a
-                        href={subject.syllabusHref}
-                        target="_blank"
-                        rel="nofollow noopener noreferrer"
+    const getColor = (subject: Subject, no: number) => {
+      // 実施形態と重なりで色を決定
+      const isFaceToFace = subject.classMethods.includes("対面");
+      const isOndemand = subject.classMethods.includes("オンデマンド");
+      const isInteractive = subject.classMethods.includes("同時双方向");
+
+      const isOnlyFaceToFace = isFaceToFace && !isOndemand && !isInteractive;
+      const isOnlyOnline = !isFaceToFace && (isOndemand || isInteractive);
+      const baseH = isOnlyFaceToFace ? 320 : isOnlyOnline ? 200 : 260;
+      const h = baseH;
+      const s = 100 - no * 40;
+      return `hsla(${h}, ${s}%, 90%, 1.0)`;
+    };
+
+    useEffect(() => {
+      const table = fillTimetable<Subject[]>([]);
+      let credits = 0;
+      let timeslots = 0;
+
+      for (const bookmark of bookmarks) {
+        const subject = kdb.subjectMap[bookmark];
+        if (!subject) {
+          continue;
+        }
+
+        // タームコードを含むグループを探索
+        const termIndex = subject.termCodes.findIndex((codes) =>
+          codes.includes(termCode)
+        );
+        if (termIndex === -1) {
+          continue;
+        }
+        const subjectTable = subject.timeslotTables[termIndex];
+        for (let day = 0; day < table.length; day++) {
+          for (let period = 0; period < table[day].length; period++) {
+            // 科目がコマを含めば追加
+            if (subjectTable[day][period]) {
+              table[day][period].push(subject);
+            }
+          }
+        }
+        credits += subject.credit;
+        timeslots += getTimeslotsLength(subjectTable);
+      }
+      setTimetable(table);
+      setCurrentCredits(credits);
+      setCurrentTimeslots(timeslots);
+    }, [bookmarks, termCode]);
+
+    return (
+      <Wrapper>
+        <Header
+          opened={opened}
+          termCode={termCode}
+          currentCredits={currentCredits}
+          currentTimeslots={currentTimeslots}
+          totalCredits={totalCredits}
+          setOpened={setOpened}
+          setTermCode={setTermCode}
+        />
+        <TimetableWrapper data-closed={!opened}>
+          <PeriodColumn>
+            <Day />
+            {[...Array(maxPeriod)].map((_, i) => (
+              <PeriodItem key={i}>
+                {i + 1}
+                <Time>
+                  {times[i][0]}
+                  <br />
+                  {times[i][1]}
+                </Time>
+              </PeriodItem>
+            ))}
+          </PeriodColumn>
+          <Main>
+            {daysofweek.map((day, dayi) => (
+              <MainColumn key={day}>
+                <Day>
+                  <span>{day}</span>
+                </Day>
+                {[...Array(maxPeriod)].map((_, period) => (
+                  <Item key={period}>
+                    {timetable[dayi][period].map((subject, subjecti) => (
+                      <SubjectTile
+                        background={getColor(subject, subjecti)}
+                        top={subjecti * 2}
+                        key={subject.code}
                       >
-                        {subject.code}
-                        <br />
-                        {subject.name}
-                      </a>
-                      <Close
-                        className="close"
-                        onClick={() => switchBookmark(subject.code)}
-                      >
-                        ✕
-                      </Close>
-                    </SubjectTile>
-                  ))}
-                </Item>
-              ))}
-            </MainColumn>
-          ))}
-        </Main>
-      </TimetableWrapper>
-      <Footer>
-        <Link onClick={exportToTwinte}>
-          <span>Twin:te にエクスポート</span>
-        </Link>
-        {/*<Link>
+                        <a
+                          href={subject.syllabusHref}
+                          target="_blank"
+                          rel="nofollow noopener noreferrer"
+                        >
+                          {subject.code}
+                          <br />
+                          {subject.name}
+                        </a>
+                        <Close
+                          className="close"
+                          onClick={() => switchBookmark(subject.code)}
+                        >
+                          ✕
+                        </Close>
+                      </SubjectTile>
+                    ))}
+                  </Item>
+                ))}
+              </MainColumn>
+            ))}
+          </Main>
+        </TimetableWrapper>
+        <Footer>
+          <Link onClick={exportToTwinte}>
+            <span>Twin:te にエクスポート</span>
+          </Link>
+          {/*<Link>
           <span>画像に保存</span>
         </Link>*/}
-        <Link caution={true} onClick={clearBookmarks}>
-          <span>すべて削除</span>
-        </Link>
-      </Footer>
-    </Wrapper>
-  );
-};
+          <Link caution={true} onClick={clearBookmarks}>
+            <span>すべて削除</span>
+          </Link>
+        </Footer>
+      </Wrapper>
+    );
+  }
+);
 
 export default TimetableElement;

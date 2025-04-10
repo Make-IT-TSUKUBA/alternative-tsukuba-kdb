@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 
 import {
-  allCodeTypes,
-  type SmallCodeArray,
   type MidCodeArray,
+  type SmallCodeArray,
+  allCodeTypes,
 } from "@/kdb/code-types";
 import type { SearchOptions } from "@/utils/search";
-import { rounded, roundedHeightExceptInput } from "./header-parts";
 import { useMemo } from "react";
+import { rounded, roundedHeightExceptInput } from "./header-parts";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -34,7 +34,7 @@ const Requirements = ({ options, setOptions }: RequirementsProps) => {
 
   const typesB = useMemo(() => {
     const mid = allCodeTypes.find(
-      (type) => type.name === options.reqA
+      (type) => type.name === options.reqA,
     )?.children;
     if (!mid || mid.length === 0 || typeof mid[0] === "string") {
       return [];
@@ -44,13 +44,13 @@ const Requirements = ({ options, setOptions }: RequirementsProps) => {
 
   const typesC = useMemo(() => {
     const mid = allCodeTypes.find(
-      (type) => type.name === options.reqA
+      (type) => type.name === options.reqA,
     )?.children;
     if (!mid || mid.length === 0 || typeof mid[0] === "string") {
       return [];
     }
     const small = (mid as MidCodeArray).find(
-      (type) => type.name === options.reqB
+      (type) => type.name === options.reqB,
     )?.children;
     if (!small || small.length === 0 || typeof small[0] === "string") {
       return [];

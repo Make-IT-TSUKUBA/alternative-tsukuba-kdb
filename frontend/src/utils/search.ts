@@ -68,16 +68,16 @@ export const searchSubjects = (
   subjectCodeList: string[],
   searchOptions: SearchOptions,
   bookmarks: Set<string>,
-  bookmarkTimeslotTable: TimeslotTable
+  bookmarkTimeslotTable: TimeslotTable,
 ) => {
   const subjects: Subject[] = [];
   const nameSet = new Set<string>();
   const enableTimeslotBits = timeslotTableToBits(searchOptions.timeslotTable);
   const disableTimeslotBits = timeslotTableToBits(
-    searchOptions.excludesBookmark ? bookmarkTimeslotTable : []
+    searchOptions.excludesBookmark ? bookmarkTimeslotTable : [],
   );
 
-  const regex = buildRegExp(searchOptions.keyword)
+  const regex = buildRegExp(searchOptions.keyword);
 
   for (let i = 0; i < subjectCodeList.length; i++) {
     const subject = subjectMap[subjectCodeList[i]];
@@ -89,7 +89,7 @@ export const searchSubjects = (
         nameSet,
         bookmarks,
         enableTimeslotBits,
-        disableTimeslotBits
+        disableTimeslotBits,
       )
     ) {
       subjects.push(subject);
@@ -106,7 +106,7 @@ const matchesSearchOptions = (
   codeSet: Set<string>,
   bookmarks: Set<string>,
   enableTimeslotBits: bigint,
-  disableTimeslotBits: bigint
+  disableTimeslotBits: bigint,
 ) => {
   // 標準履修年次
   const matchesYear = (() => {
@@ -115,13 +115,13 @@ const matchesSearchOptions = (
     }
     if (!subject.year.includes("-")) {
       return [...options.years].some((year) =>
-        subject.year.includes(year.toString())
+        subject.year.includes(year.toString()),
       );
     }
     const minYear = Number.parseInt(subject.year.replace(/\s-\s[1-6]/g, ""));
     const maxYear = Number.parseInt(subject.year.replace(/[1-6]\s-\s/g, ""));
     return [...options.years].some(
-      (year) => minYear <= year && year <= maxYear
+      (year) => minYear <= year && year <= maxYear,
     );
   })();
 
@@ -158,7 +158,7 @@ const matchesSearchOptions = (
       subject,
       options,
       enableTimeslotBits,
-      disableTimeslotBits
+      disableTimeslotBits,
     ) &&
     matchesRequirement &&
     matchesBookmark &&
@@ -181,18 +181,21 @@ const buildRegExp = (keyword: string): RegExp | string => {
   } catch {
     return keyword;
   }
-}
+};
 
 /**
  * エラーに寛容にマッチ検索する
  * @param base
  * @param regex
  */
-const matchesSoftly = (base: string, regex: string | RegExp): RegExpMatchArray | null => {
+const matchesSoftly = (
+  base: string,
+  regex: string | RegExp,
+): RegExpMatchArray | null => {
   // 不正な正規表現等によってエラーが起きれば，単純に文字列どうしの部分一致をとる
 
   // 失敗キャッシュがあればそれを返す
-  const keyword = typeof regex === 'string' ? regex : regex.source;
+  const keyword = typeof regex === "string" ? regex : regex.source;
   if (regExpCaches.has(regex as string)) {
     return base.includes(regex as string) ? [base] : null;
   }
@@ -203,9 +206,13 @@ const matchesSoftly = (base: string, regex: string | RegExp): RegExpMatchArray |
     regExpCaches.add(keyword);
     return base.includes(keyword) ? [base] : null;
   }
-}
+};
 
-const matchesKeyword = (subject: Subject, options: SearchOptions, regex: RegExp | string) => {
+const matchesKeyword = (
+  subject: Subject,
+  options: SearchOptions,
+  regex: RegExp | string,
+) => {
   // 何の条件も設定されていない場合は true
   if (
     !options.containsCode &&
@@ -227,18 +234,24 @@ const matchesKeyword = (subject: Subject, options: SearchOptions, regex: RegExp 
   const matchesCode =
     options.containsCode && subject.code.startsWith(options.keyword);
 
-  const matchesName = options.containsName && matchesSoftly(subject.name, regex);
-  const matchesRoom = options.containsRoom && matchesSoftly(subject.room, regex);
+  const matchesName =
+    options.containsName && matchesSoftly(subject.name, regex);
+  const matchesRoom =
+    options.containsRoom && matchesSoftly(subject.room, regex);
 
   // 教員名はスペースを無視して検索
   // すなわち、"情報太郎" または "情報　太郎" で検索した場合も、"情報 太郎" にヒットさせる
   const matchesPerson =
-      options.containsPerson &&
-      matchesSoftly(subject.person.replace(" ", ""), buildRegExp(options.keyword.replace(/[ 　]/, ""))) != null;
+    options.containsPerson &&
+    matchesSoftly(
+      subject.person.replace(" ", ""),
+      buildRegExp(options.keyword.replace(/[ 　]/, "")),
+    ) != null;
 
   const matchesAbstract =
-      options.containsAbstract && matchesSoftly(subject.abstract, regex);
-  const matchesNote = options.containsNote && matchesSoftly(subject.note, regex);
+    options.containsAbstract && matchesSoftly(subject.abstract, regex);
+  const matchesNote =
+    options.containsNote && matchesSoftly(subject.note, regex);
 
   return (
     matchesCode ||
@@ -262,7 +275,7 @@ const matchesTerm = (subject: Subject, options: SearchOptions) => {
   // 学期、モジュールが両方指定されている場合は組み合わせで検索
   if (season && module) {
     return subject.termCodes.some((codes) =>
-      codes.includes(getTermCode(season, module))
+      codes.includes(getTermCode(season, module)),
     );
   }
 
@@ -276,7 +289,7 @@ const matchesTimeslot = (
   subject: Subject,
   options: SearchOptions,
   enableBits: bigint,
-  disableBits: bigint
+  disableBits: bigint,
 ) => {
   // 除外時限に一致する場合は false
   if (

@@ -69,7 +69,7 @@ export const matchesCodeRequirement = (
   code: string,
   reqA: string | null,
   reqB: string | null,
-  reqC: string | null
+  reqC: string | null,
 ) => {
   // 指定なし
   if (reqA === null) {
@@ -85,6 +85,6 @@ export const matchesCodeRequirement = (
   }
   // 小分類
   return allCodeMap[reqA]?.mid[reqB]?.small[reqC]?.codes.some((c) =>
-    code.startsWith(c)
+    code.startsWith(c),
   );
 };
