@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import type { SearchOptions } from "@/utils/search";
 import { mobileMedia, mobileWidth } from "@/utils/style";
@@ -34,39 +34,37 @@ interface HeaderProps {
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
 
-const Header = ({
-  searchOptions,
-  bookmarkTimeslotTable,
-  setSearchOptions,
-}: HeaderProps) => {
-  const [displaysTimeslotSelection, setDisplaysTimeslotSelection] =
-    useState(false);
+const Header = React.memo(
+  ({ searchOptions, bookmarkTimeslotTable, setSearchOptions }: HeaderProps) => {
+    const [displaysTimeslotSelection, setDisplaysTimeslotSelection] =
+      useState(false);
 
-  const isMobile = useMedia(`(width < ${mobileWidth})`);
+    const isMobile = useMedia(`(width < ${mobileWidth})`);
 
-  return (
-    <Wrapper>
-      <Content>
-        {isMobile ? (
-          <MobileForm
-            searchOptions={searchOptions}
-            bookmarkTimeslotTable={bookmarkTimeslotTable}
-            displaysTimeslotSelection={displaysTimeslotSelection}
-            setSearchOptions={setSearchOptions}
-            setDisplaysTimeslotSelection={setDisplaysTimeslotSelection}
-          />
-        ) : (
-          <DesktopForm
-            searchOptions={searchOptions}
-            bookmarkTimeslotTable={bookmarkTimeslotTable}
-            displaysTimeslotSelection={displaysTimeslotSelection}
-            setSearchOptions={setSearchOptions}
-            setDisplaysTimeslotSelection={setDisplaysTimeslotSelection}
-          />
-        )}
-      </Content>
-    </Wrapper>
-  );
-};
+    return (
+      <Wrapper>
+        <Content>
+          {isMobile ? (
+            <MobileForm
+              searchOptions={searchOptions}
+              bookmarkTimeslotTable={bookmarkTimeslotTable}
+              displaysTimeslotSelection={displaysTimeslotSelection}
+              setSearchOptions={setSearchOptions}
+              setDisplaysTimeslotSelection={setDisplaysTimeslotSelection}
+            />
+          ) : (
+            <DesktopForm
+              searchOptions={searchOptions}
+              bookmarkTimeslotTable={bookmarkTimeslotTable}
+              displaysTimeslotSelection={displaysTimeslotSelection}
+              setSearchOptions={setSearchOptions}
+              setDisplaysTimeslotSelection={setDisplaysTimeslotSelection}
+            />
+          )}
+        </Content>
+      </Wrapper>
+    );
+  }
+);
 
 export default Header;

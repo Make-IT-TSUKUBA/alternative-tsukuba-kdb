@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { kdb } from "./subject";
 import { createEmptyTimeslotTable } from "./timetable";
 
@@ -15,6 +15,8 @@ const getBookmarks = () => {
   return new Set(array);
 };
 
+const localStorageBookmarks = getBookmarks();
+
 const saveBookmarks = (bookmarks: Set<string>) => {
   const value = [...bookmarks].join(",");
   localStorage.setItem(BOOKMARK_KEY, encodeURIComponent(value));
@@ -22,28 +24,9 @@ const saveBookmarks = (bookmarks: Set<string>) => {
 
 export const useBookmark = (
   timetableTermCode: number,
-  setTimetableTermCode: React.Dispatch<React.SetStateAction<number>>,
+  setTimetableTermCode: React.Dispatch<React.SetStateAction<number>>
 ) => {
-  const [bookmarks, setBookmarks] = useState<Set<string>>(new Set());
-
-  const switchBookmark = (subjectCode: string) => {
-    const bookmarks = getBookmarks();
-    const newBookmarks = structuredClone(bookmarks);
-    if (newBookmarks.has(subjectCode)) {
-      newBookmarks.delete(subjectCode);
-    } else {
-      newBookmarks.add(subjectCode);
-      const subject = kdb.subjectMap[subjectCode];
-      if (subject) {
-        const termCode = subject.termCodes[0]?.[0];
-        if (termCode !== undefined) {
-          setTimetableTermCode(termCode);
-        }
-      }
-    }
-    setBookmarks(newBookmarks);
-    saveBookmarks(newBookmarks);
-  };
+  const [bookmarks, setBookmarks] = useState(localStorageBookmarks);
 
   const bookmarkTimeslotTable = useMemo(() => {
     const table = createEmptyTimeslotTable();
@@ -53,7 +36,7 @@ export const useBookmark = (
         continue;
       }
       const termIndex = subject.termCodes.findIndex((codes) =>
-        codes.includes(timetableTermCode),
+        codes.includes(timetableTermCode)
       );
       if (termIndex === -1) {
         continue;
@@ -71,25 +54,42 @@ export const useBookmark = (
     return table;
   }, [bookmarks, timetableTermCode]);
 
-  const clearBookmarks = () => {
+  const switchBookmark = useCallback(
+    (subjectCode: string) => {
+      const newBookmarks = structuredClone(bookmarks);
+      if (newBookmarks.has(subjectCode)) {
+        newBookmarks.delete(subjectCode);
+      } else {
+        newBookmarks.add(subjectCode);
+        const subject = kdb.subjectMap[subjectCode];
+        if (subject) {
+          const termCode = subject.termCodes[0]?.[0];
+          if (termCode !== undefined) {
+            setTimetableTermCode(termCode);
+          }
+        }
+      }
+      setBookmarks(newBookmarks);
+      saveBookmarks(newBookmarks);
+    },
+    [bookmarks, setTimetableTermCode]
+  );
+
+  const clearBookmarks = useCallback(() => {
     const ok = window.confirm(
-      "すべてのお気に入りの科目が削除されます。よろしいですか？",
+      "すべてのお気に入りの科目が削除されます。よろしいですか？"
     );
     if (ok) {
       localStorage.removeItem(BOOKMARK_KEY);
       setBookmarks(new Set());
     }
-  };
+  }, []);
 
-  const exportToTwinte = () => {
+  const exportToTwinte = useCallback(() => {
     // cf. https://github.com/twin-te/twinte-front/pull/529
     const baseUrl = "https://app.twinte.net/import?codes=";
     window.open(baseUrl + [...bookmarks].join(","));
-  };
-
-  useEffect(() => {
-    setBookmarks(getBookmarks());
-  }, []);
+  }, [bookmarks]);
 
   return {
     bookmarks,
