@@ -63,6 +63,7 @@ interface DesktopFormProps {
   displaysTimeslotSelection: boolean;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
   setDisplaysTimeslotSelection: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplaysPlan: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DesktopForm = ({
@@ -71,6 +72,7 @@ const DesktopForm = ({
   displaysTimeslotSelection,
   setSearchOptions,
   setDisplaysTimeslotSelection,
+  setDisplaysPlan,
 }: DesktopFormProps) => {
   return (
     <Wrapper>
@@ -98,24 +100,24 @@ const DesktopForm = ({
             {displaysTimeslotSelection
               ? "カレンダーをクリックして曜日・時限を選択"
               : getTimeslotsLength(searchOptions.timeslotTable) > 0
-                ? searchOptions.timeslotTable.map(
-                    (day, dayi) =>
-                      day.reduce((prev, value) => prev + (value ? 1 : 0), 0) >
-                        0 && (
-                        <div key={dayi}>
-                          <Day>{daysofweek[dayi]}</Day>
-                          {day.map(
-                            (slot, period) =>
-                              slot && (
-                                <React.Fragment key={period}>
-                                  {period + 1}
-                                </React.Fragment>
-                              ),
-                          )}
-                        </div>
-                      ),
-                  )
-                : "指定なし"}
+              ? searchOptions.timeslotTable.map(
+                  (day, dayi) =>
+                    day.reduce((prev, value) => prev + (value ? 1 : 0), 0) >
+                      0 && (
+                      <div key={dayi}>
+                        <Day>{daysofweek[dayi]}</Day>
+                        {day.map(
+                          (slot, period) =>
+                            slot && (
+                              <React.Fragment key={period}>
+                                {period + 1}
+                              </React.Fragment>
+                            )
+                        )}
+                      </div>
+                    )
+                )
+              : "指定なし"}
           </Period>
           <SubButtonAnchor
             css={desktopButtonAnchor}
@@ -179,7 +181,7 @@ const DesktopForm = ({
       <Line thin={true}>
         <Headline>標準履修年次</Headline>
         <Left>
-          <Options>
+          <Options css={{ width: inputSize }}>
             {[...Array(6)].map((_, i) => (
               <label key={i}>
                 <input
@@ -202,6 +204,12 @@ const DesktopForm = ({
               </label>
             ))}
           </Options>
+          <SubButtonAnchor
+            css={desktopButtonAnchor}
+            onClick={() => setDisplaysPlan((prev) => !prev)}
+          >
+            <span>履修計画</span>
+          </SubButtonAnchor>
         </Left>
         <Update>
           <span>{kdb.updated}</span> 時点での

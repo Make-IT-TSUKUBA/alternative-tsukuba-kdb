@@ -5,6 +5,7 @@ import type { SearchOptions } from "@/utils/search";
 import { mobileMedia } from "@/utils/style";
 import { ONCE_COUNT, type Subject, initialSubjects } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
+import MainTableDesktop from "./MainTableDesktop";
 import Mobile from "./Mobile";
 import CoursePlan from "./CoursePlan";
 
@@ -20,16 +21,23 @@ const Wrapper = styled.main`
 
 interface MainProps {
   filteredSubjects: Subject[];
+  displaysPlan: boolean;
   usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
 
 const Main = React.memo(
-  ({ filteredSubjects, usedBookmark, setSearchOptions }: MainProps) => {
+  ({
+    filteredSubjects,
+    displaysPlan,
+    usedBookmark,
+    setSearchOptions,
+  }: MainProps) => {
     const { bookmarksHas, switchBookmark } = usedBookmark;
 
     const [displayedCount, setDisplayedCount] = useState(0);
     const [initial, setInitial] = useState(true);
+
     const loadingDesktopRef = useRef<HTMLTableRowElement>(null);
     const loadingMobileRef = useRef<HTMLDivElement>(null);
 
@@ -77,20 +85,22 @@ const Main = React.memo(
 
     return (
       <Wrapper>
-        {/*<MainTableDesktop
-        subjects={subjects}
-        filteredSubjects={filteredSubjects}
-        hasMore={hasMore}
-        loadingRef={loadingDesktopRef}
-        usedBookmark={usedBookmark}
-        setSearchOptions={setSearchOptions}
-      />*/}
-        <CoursePlan
-          subjects={subjects}
-          hasMore={hasMore}
-          loadingRef={loadingDesktopRef}
-          usedBookmark={usedBookmark}
-        />
+        {displaysPlan ? (
+          <CoursePlan
+            subjects={subjects}
+            hasMore={hasMore}
+            loadingRef={loadingDesktopRef}
+            usedBookmark={usedBookmark}
+          />
+        ) : (
+          <MainTableDesktop
+            subjects={subjects}
+            hasMore={hasMore}
+            loadingRef={loadingDesktopRef}
+            usedBookmark={usedBookmark}
+            setSearchOptions={setSearchOptions}
+          />
+        )}
         <Mobile
           subjects={subjects}
           hasMore={hasMore}

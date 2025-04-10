@@ -32,10 +32,16 @@ interface HeaderProps {
   searchOptions: SearchOptions;
   bookmarkTimeslotTable: TimeslotTable;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
+  setDisplaysPlan: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Header = React.memo(
-  ({ searchOptions, bookmarkTimeslotTable, setSearchOptions }: HeaderProps) => {
+  ({
+    searchOptions,
+    bookmarkTimeslotTable,
+    setSearchOptions,
+    setDisplaysPlan,
+  }: HeaderProps) => {
     const [displaysTimeslotSelection, setDisplaysTimeslotSelection] =
       useState(false);
 
@@ -59,6 +65,7 @@ const Header = React.memo(
               displaysTimeslotSelection={displaysTimeslotSelection}
               setSearchOptions={setSearchOptions}
               setDisplaysTimeslotSelection={setDisplaysTimeslotSelection}
+              setDisplaysPlan={setDisplaysPlan}
             />
           )}
         </Content>

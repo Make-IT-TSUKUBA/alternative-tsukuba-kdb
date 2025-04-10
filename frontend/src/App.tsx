@@ -48,20 +48,25 @@ const App = () => {
   );
   const [filteredSubjects, setFilteredSubjects] = useState<Subject[]>([]);
   const [timetableTermCode, setTimetableTermCode] = useState(0);
-
+  const [displaysPlan, setDisplaysPlan] = useState(false);
   const usedBookmark = useBookmark(timetableTermCode, setTimetableTermCode);
   const { bookmarkTimeslotTable, bookmarksHas } = usedBookmark;
 
-  /** debounce 時間 */
+  // debounce 時間
   const DEBOUNCE_TIME = 100;
 
   useEffect(() => {
+    // 履修計画の画面ではブックマークに登録された全科目を表示
+    const planSearchOptions = createSearchOptions();
+    planSearchOptions.filter = "bookmark";
+    const options = displaysPlan ? planSearchOptions : searchOptions;
+
     const timer = setTimeout(() => {
       // 検索結果を更新
       const subjects = searchSubjects(
         kdb.subjectMap,
         kdb.subjectCodeList,
-        searchOptions,
+        options,
         bookmarkTimeslotTable,
         bookmarksHas
       );
@@ -71,7 +76,7 @@ const App = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [searchOptions, bookmarkTimeslotTable, bookmarksHas]);
+  }, [searchOptions, bookmarkTimeslotTable, displaysPlan, bookmarksHas]);
 
   return (
     <>
@@ -80,9 +85,11 @@ const App = () => {
         searchOptions={searchOptions}
         bookmarkTimeslotTable={usedBookmark.bookmarkTimeslotTable}
         setSearchOptions={setSearchOptions}
+        setDisplaysPlan={setDisplaysPlan}
       />
       <Main
         filteredSubjects={filteredSubjects}
+        displaysPlan={displaysPlan}
         usedBookmark={usedBookmark}
         setSearchOptions={setSearchOptions}
       />

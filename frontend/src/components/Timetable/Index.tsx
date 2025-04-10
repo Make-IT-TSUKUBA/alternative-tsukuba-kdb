@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useMedia } from "react-use";
 
 import {
@@ -8,14 +8,8 @@ import {
   mobileWidth,
   shadow,
 } from "@/utils/style";
-import { type Subject, kdb } from "@/utils/subject";
-import {
-  type Timetable,
-  daysofweek,
-  fillTimetable,
-  getTimeslotsLength,
-  maxPeriod,
-} from "@/utils/timetable";
+import type { Subject } from "@/utils/subject";
+import { daysofweek, maxPeriod } from "@/utils/timetable";
 import type { useBookmark } from "@/utils/useBookmark";
 import Header from "./Header";
 

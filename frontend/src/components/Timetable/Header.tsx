@@ -1,6 +1,7 @@
+import styled from "@emotion/styled";
+
 import { shadow } from "@/utils/style";
 import { modules, normalSeasons } from "@/utils/subject";
-import styled from "@emotion/styled";
 
 const Wrapper = styled.header`
   height: 24px;

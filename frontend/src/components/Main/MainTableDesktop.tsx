@@ -73,7 +73,6 @@ const LoadingTd = styled.td`
 
 interface MainTableDesktopProps {
   subjects: Subject[];
-  bookmarks: Set<string>;
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLTableRowElement | null>;
   usedBookmark: ReturnType<typeof useBookmark>;

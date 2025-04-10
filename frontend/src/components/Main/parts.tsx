@@ -1,6 +1,7 @@
+import styled from "@emotion/styled";
+
 import { colorPurple, shallowShadow } from "@/utils/style";
 import { CURRENT_YEAR } from "@/utils/subject";
-import styled from "@emotion/styled";
 
 export const years = [...Array(9)].map((_, i) => CURRENT_YEAR + i - 4);
 

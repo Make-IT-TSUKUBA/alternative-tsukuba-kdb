@@ -1,16 +1,14 @@
 import styled from "@emotion/styled";
 import React, { useMemo } from "react";
 
-import type { SearchOptions } from "@/utils/search";
 import {
   colorPurple,
   colorPurpleDark,
   mobileMedia,
   shallowShadow,
 } from "@/utils/style";
-import { type Subject, kdb } from "@/utils/subject";
+import type { Subject } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
-import {} from "./SubjectTr";
 import { BottomRow, Star, Td, YearSelect, years } from "./parts";
 
 const Table = styled.table`
