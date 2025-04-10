@@ -61,6 +61,7 @@ interface DesktopFormProps {
   searchOptions: SearchOptions;
   bookmarkTimeslotTable: TimeslotTable;
   displaysTimeslotSelection: boolean;
+  displaysPlan: boolean;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
   setDisplaysTimeslotSelection: React.Dispatch<React.SetStateAction<boolean>>;
   setDisplaysPlan: React.Dispatch<React.SetStateAction<boolean>>;
@@ -70,6 +71,7 @@ const DesktopForm = ({
   searchOptions,
   bookmarkTimeslotTable,
   displaysTimeslotSelection,
+  displaysPlan,
   setSearchOptions,
   setDisplaysTimeslotSelection,
   setDisplaysPlan,
@@ -208,7 +210,7 @@ const DesktopForm = ({
             css={desktopButtonAnchor}
             onClick={() => setDisplaysPlan((prev) => !prev)}
           >
-            <span>履修計画</span>
+            <span>{displaysPlan ? "× 履修計画" : "履修計画"}</span>
           </SubButtonAnchor>
         </Left>
         <Update>

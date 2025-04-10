@@ -5,6 +5,7 @@ import { colorPurpleDark, mobileMedia } from "@/utils/style";
 import { type Subject, kdb } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
 import SubjectTr from "./SubjectTr";
+import { BottomTd } from "./parts";
 
 const Table = styled.table`
   width: 100%;
@@ -67,10 +68,6 @@ const Th = styled.th`
   }
 `;
 
-const LoadingTd = styled.td`
-  padding-top: 4px;
-`;
-
 interface MainTableDesktopProps {
   subjects: Subject[];
   hasMore: boolean;
@@ -109,11 +106,11 @@ const MainTableDesktop = ({
           />
         ))}
         <tr ref={loadingRef}>
-          <LoadingTd>
+          <BottomTd>
             {hasMore
               ? "Loading..."
               : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
-          </LoadingTd>
+          </BottomTd>
         </tr>
       </tbody>
     </Table>

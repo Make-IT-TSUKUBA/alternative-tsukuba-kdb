@@ -47,3 +47,7 @@ export const YearSelect = styled.select`
   box-sizing: border-box;
   appearance: none;
 `;
+
+export const BottomTd = styled.td`
+  padding-top: 8px;
+`;

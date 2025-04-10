@@ -31,6 +31,7 @@ const Content = styled.div`
 interface HeaderProps {
   searchOptions: SearchOptions;
   bookmarkTimeslotTable: TimeslotTable;
+  displaysPlan: boolean;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
   setDisplaysPlan: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -39,6 +40,7 @@ const Header = React.memo(
   ({
     searchOptions,
     bookmarkTimeslotTable,
+    displaysPlan,
     setSearchOptions,
     setDisplaysPlan,
   }: HeaderProps) => {
@@ -63,6 +65,7 @@ const Header = React.memo(
               searchOptions={searchOptions}
               bookmarkTimeslotTable={bookmarkTimeslotTable}
               displaysTimeslotSelection={displaysTimeslotSelection}
+              displaysPlan={displaysPlan}
               setSearchOptions={setSearchOptions}
               setDisplaysTimeslotSelection={setDisplaysTimeslotSelection}
               setDisplaysPlan={setDisplaysPlan}

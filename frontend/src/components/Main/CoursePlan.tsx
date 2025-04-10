@@ -9,7 +9,7 @@ import {
 } from "@/utils/style";
 import type { Subject } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
-import { BottomRow, Star, Td, YearSelect, years } from "./parts";
+import { BottomRow, BottomTd, Star, Td, YearSelect, years } from "./parts";
 
 const Table = styled.table`
   width: 100%;
@@ -31,16 +31,16 @@ const Table = styled.table`
   td {
     text-align: left;
 
-    &:first-of-type {
-      width: 16rem;
+    &:nth-of-type(1) {
+      width: 3rem;
     }
 
     &:nth-of-type(2) {
-      width: 14rem;
+      width: 18rem;
     }
 
     &:nth-of-type(3) {
-      width: 5rem;
+      width: 10rem;
     }
 
     &:nth-of-type(4) {
@@ -48,6 +48,7 @@ const Table = styled.table`
     }
 
     &:nth-of-type(5) {
+      width: 10rem;
     }
   }
 `;
@@ -76,7 +77,24 @@ const Th = styled.th`
   }
 `;
 
+const Season = styled.div`
+  padding: 4px 0;
+  text-align: center;
+  border-radius: 4px;
+
+  &[data-season="year-round"] {
+    background: #f0f0f0;
+  }
+  &[data-season="spring"] {
+    background: #ffe6f7;
+  }
+  &[data-season="autumn"] {
+    background: #ffedd6;
+  }
+`;
+
 const Textarea = styled.textarea`
+  width: 100%;
   font-family: inherit;
   border: none;
   border-radius: 4px;
@@ -93,6 +111,7 @@ interface CoursePlanProps {
 
 const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
   const {
+    yearCredits,
     totalCredits,
     bookmarksHas,
     getBookmarkSubject,
@@ -101,6 +120,7 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
   } = usedBookmark;
 
   const yearSubjects = useMemo(() => {
+    // 年度毎に集計
     const record: Record<number, Subject[]> = {};
     for (const subject of subjects) {
       const bookmark = getBookmarkSubject(subject.code);
@@ -111,6 +131,19 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
         record[bookmark.year].push(subject);
       }
     }
+
+    // 年度毎にソート
+    for (const year in record) {
+      record[year].sort((a, b) =>
+        a.termStr.includes("通年")
+          ? -1
+          : a.termStr.includes("春") && !b.termStr.includes("春")
+          ? -1
+          : a.termStr < b.termStr
+          ? -1
+          : 1
+      );
+    }
     return record;
   }, [subjects, getBookmarkSubject]);
 
@@ -118,6 +151,7 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
     <Table>
       <thead>
         <tr>
+          <Th />
           <Th>科目番号／科目名</Th>
           <Th />
           <Th>単位／年次</Th>
@@ -129,13 +163,39 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
         {Object.entries(yearSubjects).map(([key, subjects]) => (
           <React.Fragment key={key}>
             <tr>
-              <YearTd>{key} 年度</YearTd>
+              <YearTd colSpan={2}>
+                {key} 年度（{yearCredits[Number.parseInt(key)] ?? 0} 単位）
+              </YearTd>
             </tr>
             {subjects.map((subject) => {
               const bookmarkSubject = getBookmarkSubject(subject.code);
+              const isSpring = subject.termStr.includes("春");
+              const isAutumn = subject.termStr.includes("秋");
+              const isYearRound =
+                subject.termStr.includes("通年") || (isSpring && isAutumn);
 
               return (
                 <tr key={subject.code}>
+                  <Td css={{ verticalAlign: "middle" }}>
+                    <Season
+                      data-season={
+                        isYearRound
+                          ? "year-round"
+                          : isSpring
+                          ? "spring"
+                          : "autumn"
+                      }
+                    >
+                      {isYearRound ? (
+                        "通年"
+                      ) : (
+                        <>
+                          {isSpring && "春"}
+                          {isAutumn && "秋"}
+                        </>
+                      )}
+                    </Season>
+                  </Td>
                   <Td>
                     {subject.code}
                     <br />
@@ -197,7 +257,10 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
             })}
           </React.Fragment>
         ))}
-        <tr>計 {totalCredits} 単位</tr>
+        <tr>
+          <BottomTd colSpan={5}>計 {totalCredits} 単位</BottomTd>
+          <br />：
+        </tr>
       </tbody>
     </Table>
   );

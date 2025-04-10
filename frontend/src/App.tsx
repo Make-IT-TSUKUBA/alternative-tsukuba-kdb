@@ -84,6 +84,7 @@ const App = () => {
       <Header
         searchOptions={searchOptions}
         bookmarkTimeslotTable={usedBookmark.bookmarkTimeslotTable}
+        displaysPlan={displaysPlan}
         setSearchOptions={setSearchOptions}
         setDisplaysPlan={setDisplaysPlan}
       />

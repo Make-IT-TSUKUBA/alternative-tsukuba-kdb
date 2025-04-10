@@ -69,10 +69,7 @@ const getBookmarks = (): Bookmarks => {
 const localStorageBookmarks = getBookmarks();
 
 const saveBookmarks = (bookmarks: Bookmarks) => {
-  localStorage.setItem(
-    BOOKMARK_KEY,
-    encodeURIComponent(JSON.stringify(bookmarks))
-  );
+  localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks));
 };
 
 export const useBookmark = (
@@ -81,23 +78,27 @@ export const useBookmark = (
 ) => {
   const [bookmarks, setBookmarks] = useState<Bookmarks>(localStorageBookmarks);
 
-  const [
-    totalCredits, // 全ての単位数の合計
-    totalYearCredits, // 今年度の単位数の合計
-  ] = useMemo(() => {
-    let credits = 0;
-    let yearCredits = 0;
+  // 年度ごとの単位数の合計
+  const yearCredits = useMemo(() => {
+    const result: Record<number, number> = {};
     for (const [code, bookmarkSubject] of Object.entries(bookmarks.subjects)) {
       const subject = kdb.subjectMap[code];
       if (subject && !bookmarkSubject.ta) {
-        credits += subject.credit;
-        if (bookmarkSubject.year === CURRENT_YEAR) {
-          yearCredits += subject.credit;
+        if (!(bookmarkSubject.year in result)) {
+          result[bookmarkSubject.year] = 0;
         }
+        result[bookmarkSubject.year] += subject.credit;
       }
     }
-    return [credits, yearCredits];
+    return result;
   }, [bookmarks]);
+
+  // 全ての単位数の合計
+  const totalCredits = useMemo(
+    () =>
+      Object.values(yearCredits).reduce((prev, credits) => prev + credits, 0),
+    [yearCredits]
+  );
 
   const [
     bookmarkTimeslotTable, // 現在のタームの TimeslotTable
@@ -220,8 +221,8 @@ export const useBookmark = (
   return {
     bookmarkTimeslotTable,
     bookmarkSubjectTable,
+    yearCredits,
     totalCredits,
-    totalYearCredits,
     currentCredits,
     currentTimeslots,
     bookmarksHas,
