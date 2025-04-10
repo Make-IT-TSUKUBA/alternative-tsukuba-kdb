@@ -4,14 +4,7 @@
     "children": [
       {
         "name": "ファーストイヤーセミナー",
-        "children": [
-          "110",
-          "111",
-          "112",
-          "1130",
-          "1131012",
-          "1131022"
-        ]
+        "children": ["110", "111", "112", "1130", "1131012", "1131022"]
       },
       {
         "name": "学問への誘い",
@@ -41,9 +34,7 @@
       },
       {
         "name": "学士基盤科目-高年次向け-",
-        "children": [
-          "14"
-        ]
+        "children": ["14"]
       }
     ]
   },
@@ -432,30 +423,19 @@
       },
       {
         "name": "ウェルネス・スポーツ",
-        "children": [
-          "25"
-        ]
+        "children": ["25"]
       },
       {
         "name": "全学年対象自由科目（講義）",
-        "children": [
-          "2802"
-        ]
+        "children": ["2802"]
       },
       {
         "name": "全学年対象自由科目（演習）",
-        "children": [
-          "2820",
-          "2847",
-          "2859"
-        ]
+        "children": ["2820", "2847", "2859"]
       },
       {
         "name": "全学年対象自由科目（通年実技）",
-        "children": [
-          "2824",
-          "2850"
-        ]
+        "children": ["2824", "2850"]
       },
       {
         "name": "全学年対象自由科目（集中実技）",
@@ -479,45 +459,31 @@
     "children": [
       {
         "name": "英語",
-        "children": [
-          "31"
-        ]
+        "children": ["31"]
       },
       {
         "name": "ドイツ語",
-        "children": [
-          "32"
-        ]
+        "children": ["32"]
       },
       {
         "name": "フランス語",
-        "children": [
-          "33"
-        ]
+        "children": ["33"]
       },
       {
         "name": "中国語",
-        "children": [
-          "34"
-        ]
+        "children": ["34"]
       },
       {
         "name": "ロシア語",
-        "children": [
-          "35"
-        ]
+        "children": ["35"]
       },
       {
         "name": "スペイン語",
-        "children": [
-          "36"
-        ]
+        "children": ["36"]
       },
       {
         "name": "韓国語",
-        "children": [
-          "37"
-        ]
+        "children": ["37"]
       },
       {
         "name": "日本語",
@@ -534,9 +500,7 @@
       },
       {
         "name": "短期留学生用カリキュラム",
-        "children": [
-          "390"
-        ]
+        "children": ["390"]
       }
     ]
   },
@@ -595,15 +559,11 @@
   },
   {
     "name": "国語",
-    "children": [
-      "5"
-    ]
+    "children": ["5"]
   },
   {
     "name": "芸術",
-    "children": [
-      "4"
-    ]
+    "children": ["4"]
   },
   {
     "name": "自由科目（特設）",
@@ -627,12 +587,7 @@
       },
       {
         "name": "キャリア形成科目群",
-        "children": [
-          "83312",
-          "833110",
-          "833114",
-          "8220004"
-        ]
+        "children": ["83312", "833110", "833114", "8220004"]
       },
       {
         "name": "グローバル自由科目群",
@@ -653,10 +608,7 @@
       },
       {
         "name": "日本事情等科目",
-        "children": [
-          "81",
-          "8049"
-        ]
+        "children": ["81", "8049"]
       }
     ]
   },
@@ -665,86 +617,52 @@
     "children": [
       {
         "name": "教育の基礎的理解に関する科目",
-        "children": [
-          "92",
-          "91",
-          "9803",
-          "9606",
-          "9604"
-        ]
+        "children": ["92", "91", "9803", "9606", "9604"]
       },
       {
         "name": "道徳、総合的な学習の時間等の指導法及び生徒指導、教育相談等に関する科目",
-        "children": [
-          "93",
-          "97",
-          "9807",
-          "9605",
-          "9607",
-          "9801",
-          "9802"
-        ]
+        "children": ["93", "97", "9807", "9605", "9607", "9801", "9802"]
       },
       {
         "name": "教科指導法",
-        "children": [
-          "94"
-        ]
+        "children": ["94"]
       },
       {
         "name": "教育実習",
-        "children": [
-          "950",
-          "951"
-        ]
+        "children": ["950", "951"]
       },
       {
         "name": "養護実習（2012-）",
-        "children": [
-          "952"
-        ]
+        "children": ["952"]
       },
       {
         "name": "教職実践演習",
-        "children": [
-          "9806"
-        ]
+        "children": ["9806"]
       },
       {
         "name": "その他",
-        "children": [
-          "9004"
-        ]
+        "children": ["9004"]
       },
       {
         "name": "その他（職業指導）",
-        "children": [
-          "9001"
-        ]
+        "children": ["9001"]
       },
       {
         "name": "その他（情報と職業）",
-        "children": [
-          "9005"
-        ]
+        "children": ["9005"]
       }
     ]
   },
   {
     "name": "博物館",
-    "children": [
-      "99"
-    ]
+    "children": ["99"]
   },
   {
     "name": "専門基礎科目・専門科目",
     "children": [
       {
         "name": "全学群対象",
-        "children": [
-          "AB0",
-          "BB00"
-        ]
+        "children": ["AB0", "BB00"]
       },
       {
         "name": "専門導入科目（事前登録対象）",
@@ -904,15 +822,11 @@
           },
           {
             "name": "グローバル科目群",
-            "children": [
-              "AA21"
-            ]
+            "children": ["AA21"]
           },
           {
             "name": "インターンシップ",
-            "children": [
-              "AA29"
-            ]
+            "children": ["AA29"]
           },
           {
             "name": "人文学類",
@@ -1047,15 +961,11 @@
         "children": [
           {
             "name": "グローバル科目群",
-            "children": [
-              "BA2"
-            ]
+            "children": ["BA2"]
           },
           {
             "name": "TSUKUBA 社会国際学初年次チュートリアルプログラム（T-FEP）",
-            "children": [
-              "BA9"
-            ]
+            "children": ["BA9"]
           },
           {
             "name": "社会学類",
@@ -1125,9 +1035,7 @@
           },
           {
             "name": "障害科学類",
-            "children": [
-              "CE"
-            ]
+            "children": ["CE"]
           }
         ]
       },
@@ -1268,9 +1176,7 @@
           },
           {
             "name": "アセアン横断型グローバル課題挑戦的教育プログラム",
-            "children": [
-              "EZ"
-            ]
+            "children": ["EZ"]
           }
         ]
       },
@@ -1279,9 +1185,7 @@
         "children": [
           {
             "name": "学群共通科目",
-            "children": [
-              "FA00"
-            ]
+            "children": ["FA00"]
           },
           {
             "name": "学群共通科目（数学）",
@@ -1521,9 +1425,7 @@
           },
           {
             "name": "その他",
-            "children": [
-              "FA4"
-            ]
+            "children": ["FA4"]
           }
         ]
       },
@@ -1559,21 +1461,15 @@
           },
           {
             "name": "情報科学類",
-            "children": [
-              "GB"
-            ]
+            "children": ["GB"]
           },
           {
             "name": "情報メディア創成学類",
-            "children": [
-              "GC"
-            ]
+            "children": ["GC"]
           },
           {
             "name": "知識情報・図書館学類",
-            "children": [
-              "GE"
-            ]
+            "children": ["GE"]
           }
         ]
       },
@@ -1719,10 +1615,7 @@
           },
           {
             "name": "専門基礎科目",
-            "children": [
-              "W8",
-              "W9"
-            ]
+            "children": ["W8", "W9"]
           }
         ]
       },
@@ -1756,93 +1649,63 @@
           },
           {
             "name": "専門科目（美術史領域）",
-            "children": [
-              "YBA"
-            ]
+            "children": ["YBA"]
           },
           {
             "name": "専門科目（芸術支援領域）",
-            "children": [
-              "YBB"
-            ]
+            "children": ["YBB"]
           },
           {
             "name": "専門科目（洋画領域）",
-            "children": [
-              "YBC"
-            ]
+            "children": ["YBC"]
           },
           {
             "name": "専門科目（版画領域）",
-            "children": [
-              "YBD"
-            ]
+            "children": ["YBD"]
           },
           {
             "name": "専門科目（日本画領域）",
-            "children": [
-              "YBE"
-            ]
+            "children": ["YBE"]
           },
           {
             "name": "専門科目（彫塑領域）",
-            "children": [
-              "YBF"
-            ]
+            "children": ["YBF"]
           },
           {
             "name": "専門科目（書領域）",
-            "children": [
-              "YBG"
-            ]
+            "children": ["YBG"]
           },
           {
             "name": "専門科目（工芸領域）",
-            "children": [
-              "YBH"
-            ]
+            "children": ["YBH"]
           },
           {
             "name": "専門科目（総合造形領域）",
-            "children": [
-              "YBJ"
-            ]
+            "children": ["YBJ"]
           },
           {
             "name": "専門科目（構成領域）",
-            "children": [
-              "YBK"
-            ]
+            "children": ["YBK"]
           },
           {
             "name": "専門科目（ビジュアルデザイン領域）",
-            "children": [
-              "YBL"
-            ]
+            "children": ["YBL"]
           },
           {
             "name": "専門科目（情報・プロダクトデザイン領域）",
-            "children": [
-              "YBN"
-            ]
+            "children": ["YBN"]
           },
           {
             "name": "専門科目（環境デザイン領域）",
-            "children": [
-              "YBP"
-            ]
+            "children": ["YBP"]
           },
           {
             "name": "専門科目（建築デザイン領域）",
-            "children": [
-              "YBQ"
-            ]
+            "children": ["YBQ"]
           },
           {
             "name": "専門科目（共通）",
-            "children": [
-              "YBX"
-            ]
+            "children": ["YBX"]
           },
           {
             "name": "専門科目（Japan-Expert）",
@@ -1889,15 +1752,11 @@
         "children": [
           {
             "name": "専門科目",
-            "children": [
-              "UB"
-            ]
+            "children": ["UB"]
           },
           {
             "name": "専門基礎科目",
-            "children": [
-              "UA"
-            ]
+            "children": ["UA"]
           },
           {
             "name": "基礎科目",
@@ -1925,8 +1784,6 @@
   },
   {
     "name": "外国人留学生等日本語研修コース",
-    "children": [
-      "X"
-    ]
+    "children": ["X"]
   }
 ]

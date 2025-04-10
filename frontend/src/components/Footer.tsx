@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 import { mobileMedia } from "@/utils/style";
 import { type Subject, outputSubjectsToCSV } from "@/utils/subject";
@@ -37,7 +37,7 @@ interface FooterProps {
   filteredSubjects: Subject[];
 }
 
-const Footer = ({ filteredSubjects }: FooterProps) => {
+const Footer = React.memo(({ filteredSubjects }: FooterProps) => {
   const anchorRef = useRef<HTMLAnchorElement>(null);
 
   return (
@@ -71,6 +71,6 @@ const Footer = ({ filteredSubjects }: FooterProps) => {
       </List>
     </Wrapper>
   );
-};
+});
 
 export default Footer;

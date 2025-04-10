@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import React, { useMemo } from "react";
 
 import type { SearchOptions } from "@/utils/search";
 import {
@@ -11,7 +12,6 @@ import { type Subject, kdb } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
 import {} from "./SubjectTr";
 import { BottomRow, Star, Td, YearSelect, years } from "./parts";
-import React, { useMemo } from "react";
 
 const Table = styled.table`
   width: 100%;
@@ -86,27 +86,14 @@ const Textarea = styled.textarea`
   display: block;
 `;
 
-const LoadingTd = styled.td`
-  padding-top: 4px;
-`;
-
 interface CoursePlanProps {
   subjects: Subject[];
-  filteredSubjects: Subject[];
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLTableRowElement | null>;
   usedBookmark: ReturnType<typeof useBookmark>;
-  setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
 
-const CoursePlan = ({
-  subjects,
-  filteredSubjects,
-  hasMore,
-  loadingRef,
-  usedBookmark,
-  setSearchOptions,
-}: CoursePlanProps) => {
+const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
   const {
     totalCredits,
     bookmarksHas,
@@ -117,7 +104,7 @@ const CoursePlan = ({
 
   const yearSubjects = useMemo(() => {
     const record: Record<number, Subject[]> = {};
-    for (const subject of filteredSubjects) {
+    for (const subject of subjects) {
       const bookmark = getBookmarkSubject(subject.code);
       if (bookmark) {
         if (!record[bookmark.year]) {
@@ -127,7 +114,7 @@ const CoursePlan = ({
       }
     }
     return record;
-  }, [filteredSubjects, getBookmarkSubject]);
+  }, [subjects, getBookmarkSubject]);
 
   return (
     <Table>

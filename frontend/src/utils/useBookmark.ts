@@ -66,17 +66,21 @@ const getBookmarks = (): Bookmarks => {
   }
 };
 
+const localStorageBookmarks = getBookmarks();
+
 const saveBookmarks = (bookmarks: Bookmarks) => {
-  localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks));
+  localStorage.setItem(
+    BOOKMARK_KEY,
+    encodeURIComponent(JSON.stringify(bookmarks))
+  );
 };
 
 export const useBookmark = (
   timetableTermCode: number,
   setTimetableTermCode: React.Dispatch<React.SetStateAction<number>>
 ) => {
-  const [bookmarks, setBookmarks] = useState<Bookmarks>(createEmptyBookmarks());
+  const [bookmarks, setBookmarks] = useState<Bookmarks>(localStorageBookmarks);
 
-  //
   const [
     totalCredits, // 全ての単位数の合計
     totalYearCredits, // 今年度の単位数の合計
@@ -151,24 +155,27 @@ export const useBookmark = (
     [bookmarks]
   );
 
-  const switchBookmark = (subjectCode: string) => {
-    const newBookmarks = structuredClone(bookmarks);
-    if (subjectCode in newBookmarks.subjects) {
-      delete newBookmarks.subjects[subjectCode];
-    } else {
-      const subject = kdb.subjectMap[subjectCode];
-      if (!subject) {
-        return;
+  const switchBookmark = useCallback(
+    (subjectCode: string) => {
+      const newBookmarks = structuredClone(bookmarks);
+      if (subjectCode in newBookmarks.subjects) {
+        delete newBookmarks.subjects[subjectCode];
+      } else {
+        const subject = kdb.subjectMap[subjectCode];
+        if (!subject) {
+          return;
+        }
+        newBookmarks.subjects[subjectCode] = createEmptyBookmarkSubject();
+        const termCode = subject.termCodes[0]?.[0];
+        if (termCode !== undefined) {
+          setTimetableTermCode(termCode);
+        }
       }
-      newBookmarks.subjects[subjectCode] = createEmptyBookmarkSubject();
-      const termCode = subject.termCodes[0]?.[0];
-      if (termCode !== undefined) {
-        setTimetableTermCode(termCode);
-      }
-    }
-    setBookmarks(newBookmarks);
-    saveBookmarks(newBookmarks);
-  };
+      setBookmarks(newBookmarks);
+      saveBookmarks(newBookmarks);
+    },
+    [bookmarks, setTimetableTermCode]
+  );
 
   const updateBookmark = (
     subjectCode: string,
@@ -189,7 +196,7 @@ export const useBookmark = (
     saveBookmarks(newBookmarks);
   };
 
-  const clearBookmarks = () => {
+  const clearBookmarks = useCallback(() => {
     const ok = window.confirm(
       "すべてのお気に入りの科目が削除されます。よろしいですか？"
     );
@@ -197,14 +204,14 @@ export const useBookmark = (
       localStorage.removeItem(BOOKMARK_KEY);
       setBookmarks(createEmptyBookmarks());
     }
-  };
+  }, []);
 
-  const exportToTwinte = () => {
+  const exportToTwinte = useCallback(() => {
     // cf. https://github.com/twin-te/twinte-front/pull/529
     const baseUrl = "https://app.twinte.net/import?codes=";
     const codes = Object.keys(bookmarks.subjects);
     window.open(baseUrl + codes.join(","));
-  };
+  }, [bookmarks.subjects]);
 
   useEffect(() => {
     setBookmarks(getBookmarks());

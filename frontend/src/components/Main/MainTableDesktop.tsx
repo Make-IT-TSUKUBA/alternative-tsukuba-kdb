@@ -73,7 +73,7 @@ const LoadingTd = styled.td`
 
 interface MainTableDesktopProps {
   subjects: Subject[];
-  filteredSubjects: Subject[];
+  bookmarks: Set<string>;
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLTableRowElement | null>;
   usedBookmark: ReturnType<typeof useBookmark>;
@@ -82,7 +82,6 @@ interface MainTableDesktopProps {
 
 const MainTableDesktop = ({
   subjects,
-  filteredSubjects,
   hasMore,
   loadingRef,
   usedBookmark,
@@ -114,7 +113,7 @@ const MainTableDesktop = ({
           <LoadingTd>
             {hasMore
               ? "Loading..."
-              : `全 ${kdb?.subjectCodeList.length} 件中 ${filteredSubjects.length} 件を表示しました`}
+              : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
           </LoadingTd>
         </tr>
       </tbody>

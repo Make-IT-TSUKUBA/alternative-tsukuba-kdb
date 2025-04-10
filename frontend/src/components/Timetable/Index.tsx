@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useMedia } from "react-use";
 
 import {
@@ -198,116 +198,128 @@ interface TimetableProps {
   setTermCode: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const TimetableElement = ({
-  usedBookmark,
-  termCode,
-  setTermCode,
-}: TimetableProps) => {
-  const {
-    bookmarkSubjectTable,
-    totalYearCredits,
-    currentCredits,
-    currentTimeslots,
-    switchBookmark,
-    clearBookmarks,
-    exportToTwinte,
-  } = usedBookmark;
+const TimetableElement = React.memo(
+  ({ usedBookmark, termCode, setTermCode }: TimetableProps) => {
+    const {
+      bookmarkSubjectTable,
+      totalYearCredits,
+      currentCredits,
+      currentTimeslots,
+      switchBookmark,
+      clearBookmarks,
+      exportToTwinte,
+    } = usedBookmark;
 
-  const isMobile = useMedia(`(width < ${mobileWidth})`);
+    const isMobile = useMedia(`(width < ${mobileWidth})`);
 
-  const [opened, setOpened] = useState(!isMobile);
+    const [opened, setOpened] = useState(!isMobile);
 
-  const getColor = (subject: Subject, no: number) => {
-    // 実施形態と重なりで色を決定
-    const isFaceToFace = subject.classMethods.includes("対面");
-    const isOndemand = subject.classMethods.includes("オンデマンド");
-    const isInteractive = subject.classMethods.includes("同時双方向");
+    const getColor = (subject: Subject, no: number) => {
+      // 実施形態と重なりで色を決定
+      const isFaceToFace = subject.classMethods.includes("対面");
+      const isOndemand = subject.classMethods.includes("オンデマンド");
+      const isInteractive = subject.classMethods.includes("同時双方向");
 
-    const isOnlyFaceToFace = isFaceToFace && !isOndemand && !isInteractive;
-    const isOnlyOnline = !isFaceToFace && (isOndemand || isInteractive);
-    const baseH = isOnlyFaceToFace ? 320 : isOnlyOnline ? 200 : 260;
-    const h = baseH;
-    const s = 100 - no * 40;
-    return `hsla(${h}, ${s}%, 90%, 1.0)`;
-  };
+      const isOnlyFaceToFace = isFaceToFace && !isOndemand && !isInteractive;
+      const isOnlyOnline = !isFaceToFace && (isOndemand || isInteractive);
+      const baseH = isOnlyFaceToFace ? 320 : isOnlyOnline ? 200 : 260;
+      const h = baseH;
+      const s = 100 - no * 40;
+      return `hsla(${h}, ${s}%, 90%, 1.0)`;
+    };
 
-  return (
-    <Wrapper>
-      <Header
-        opened={opened}
-        termCode={termCode}
-        currentCredits={currentCredits}
-        currentTimeslots={currentTimeslots}
-        totalYearCredits={totalYearCredits}
-        setOpened={setOpened}
-        setTermCode={setTermCode}
-      />
-      <TimetableWrapper data-closed={!opened}>
-        <PeriodColumn>
-          <Day />
-          {[...Array(maxPeriod)].map((_, i) => (
-            <PeriodItem key={i}>
-              {i + 1}
-              <Time>
-                {times[i][0]}
-                <br />
-                {times[i][1]}
-              </Time>
-            </PeriodItem>
-          ))}
-        </PeriodColumn>
-        <Main>
-          {daysofweek.map((day, dayi) => (
-            <MainColumn key={day}>
-              <Day>
-                <span>{day}</span>
-              </Day>
-              {[...Array(maxPeriod)].map((_, period) => (
-                <Item key={period}>
-                  {bookmarkSubjectTable[dayi][period].map(
-                    (subject, subjecti) => (
-                      <SubjectTile
-                        background={getColor(subject, subjecti)}
-                        top={subjecti * 2}
-                        key={subject.code}
-                      >
-                        <a
-                          href={subject.syllabusHref}
-                          target="_blank"
-                          rel="nofollow noopener noreferrer"
+    return (
+      <Wrapper>
+        <Header
+          opened={opened}
+          termCode={termCode}
+          currentCredits={currentCredits}
+          currentTimeslots={currentTimeslots}
+          totalYearCredits={totalYearCredits}
+          setOpened={setOpened}
+          setTermCode={setTermCode}
+        />
+        <TimetableWrapper data-closed={!opened}>
+          <PeriodColumn>
+            <Day />
+            {[...Array(maxPeriod)].map((_, i) => (
+              <PeriodItem key={i}>
+                {i + 1}
+                <Time>
+                  {times[i][0]}
+                  <br />
+                  {times[i][1]}
+                </Time>
+              </PeriodItem>
+            ))}
+          </PeriodColumn>
+          <Main>
+            {daysofweek.map((day, dayi) => (
+              <MainColumn key={day}>
+                <Day>
+                  <span>{day}</span>
+                </Day>
+                {[...Array(maxPeriod)].map((_, period) => (
+                  <Item key={period}>
+                    {bookmarkSubjectTable[dayi][period].map(
+                      (subject, subjecti) => (
+                        <SubjectTile
+                          background={getColor(subject, subjecti)}
+                          top={subjecti * 2}
+                          key={subject.code}
                         >
-                          {subject.code}
-                          <br />
-                          {subject.name}
-                        </a>
-                        <Close
-                          className="close"
-                          onClick={() => switchBookmark(subject.code)}
-                        >
-                          ✕
-                        </Close>
-                      </SubjectTile>
-                    )
-                  )}
-                </Item>
-              ))}
-            </MainColumn>
-          ))}
-        </Main>
-      </TimetableWrapper>
-      <Footer>
-        <Link onClick={exportToTwinte}>
-          <span>Twin:te にエクスポート</span>
-        </Link>
-        {/*<Link>
+                          <a
+                            href={subject.syllabusHref}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                          >
+                            {subject.code}
+                            <br />
+                            {subject.name}
+                          </a>
+                          <Close
+                            className="close"
+                            onClick={() => switchBookmark(subject.code)}
+                          >
+                            ✕
+                          </Close>
+                        </SubjectTile>
+                      )
+                    )}
+                  </Item>
+                ))}
+              </MainColumn>
+            ))}
+          </Main>
+        </TimetableWrapper>
+        <Footer>
+          <Link onClick={exportToTwinte}>
+            <span>Twin:te にエクスポート</span>
+          </Link>
+          {/*<Link>
+=======
+                    ))}
+                  </Item>
+                ))}
+              </MainColumn>
+            ))}
+          </Main>
+        </TimetableWrapper>
+        <Footer>
+          <Link onClick={exportToTwinte}>
+            <span>Twin:te にエクスポート</span>
+          </Link>
+          {/*<Link>
+>>>>>>> 6a66e61a43e30268e77c6652617ca04077d03a32
           <span>画像に保存</span>
         </Link>*/}
-        <Link caution={true} onClick={clearBookmarks}>
-          <span>すべて削除</span>
-        </Link>
-      </Footer>
-    </Wrapper>
-  );
-};
+          <Link caution={true} onClick={clearBookmarks}>
+            <span>すべて削除</span>
+          </Link>
+        </Footer>
+      </Wrapper>
+    );
+  }
+);
 
 export default TimetableElement;
