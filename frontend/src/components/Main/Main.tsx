@@ -79,7 +79,6 @@ const Main = React.memo(
       <Wrapper>
         <MainTableDesktop
           subjects={subjects}
-          filteredSubjects={filteredSubjects}
           bookmarks={bookmarks}
           hasMore={hasMore}
           loadingRef={loadingDesktopRef}
@@ -88,7 +87,6 @@ const Main = React.memo(
         />
         <Mobile
           subjects={subjects}
-          filteredSubjects={filteredSubjects}
           bookmarks={bookmarks}
           hasMore={hasMore}
           loadingRef={loadingMobileRef}

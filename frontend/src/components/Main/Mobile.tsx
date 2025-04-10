@@ -113,7 +113,6 @@ const Loading = styled.div`
 
 interface MobileProps {
   subjects: Subject[];
-  filteredSubjects: Subject[];
   bookmarks: Set<string>;
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLDivElement | null>;
@@ -122,7 +121,6 @@ interface MobileProps {
 
 const Mobile = ({
   subjects,
-  filteredSubjects,
   bookmarks,
   hasMore,
   loadingRef,
@@ -186,7 +184,7 @@ const Mobile = ({
       <Loading ref={loadingRef}>
         {hasMore
           ? "Loading..."
-          : `全 ${kdb?.subjectCodeList.length} 件中 ${filteredSubjects.length} 件を表示しました`}
+          : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
       </Loading>
     </Wrapper>
   );
