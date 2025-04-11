@@ -49,5 +49,6 @@ export const YearSelect = styled.select`
 `;
 
 export const BottomTd = styled.td`
+  vertical-align: top;
   padding-top: 8px;
 `;

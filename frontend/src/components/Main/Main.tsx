@@ -7,7 +7,7 @@ import { ONCE_COUNT, type Subject, initialSubjects } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
 import MainTableDesktop from "./MainTableDesktop";
 import Mobile from "./Mobile";
-import CoursePlan from "./CoursePlan";
+import CoursePlan from "./CoursePlan/Index";
 
 const Wrapper = styled.main`
   width: 1100px;
