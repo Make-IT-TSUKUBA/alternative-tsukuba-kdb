@@ -5,6 +5,7 @@ import type { SearchOptions } from "@/utils/search";
 import { mobileMedia } from "@/utils/style";
 import { ONCE_COUNT, type Subject, initialSubjects } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
+import CoursePlan from "./CoursePlan/Index";
 import MainTableDesktop from "./MainTableDesktop";
 import Mobile from "./Mobile";
 
@@ -20,32 +21,39 @@ const Wrapper = styled.main`
 
 interface MainProps {
   filteredSubjects: Subject[];
+  displaysPlan: boolean;
   usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
 
 const Main = React.memo(
-  ({ filteredSubjects, usedBookmark, setSearchOptions }: MainProps) => {
-    const { bookmarks, switchBookmark } = usedBookmark;
+  ({
+    filteredSubjects,
+    displaysPlan,
+    usedBookmark,
+    setSearchOptions,
+  }: MainProps) => {
+    const { bookmarksHas, switchBookmark } = usedBookmark;
 
     const [displayedCount, setDisplayedCount] = useState(0);
     const [initial, setInitial] = useState(true);
+
     const loadingDesktopRef = useRef<HTMLTableRowElement>(null);
     const loadingMobileRef = useRef<HTMLDivElement>(null);
 
     const displayedSubjects = useMemo(
       () => filteredSubjects.slice(0, displayedCount),
-      [filteredSubjects, displayedCount]
+      [filteredSubjects, displayedCount],
     );
 
     const hasMore = useMemo(
       () => displayedCount < filteredSubjects.length,
-      [displayedCount, filteredSubjects]
+      [displayedCount, filteredSubjects],
     );
 
     const subjects = useMemo(
       () => (initial ? initialSubjects : displayedSubjects),
-      [initial, displayedSubjects]
+      [initial, displayedSubjects],
     );
 
     useEffect(() => {
@@ -65,7 +73,7 @@ const Main = React.memo(
             setDisplayedCount((prev) => prev + ONCE_COUNT);
           }
         },
-        { threshold: 0.1 }
+        { threshold: 0.1 },
       );
       if (loadingDesktopRef.current) {
         observer.observe(loadingDesktopRef.current);
@@ -77,24 +85,32 @@ const Main = React.memo(
 
     return (
       <Wrapper>
-        <MainTableDesktop
-          subjects={subjects}
-          bookmarks={bookmarks}
-          hasMore={hasMore}
-          loadingRef={loadingDesktopRef}
-          setSearchOptions={setSearchOptions}
-          switchBookmark={switchBookmark}
-        />
+        {displaysPlan ? (
+          <CoursePlan
+            subjects={subjects}
+            hasMore={hasMore}
+            loadingRef={loadingDesktopRef}
+            usedBookmark={usedBookmark}
+          />
+        ) : (
+          <MainTableDesktop
+            subjects={subjects}
+            hasMore={hasMore}
+            loadingRef={loadingDesktopRef}
+            usedBookmark={usedBookmark}
+            setSearchOptions={setSearchOptions}
+          />
+        )}
         <Mobile
           subjects={subjects}
-          bookmarks={bookmarks}
           hasMore={hasMore}
           loadingRef={loadingMobileRef}
+          bookmarksHas={bookmarksHas}
           switchBookmark={switchBookmark}
         />
       </Wrapper>
     );
-  }
+  },
 );
 
 export default Main;

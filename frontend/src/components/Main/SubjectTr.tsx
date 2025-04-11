@@ -9,24 +9,8 @@ import {
   shallowShadow,
 } from "@/utils/style";
 import type { Subject } from "@/utils/subject";
-
-const Td = styled.td`
-  vertical-align: top;
-  padding: 4px 8px 4px 0;
-  border-bottom: solid 1px #ccc;
-
-  &:nth-of-type(6),
-  &:nth-of-type(7) {
-    line-height: 1.3em;
-    font-size: 0.6rem;
-  }
-`;
-
-const BottomRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
+import type { useBookmark } from "@/utils/useBookmark";
+import { BottomRow, Star, Td, YearSelect, years } from "./parts";
 
 const Link = styled.a`
   height: 24px;
@@ -52,16 +36,6 @@ const Link = styled.a`
   }
 `;
 
-const Star = styled.a<{ enabled: boolean }>`
-  line-height: 1;
-  color: ${(props) => (props.enabled ? colorPurple : "#aaa")};
-  font-size: 1.2rem;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
 const Anchor = styled.a`
   color: #666;
   text-decoration-color: #ddd;
@@ -74,18 +48,17 @@ const Anchor = styled.a`
 
 interface SubjectTrProps {
   subject: Subject;
-  bookmarks: Set<string>;
-  switchBookmark: (subjectCode: string) => void;
+  usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
 
 const SubjectTr = React.memo(
-  ({
-    subject,
-    bookmarks,
-    switchBookmark,
-    setSearchOptions,
-  }: SubjectTrProps) => {
+  ({ subject, usedBookmark, setSearchOptions }: SubjectTrProps) => {
+    const { bookmarksHas, getBookmarkSubject, switchBookmark, updateBookmark } =
+      usedBookmark;
+
+    const bookmarkSubject = getBookmarkSubject(subject.code);
+
     // TODO: 科目区分を科目番号の隣に表示（情報学群 のように）
 
     return (
@@ -94,7 +67,6 @@ const SubjectTr = React.memo(
           {subject.code}
           <br />
           {subject.name}
-          <br />
           <BottomRow>
             <Link href={subject.syllabusHref} target="_blank">
               <span>シラバス</span>
@@ -103,11 +75,39 @@ const SubjectTr = React.memo(
 							<span>ポップアップ</span>
 						</Link>*/}
             <Star
-              enabled={bookmarks.has(subject.code)}
+              enabled={bookmarksHas(subject.code)}
               onClick={() => switchBookmark(subject.code)}
             >
               ★
             </Star>
+            {bookmarkSubject && (
+              <>
+                <YearSelect
+                  value={bookmarkSubject.year}
+                  onChange={(e) =>
+                    updateBookmark(subject.code, {
+                      year: Number.parseInt(e.currentTarget.value),
+                    })
+                  }
+                >
+                  {years.map((year) => (
+                    <option key={year}>{year}</option>
+                  ))}
+                </YearSelect>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={bookmarkSubject.ta}
+                    onChange={(e) =>
+                      updateBookmark(subject.code, {
+                        ta: e.currentTarget.checked,
+                      })
+                    }
+                  />{" "}
+                  TA
+                </label>
+              </>
+            )}
           </BottomRow>
         </Td>
         <Td>
@@ -151,7 +151,7 @@ const SubjectTr = React.memo(
         <Td>{subject.note}</Td>
       </tr>
     );
-  }
+  },
 );
 
 export default SubjectTr;

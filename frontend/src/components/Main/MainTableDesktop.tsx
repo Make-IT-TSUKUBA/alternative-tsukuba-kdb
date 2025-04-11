@@ -3,7 +3,9 @@ import styled from "@emotion/styled";
 import type { SearchOptions } from "@/utils/search";
 import { colorPurpleDark, mobileMedia } from "@/utils/style";
 import { type Subject, kdb } from "@/utils/subject";
+import type { useBookmark } from "@/utils/useBookmark";
 import SubjectTr from "./SubjectTr";
+import { BottomTd } from "./parts";
 
 const Table = styled.table`
   width: 100%;
@@ -66,26 +68,20 @@ const Th = styled.th`
   }
 `;
 
-const LoadingTd = styled.td`
-  padding-top: 4px;
-`;
-
 interface MainTableDesktopProps {
   subjects: Subject[];
-  bookmarks: Set<string>;
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLTableRowElement | null>;
+  usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
-  switchBookmark: (subjectCode: string) => void;
 }
 
 const MainTableDesktop = ({
   subjects,
-  bookmarks,
   hasMore,
   loadingRef,
+  usedBookmark,
   setSearchOptions,
-  switchBookmark,
 }: MainTableDesktopProps) => {
   return (
     <Table>
@@ -104,18 +100,17 @@ const MainTableDesktop = ({
         {subjects.map((subject) => (
           <SubjectTr
             subject={subject}
-            bookmarks={bookmarks}
-            switchBookmark={switchBookmark}
+            usedBookmark={usedBookmark}
             setSearchOptions={setSearchOptions}
             key={subject.code}
           />
         ))}
         <tr ref={loadingRef}>
-          <LoadingTd>
+          <BottomTd>
             {hasMore
               ? "Loading..."
               : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
-          </LoadingTd>
+          </BottomTd>
         </tr>
       </tbody>
     </Table>

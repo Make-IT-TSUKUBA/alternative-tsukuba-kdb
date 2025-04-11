@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useMedia } from "react-use";
 
 import {
@@ -8,14 +8,8 @@ import {
   mobileWidth,
   shadow,
 } from "@/utils/style";
-import { type Subject, kdb } from "@/utils/subject";
-import {
-  type Timetable,
-  daysofweek,
-  fillTimetable,
-  getTimeslotsLength,
-  maxPeriod,
-} from "@/utils/timetable";
+import { CURRENT_YEAR, type Subject } from "@/utils/subject";
+import { daysofweek, maxPeriod } from "@/utils/timetable";
 import type { useBookmark } from "@/utils/useBookmark";
 import Header from "./Header";
 
@@ -200,29 +194,19 @@ interface TimetableProps {
 
 const TimetableElement = React.memo(
   ({ usedBookmark, termCode, setTermCode }: TimetableProps) => {
-    const { bookmarks, switchBookmark, clearBookmarks, exportToTwinte } =
-      usedBookmark;
+    const {
+      bookmarkSubjectTable,
+      yearCredits,
+      currentCredits,
+      currentTimeslots,
+      switchBookmark,
+      clearBookmarks,
+      exportToTwinte,
+    } = usedBookmark;
 
     const isMobile = useMedia(`(width < ${mobileWidth})`);
 
     const [opened, setOpened] = useState(!isMobile);
-    const [timetable, setTimetable] = useState<Timetable<Subject[]>>(
-      fillTimetable<Subject[]>([])
-    );
-    const [currentCredits, setCurrentCredits] = useState(0);
-    const [currentTimeslots, setCurrentTimeslots] = useState(0);
-
-    // 全タームを通した単位数の合計
-    const totalCredits = useMemo(() => {
-      let credits = 0;
-      for (const bookmark of bookmarks) {
-        const subject = kdb.subjectMap[bookmark];
-        if (subject) {
-          credits += subject.credit;
-        }
-      }
-      return credits;
-    }, [bookmarks]);
 
     const getColor = (subject: Subject, no: number) => {
       // 実施形態と重なりで色を決定
@@ -238,41 +222,6 @@ const TimetableElement = React.memo(
       return `hsla(${h}, ${s}%, 90%, 1.0)`;
     };
 
-    useEffect(() => {
-      const table = fillTimetable<Subject[]>([]);
-      let credits = 0;
-      let timeslots = 0;
-
-      for (const bookmark of bookmarks) {
-        const subject = kdb.subjectMap[bookmark];
-        if (!subject) {
-          continue;
-        }
-
-        // タームコードを含むグループを探索
-        const termIndex = subject.termCodes.findIndex((codes) =>
-          codes.includes(termCode)
-        );
-        if (termIndex === -1) {
-          continue;
-        }
-        const subjectTable = subject.timeslotTables[termIndex];
-        for (let day = 0; day < table.length; day++) {
-          for (let period = 0; period < table[day].length; period++) {
-            // 科目がコマを含めば追加
-            if (subjectTable[day][period]) {
-              table[day][period].push(subject);
-            }
-          }
-        }
-        credits += subject.credit;
-        timeslots += getTimeslotsLength(subjectTable);
-      }
-      setTimetable(table);
-      setCurrentCredits(credits);
-      setCurrentTimeslots(timeslots);
-    }, [bookmarks, termCode]);
-
     return (
       <Wrapper>
         <Header
@@ -280,7 +229,7 @@ const TimetableElement = React.memo(
           termCode={termCode}
           currentCredits={currentCredits}
           currentTimeslots={currentTimeslots}
-          totalCredits={totalCredits}
+          yearCredits={yearCredits[CURRENT_YEAR] ?? 0}
           setOpened={setOpened}
           setTermCode={setTermCode}
         />
@@ -306,28 +255,43 @@ const TimetableElement = React.memo(
                 </Day>
                 {[...Array(maxPeriod)].map((_, period) => (
                   <Item key={period}>
-                    {timetable[dayi][period].map((subject, subjecti) => (
-                      <SubjectTile
-                        background={getColor(subject, subjecti)}
-                        top={subjecti * 2}
-                        key={subject.code}
-                      >
-                        <a
-                          href={subject.syllabusHref}
-                          target="_blank"
-                          rel="nofollow noopener noreferrer"
+                    {bookmarkSubjectTable[dayi][period].map(
+                      (subject, subjecti) => (
+                        <SubjectTile
+                          background={getColor(subject, subjecti)}
+                          top={subjecti * 2}
+                          key={subject.code}
                         >
-                          {subject.code}
-                          <br />
-                          {subject.name}
-                        </a>
-                        <Close
-                          className="close"
-                          onClick={() => switchBookmark(subject.code)}
-                        >
-                          ✕
-                        </Close>
-                      </SubjectTile>
+                          <a
+                            href={subject.syllabusHref}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                          >
+                            {subject.code}
+                            <br />
+                            {subject.name}
+                          </a>
+                          <Close
+                            className="close"
+                            onClick={() => switchBookmark(subject.code)}
+                          >
+                            ✕
+                          </Close>
+                        </SubjectTile>
+                      ),
+                    )}
+                  </Item>
+                ))}
+              </MainColumn>
+            ))}
+          </Main>
+        </TimetableWrapper>
+        <Footer>
+          <Link onClick={exportToTwinte}>
+            <span>Twin:te にエクスポート</span>
+          </Link>
+          {/*<Link>
+=======
                     ))}
                   </Item>
                 ))}
@@ -340,6 +304,7 @@ const TimetableElement = React.memo(
             <span>Twin:te にエクスポート</span>
           </Link>
           {/*<Link>
+>>>>>>> 6a66e61a43e30268e77c6652617ca04077d03a32
           <span>画像に保存</span>
         </Link>*/}
           <Link caution={true} onClick={clearBookmarks}>
@@ -348,7 +313,7 @@ const TimetableElement = React.memo(
         </Footer>
       </Wrapper>
     );
-  }
+  },
 );
 
 export default TimetableElement;

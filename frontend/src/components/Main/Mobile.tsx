@@ -113,17 +113,17 @@ const Loading = styled.div`
 
 interface MobileProps {
   subjects: Subject[];
-  bookmarks: Set<string>;
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLDivElement | null>;
+  bookmarksHas: (subjectCode: string) => boolean;
   switchBookmark: (subjectCode: string) => void;
 }
 
 const Mobile = ({
   subjects,
-  bookmarks,
   hasMore,
   loadingRef,
+  bookmarksHas,
   switchBookmark,
 }: MobileProps) => {
   const [displayed, setDisplayed] = useState(new Set<string>());
@@ -161,11 +161,11 @@ const Mobile = ({
             <p>{subject.abstract}</p>
             <AnchorWrapper>
               <Anchor
-                data-bookmark={bookmarks.has(subject.code)}
+                data-bookmark={bookmarksHas(subject.code)}
                 onClick={() => switchBookmark(subject.code)}
               >
                 <span>
-                  {bookmarks.has(subject.code)
+                  {bookmarksHas(subject.code)
                     ? "★ お気に入り"
                     : "★ お気に入りに追加"}
                 </span>

@@ -7,6 +7,10 @@ import {
   timeslotTableToBits,
 } from "./timetable";
 
+// 現在の日付から年度を取得する場合、未公開のシラバスを参照してしまう可能性があるため、手動で年度を更新する。
+// シラバスは毎年 4 月上旬に更新される。
+export const CURRENT_YEAR = 2025;
+
 const allSeasons = ["春", "夏", "秋", "冬"] as const;
 export const normalSeasons = ["春", "秋"] as const;
 export const modules = ["A", "B", "C"] as const;
@@ -109,10 +113,7 @@ export class Subject {
   }
 
   get syllabusHref() {
-    // 現在の日付から年度を取得する場合、未公開のシラバスを参照してしまう可能性があるため、手動で年度を更新する。
-    // シラバスは、毎年4月上旬に更新される。
-    const year = 2025;
-    return `https://kdb.tsukuba.ac.jp/syllabi/${year}/${this.code}/jpn`;
+    return `https://kdb.tsukuba.ac.jp/syllabi/${CURRENT_YEAR}/${this.code}/jpn`;
   }
 
   private static parseTerm(termStr: string) {

@@ -61,16 +61,20 @@ interface DesktopFormProps {
   searchOptions: SearchOptions;
   bookmarkTimeslotTable: TimeslotTable;
   displaysTimeslotSelection: boolean;
+  displaysPlan: boolean;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
   setDisplaysTimeslotSelection: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplaysPlan: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DesktopForm = ({
   searchOptions,
   bookmarkTimeslotTable,
   displaysTimeslotSelection,
+  displaysPlan,
   setSearchOptions,
   setDisplaysTimeslotSelection,
+  setDisplaysPlan,
 }: DesktopFormProps) => {
   return (
     <Wrapper>
@@ -179,7 +183,7 @@ const DesktopForm = ({
       <Line thin={true}>
         <Headline>標準履修年次</Headline>
         <Left>
-          <Options>
+          <Options css={{ width: inputSize }}>
             {[...Array(6)].map((_, i) => (
               <label key={i}>
                 <input
@@ -202,6 +206,12 @@ const DesktopForm = ({
               </label>
             ))}
           </Options>
+          <SubButtonAnchor
+            css={desktopButtonAnchor}
+            onClick={() => setDisplaysPlan((prev) => !prev)}
+          >
+            <span>{displaysPlan ? "× 履修計画" : "履修計画"}</span>
+          </SubButtonAnchor>
         </Left>
         <Update>
           <span>{kdb.updated}</span> 時点での

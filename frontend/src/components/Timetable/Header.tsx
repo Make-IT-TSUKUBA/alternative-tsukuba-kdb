@@ -1,6 +1,7 @@
+import styled from "@emotion/styled";
+
 import { shadow } from "@/utils/style";
 import { modules, normalSeasons } from "@/utils/subject";
-import styled from "@emotion/styled";
 
 const Wrapper = styled.header`
   height: 24px;
@@ -23,7 +24,7 @@ const Left = styled.div`
 `;
 
 const TermName = styled.div`
-  width: 60px;
+  width: 56px;
   text-align: center;
   font-size: 20px;
 `;
@@ -37,6 +38,10 @@ const Details = styled.div`
 const Move = styled.a`
   line-height: 22px;
   font-size: 18px;
+
+  &[data-prev] {
+    margin-left: -8px;
+  }
 
   &[data-next] {
     margin-right: -10px;
@@ -67,7 +72,7 @@ interface HeaderProps {
   termCode: number;
   currentCredits: number;
   currentTimeslots: number;
-  totalCredits: number;
+  yearCredits: number;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
   setTermCode: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -77,7 +82,7 @@ const Header = ({
   termCode,
   currentCredits,
   currentTimeslots,
-  totalCredits,
+  yearCredits,
   setOpened,
   setTermCode,
 }: HeaderProps) => {
@@ -104,7 +109,11 @@ const Header = ({
   return (
     <Wrapper onClick={() => setOpened((prev) => !prev)}>
       <Left>
-        <Move onClick={moveBefore} data-disabled={termCode - 1 < 0}>
+        <Move
+          data-prev="true"
+          onClick={moveBefore}
+          data-disabled={termCode - 1 < 0}
+        >
           〈
         </Move>
         <TermName>
@@ -120,7 +129,7 @@ const Header = ({
         </Move>
         <Details>
           {currentCredits.toFixed(1)} 単位、{currentTimeslots} コマ（通年{" "}
-          {totalCredits.toFixed(1)} 単位）
+          {yearCredits.toFixed(1)} 単位）
         </Details>
       </Left>
       <Close opened={opened}>{opened ? "﹀" : "︿"}</Close>
