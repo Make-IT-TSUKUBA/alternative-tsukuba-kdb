@@ -74,7 +74,7 @@ const Header = React.memo(
         </Content>
       </Wrapper>
     );
-  }
+  },
 );
 
 export default Header;

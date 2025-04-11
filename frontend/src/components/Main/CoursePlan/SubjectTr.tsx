@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import { createRef, type RefObject, useEffect, useMemo, useRef } from "react";
+import { type RefObject, createRef, useEffect, useMemo, useRef } from "react";
 
-import { BottomRow, Star, Td, years, YearSelect } from "../parts";
-import type { useBookmark } from "@/utils/useBookmark";
-import type { Subject } from "@/utils/subject";
 import { shallowShadow } from "@/utils/style";
+import type { Subject } from "@/utils/subject";
+import type { useBookmark } from "@/utils/useBookmark";
+import { BottomRow, Star, Td, YearSelect, years } from "../parts";
 
 const Season = styled.div`
   padding: 4px 0;
@@ -50,7 +50,7 @@ const SubjectTr = ({ subject, usedBookmark }: SubjectTrProps) => {
 
   const bookmarkSubject = useMemo(
     () => getBookmarkSubject(subject.code),
-    [getBookmarkSubject, subject.code]
+    [getBookmarkSubject, subject.code],
   );
   if (!bookmarkSubject) {
     return <></>;

@@ -44,7 +44,7 @@ const globalStyle = css`
 
 const App = () => {
   const [searchOptions, setSearchOptions] = useState<SearchOptions>(
-    createSearchOptions()
+    createSearchOptions(),
   );
   const [filteredSubjects, setFilteredSubjects] = useState<Subject[]>([]);
   const [timetableTermCode, setTimetableTermCode] = useState(0);
@@ -68,7 +68,7 @@ const App = () => {
         kdb.subjectCodeList,
         options,
         bookmarkTimeslotTable,
-        bookmarksHas
+        bookmarksHas,
       );
       setFilteredSubjects(subjects);
     }, DEBOUNCE_TIME);

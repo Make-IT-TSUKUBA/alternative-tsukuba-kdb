@@ -102,24 +102,24 @@ const DesktopForm = ({
             {displaysTimeslotSelection
               ? "カレンダーをクリックして曜日・時限を選択"
               : getTimeslotsLength(searchOptions.timeslotTable) > 0
-              ? searchOptions.timeslotTable.map(
-                  (day, dayi) =>
-                    day.reduce((prev, value) => prev + (value ? 1 : 0), 0) >
-                      0 && (
-                      <div key={dayi}>
-                        <Day>{daysofweek[dayi]}</Day>
-                        {day.map(
-                          (slot, period) =>
-                            slot && (
-                              <React.Fragment key={period}>
-                                {period + 1}
-                              </React.Fragment>
-                            )
-                        )}
-                      </div>
-                    )
-                )
-              : "指定なし"}
+                ? searchOptions.timeslotTable.map(
+                    (day, dayi) =>
+                      day.reduce((prev, value) => prev + (value ? 1 : 0), 0) >
+                        0 && (
+                        <div key={dayi}>
+                          <Day>{daysofweek[dayi]}</Day>
+                          {day.map(
+                            (slot, period) =>
+                              slot && (
+                                <React.Fragment key={period}>
+                                  {period + 1}
+                                </React.Fragment>
+                              ),
+                          )}
+                        </div>
+                      ),
+                  )
+                : "指定なし"}
           </Period>
           <SubButtonAnchor
             css={desktopButtonAnchor}

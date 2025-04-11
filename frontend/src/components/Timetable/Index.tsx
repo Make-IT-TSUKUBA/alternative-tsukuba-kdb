@@ -278,7 +278,7 @@ const TimetableElement = React.memo(
                             ✕
                           </Close>
                         </SubjectTile>
-                      )
+                      ),
                     )}
                   </Item>
                 ))}
@@ -313,7 +313,7 @@ const TimetableElement = React.memo(
         </Footer>
       </Wrapper>
     );
-  }
+  },
 );
 
 export default TimetableElement;

@@ -119,10 +119,10 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
         a.termStr.includes("通年")
           ? -1
           : a.termStr.includes("春") && !b.termStr.includes("春")
-          ? -1
-          : a.termStr < b.termStr
-          ? -1
-          : 1
+            ? -1
+            : a.termStr < b.termStr
+              ? -1
+              : 1,
       );
     }
     return record;
@@ -194,7 +194,7 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
                     {key}：{credits} 単位
                     {i < array.length - 1 && <br />}
                   </React.Fragment>
-                )
+                ),
               )}
             </BottomTd>
             {[...Array(memoLength)].map((_, i) => (

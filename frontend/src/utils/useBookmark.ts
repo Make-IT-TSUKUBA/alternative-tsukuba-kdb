@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { z } from "zod";
 
-import { CURRENT_YEAR, kdb, type Subject } from "./subject";
+import { CURRENT_YEAR, type Subject, kdb } from "./subject";
 import {
   createEmptyTimeslotTable,
   fillTimetable,
@@ -80,7 +80,7 @@ const saveBookmarks = (bookmarks: Bookmarks) => {
 
 export const useBookmark = (
   timetableTermCode: number,
-  setTimetableTermCode: React.Dispatch<React.SetStateAction<number>>
+  setTimetableTermCode: React.Dispatch<React.SetStateAction<number>>,
 ) => {
   const [bookmarks, setBookmarks] = useState<Bookmarks>(localStorageBookmarks);
 
@@ -103,7 +103,7 @@ export const useBookmark = (
   const totalCredits = useMemo(
     () =>
       Object.values(yearCredits).reduce((prev, credits) => prev + credits, 0),
-    [yearCredits]
+    [yearCredits],
   );
 
   const [
@@ -128,7 +128,7 @@ export const useBookmark = (
 
       // タームコードを含むグループを探索
       const termIndex = subject.termCodes.findIndex((codes) =>
-        codes.includes(timetableTermCode)
+        codes.includes(timetableTermCode),
       );
       if (termIndex === -1) {
         continue;
@@ -205,13 +205,13 @@ export const useBookmark = (
 
   const bookmarksHas = useCallback(
     (subjectCode: string) => subjectCode in bookmarks.subjects,
-    [bookmarks]
+    [bookmarks],
   );
 
   const getBookmarkSubject = useCallback(
     (subjectCode: string): BookmarkSubject | undefined =>
       bookmarks.subjects[subjectCode],
-    [bookmarks]
+    [bookmarks],
   );
 
   const switchBookmark = useCallback(
@@ -233,12 +233,12 @@ export const useBookmark = (
       setBookmarks(newBookmarks);
       saveBookmarks(newBookmarks);
     },
-    [bookmarks, setTimetableTermCode]
+    [bookmarks, setTimetableTermCode],
   );
 
   const updateBookmark = (
     subjectCode: string,
-    value: Partial<BookmarkSubject>
+    value: Partial<BookmarkSubject>,
   ) => {
     const newBookmarks = structuredClone(bookmarks);
     const bookmarkSubject = newBookmarks.subjects[subjectCode];
@@ -260,7 +260,7 @@ export const useBookmark = (
 
   const clearBookmarks = useCallback(() => {
     const ok = window.confirm(
-      "すべてのお気に入りの科目が削除されます。よろしいですか？"
+      "すべてのお気に入りの科目が削除されます。よろしいですか？",
     );
     if (ok) {
       localStorage.removeItem(BOOKMARK_KEY);
@@ -275,7 +275,7 @@ export const useBookmark = (
       setBookmarks(newBookmarks);
       saveBookmarks(newBookmarks);
     },
-    [bookmarks]
+    [bookmarks],
   );
 
   const exportToTwinte = useCallback(() => {
