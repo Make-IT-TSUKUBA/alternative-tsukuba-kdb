@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { type RefObject, createRef, useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 
 import { shallowShadow } from "@/utils/style";
 import type { Subject } from "@/utils/subject";
