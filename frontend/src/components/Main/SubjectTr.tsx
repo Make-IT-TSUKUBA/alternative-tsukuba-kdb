@@ -46,18 +46,36 @@ const Anchor = styled.a`
   }
 `;
 
+const ClassMethods = styled.div`
+  line-height: 1.4;
+`;
+
+const Classrooms = styled.div`
+  line-height: 1.2;
+  color: #666;
+  font-size: 12px;
+  margin-top: 2px;
+`;
+
 interface SubjectTrProps {
   subject: Subject;
   usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
+  getClassroom: (subjectCode: string) => string | null;
 }
 
 const SubjectTr = React.memo(
-  ({ subject, usedBookmark, setSearchOptions }: SubjectTrProps) => {
+  ({
+    subject,
+    usedBookmark,
+    setSearchOptions,
+    getClassroom,
+  }: SubjectTrProps) => {
     const { bookmarksHas, getBookmarkSubject, switchBookmark, updateBookmark } =
       usedBookmark;
 
     const bookmarkSubject = getBookmarkSubject(subject.code);
+    const classrooms = getClassroom(subject.code)?.split(",") ?? [];
 
     // TODO: 科目区分を科目番号の隣に表示（情報学群 のように）
 
@@ -140,12 +158,22 @@ const SubjectTr = React.memo(
           ))}
         </Td>
         <Td>
-          {subject.classMethods.map((method, i, array) => (
-            <React.Fragment key={i}>
-              {method}
-              {i < array.length && <br />}
-            </React.Fragment>
-          ))}
+          <ClassMethods>
+            {subject.classMethods.map((method, i, array) => (
+              <React.Fragment key={i}>
+                {method}
+                {i < array.length && <br />}
+              </React.Fragment>
+            ))}
+          </ClassMethods>
+          <Classrooms>
+            {classrooms.map((classroom, i, array) => (
+              <React.Fragment key={i}>
+                {classroom}
+                {i < array.length && <br />}
+              </React.Fragment>
+            ))}
+          </Classrooms>
         </Td>
         <Td>{subject.abstract}</Td>
         <Td>{subject.note}</Td>

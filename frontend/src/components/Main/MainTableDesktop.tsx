@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import type { SearchOptions } from "@/utils/search";
-import { colorPurpleDark, mobileMedia } from "@/utils/style";
+import { colorPurple, colorPurpleDark, mobileMedia } from "@/utils/style";
 import { type Subject, kdb } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
 import SubjectTr from "./SubjectTr";
@@ -68,12 +68,43 @@ const Th = styled.th`
   }
 `;
 
+const Classrooms = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const Plus = styled.span`
+  width: 16px;
+  height: 16px;
+  color: ${colorPurple};
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    text-box: trim-both cap alphabetic;
+  }
+`;
+
 interface MainTableDesktopProps {
   subjects: Subject[];
   hasMore: boolean;
   loadingRef: React.RefObject<HTMLTableRowElement | null>;
   usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
+  setIsImporting: React.Dispatch<React.SetStateAction<boolean>>;
+  getClassroom: (subjectCode: string) => string | null;
 }
 
 const MainTableDesktop = ({
@@ -82,6 +113,8 @@ const MainTableDesktop = ({
   loadingRef,
   usedBookmark,
   setSearchOptions,
+  setIsImporting,
+  getClassroom,
 }: MainTableDesktopProps) => {
   return (
     <Table>
@@ -91,7 +124,14 @@ const MainTableDesktop = ({
           <Th>単位／年次</Th>
           <Th>学期／時限</Th>
           <Th>担当</Th>
-          <Th>実施形態</Th>
+          <Th onClick={() => setIsImporting(true)}>
+            <Classrooms>
+              実施教室
+              <Plus>
+                <span>＋</span>
+              </Plus>
+            </Classrooms>
+          </Th>
           <Th>概要</Th>
           <Th>備考</Th>
         </tr>
@@ -102,6 +142,7 @@ const MainTableDesktop = ({
             subject={subject}
             usedBookmark={usedBookmark}
             setSearchOptions={setSearchOptions}
+            getClassroom={getClassroom}
             key={subject.code}
           />
         ))}

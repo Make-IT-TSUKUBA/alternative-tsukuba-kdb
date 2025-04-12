@@ -12,11 +12,11 @@ import {
 } from "./utils/search";
 import { type Subject, kdb } from "./utils/subject";
 import { useBookmark } from "./utils/useBookmark";
+import { useClassroom } from "./utils/useClassroom";
 
 const globalStyle = css`
   html,
   body {
-    font-family: "Noto Sans JP", sans-serif;
     margin: 0;
     padding: 0;
     -webkit-text-size-adjust: 100%;
@@ -25,6 +25,10 @@ const globalStyle = css`
 
   a {
     cursor: pointer;
+  }
+
+  * {
+    font-family: "Noto Sans JP", sans-serif;
   }
 
   @font-face {
@@ -49,8 +53,11 @@ const App = () => {
   const [filteredSubjects, setFilteredSubjects] = useState<Subject[]>([]);
   const [timetableTermCode, setTimetableTermCode] = useState(0);
   const [displaysPlan, setDisplaysPlan] = useState(false);
+
   const usedBookmark = useBookmark(timetableTermCode, setTimetableTermCode);
   const { bookmarkTimeslotTable, bookmarksHas } = usedBookmark;
+
+  const usedClassroom = useClassroom();
 
   // debounce 時間
   const DEBOUNCE_TIME = 100;
@@ -92,6 +99,7 @@ const App = () => {
         filteredSubjects={filteredSubjects}
         displaysPlan={displaysPlan}
         usedBookmark={usedBookmark}
+        usedClassroom={usedClassroom}
         setSearchOptions={setSearchOptions}
       />
       <Footer filteredSubjects={filteredSubjects} />

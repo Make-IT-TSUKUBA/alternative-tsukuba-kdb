@@ -15,7 +15,10 @@
     "@emotion/styled": "^11.14.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-dropzone": "^14.3.8",
+    "react-modal": "^3.16.3",
     "react-use": "^17.6.0",
+    "xlsx": "^0.18.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -24,6 +27,7 @@
     "@types/node": "^22.13.14",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/react-modal": "^3.16.3",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "globals": "^15.15.0",
     "typescript": "~5.7.2",
