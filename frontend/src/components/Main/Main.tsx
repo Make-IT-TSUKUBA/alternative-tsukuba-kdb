@@ -5,6 +5,8 @@ import type { SearchOptions } from "@/utils/search";
 import { mobileMedia } from "@/utils/style";
 import { ONCE_COUNT, type Subject, initialSubjects } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
+import type { useClassroom } from "@/utils/useClassroom";
+import ClassroomImport from "./ClassroomImport";
 import CoursePlan from "./CoursePlan/Index";
 import MainTableDesktop from "./MainTableDesktop";
 import Mobile from "./Mobile";
@@ -23,6 +25,7 @@ interface MainProps {
   filteredSubjects: Subject[];
   displaysPlan: boolean;
   usedBookmark: ReturnType<typeof useBookmark>;
+  usedClassroom: ReturnType<typeof useClassroom>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
 }
 
@@ -31,13 +34,15 @@ const Main = React.memo(
     filteredSubjects,
     displaysPlan,
     usedBookmark,
+    usedClassroom,
     setSearchOptions,
   }: MainProps) => {
     const { bookmarksHas, switchBookmark } = usedBookmark;
+    const { getClassroom } = usedClassroom;
 
     const [displayedCount, setDisplayedCount] = useState(0);
     const [initial, setInitial] = useState(true);
-
+    const [isImporting, setIsImporting] = useState(false);
     const loadingDesktopRef = useRef<HTMLTableRowElement>(null);
     const loadingMobileRef = useRef<HTMLDivElement>(null);
 
@@ -84,31 +89,40 @@ const Main = React.memo(
     }, [hasMore]);
 
     return (
-      <Wrapper>
-        {displaysPlan ? (
-          <CoursePlan
+      <>
+        <Wrapper>
+          {displaysPlan ? (
+            <CoursePlan
+              subjects={subjects}
+              hasMore={hasMore}
+              loadingRef={loadingDesktopRef}
+              usedBookmark={usedBookmark}
+            />
+          ) : (
+            <MainTableDesktop
+              subjects={subjects}
+              hasMore={hasMore}
+              loadingRef={loadingDesktopRef}
+              usedBookmark={usedBookmark}
+              setSearchOptions={setSearchOptions}
+              setIsImporting={setIsImporting}
+              getClassroom={getClassroom}
+            />
+          )}
+          <Mobile
             subjects={subjects}
             hasMore={hasMore}
-            loadingRef={loadingDesktopRef}
-            usedBookmark={usedBookmark}
+            loadingRef={loadingMobileRef}
+            bookmarksHas={bookmarksHas}
+            switchBookmark={switchBookmark}
           />
-        ) : (
-          <MainTableDesktop
-            subjects={subjects}
-            hasMore={hasMore}
-            loadingRef={loadingDesktopRef}
-            usedBookmark={usedBookmark}
-            setSearchOptions={setSearchOptions}
-          />
-        )}
-        <Mobile
-          subjects={subjects}
-          hasMore={hasMore}
-          loadingRef={loadingMobileRef}
-          bookmarksHas={bookmarksHas}
-          switchBookmark={switchBookmark}
+        </Wrapper>
+        <ClassroomImport
+          isImporting={isImporting}
+          usedClassroom={usedClassroom}
+          setIsImporting={setIsImporting}
         />
-      </Wrapper>
+      </>
     );
   },
 );

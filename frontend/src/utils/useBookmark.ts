@@ -8,7 +8,7 @@ import {
   getTimeslotsLength,
 } from "./timetable";
 
-const BOOKMARK_KEY = "kdb_bookmarks";
+const BOOKMARKS_KEY = "kdb_bookmarks";
 const BOOKMARKS_VERSION = 1;
 
 const bookmarkSubjectSchema = z.object({
@@ -34,8 +34,8 @@ const createEmptyBookmarks = (): Bookmarks => {
   return { version: BOOKMARKS_VERSION, subjects: {}, memoHeaders: [] };
 };
 
-const getBookmarks = (): Bookmarks => {
-  const value = localStorage.getItem(BOOKMARK_KEY);
+const getLocalBookmarks = (): Bookmarks => {
+  const value = localStorage.getItem(BOOKMARKS_KEY);
 
   // データが存在しない場合は空のブックマークを返す
   if (value === null) {
@@ -72,10 +72,10 @@ const getBookmarks = (): Bookmarks => {
   }
 };
 
-const localStorageBookmarks = getBookmarks();
+const localStorageBookmarks = getLocalBookmarks();
 
 const saveBookmarks = (bookmarks: Bookmarks) => {
-  localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks));
+  localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
 };
 
 export const useBookmark = (
@@ -263,7 +263,7 @@ export const useBookmark = (
       "すべてのお気に入りの科目が削除されます。よろしいですか？",
     );
     if (ok) {
-      localStorage.removeItem(BOOKMARK_KEY);
+      localStorage.removeItem(BOOKMARKS_KEY);
       setBookmarks(createEmptyBookmarks());
     }
   }, []);
