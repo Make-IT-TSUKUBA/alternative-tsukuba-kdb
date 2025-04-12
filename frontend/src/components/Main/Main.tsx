@@ -104,7 +104,6 @@ const Main = React.memo(
               hasMore={hasMore}
               loadingRef={loadingDesktopRef}
               usedBookmark={usedBookmark}
-              usedClassroom={usedClassroom}
               setSearchOptions={setSearchOptions}
               setIsImporting={setIsImporting}
               getClassroom={getClassroom}
