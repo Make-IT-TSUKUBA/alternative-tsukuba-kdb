@@ -27,6 +27,7 @@ interface MainProps {
   usedBookmark: ReturnType<typeof useBookmark>;
   usedClassroom: ReturnType<typeof useClassroom>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
+  setSyllabiSubjectCode: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const Main = React.memo(
@@ -36,6 +37,7 @@ const Main = React.memo(
     usedBookmark,
     usedClassroom,
     setSearchOptions,
+    setSyllabiSubjectCode,
   }: MainProps) => {
     const { bookmarksHas, switchBookmark } = usedBookmark;
     const { getClassroom } = usedClassroom;
@@ -106,6 +108,7 @@ const Main = React.memo(
               usedBookmark={usedBookmark}
               setSearchOptions={setSearchOptions}
               setIsImporting={setIsImporting}
+              setSyllabiSubjectCode={setSyllabiSubjectCode}
               getClassroom={getClassroom}
             />
           )}
