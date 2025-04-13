@@ -104,6 +104,7 @@ interface MainTableDesktopProps {
   usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
   setIsImporting: React.Dispatch<React.SetStateAction<boolean>>;
+  setSyllabiSubjectCode: React.Dispatch<React.SetStateAction<string | null>>;
   getClassroom: (subjectCode: string) => string | null;
 }
 
@@ -114,6 +115,7 @@ const MainTableDesktop = ({
   usedBookmark,
   setSearchOptions,
   setIsImporting,
+  setSyllabiSubjectCode,
   getClassroom,
 }: MainTableDesktopProps) => {
   return (
@@ -142,6 +144,7 @@ const MainTableDesktop = ({
             subject={subject}
             usedBookmark={usedBookmark}
             setSearchOptions={setSearchOptions}
+            setSyllabiSubjectCode={setSyllabiSubjectCode}
             getClassroom={getClassroom}
             key={subject.code}
           />

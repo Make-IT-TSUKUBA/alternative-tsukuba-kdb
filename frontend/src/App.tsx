@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
+import Syllabi from "./components/Syllabi";
 import Timetable from "./components/Timetable/Index";
 import {
   type SearchOptions,
@@ -53,6 +54,9 @@ const App = () => {
   const [filteredSubjects, setFilteredSubjects] = useState<Subject[]>([]);
   const [timetableTermCode, setTimetableTermCode] = useState(0);
   const [displaysPlan, setDisplaysPlan] = useState(false);
+  const [syllabiSubjectCode, setSyllabiSubjectCode] = useState<string | null>(
+    null,
+  );
 
   const usedBookmark = useBookmark(timetableTermCode, setTimetableTermCode);
   const { bookmarkTimeslotTable, bookmarksHas } = usedBookmark;
@@ -101,12 +105,17 @@ const App = () => {
         usedBookmark={usedBookmark}
         usedClassroom={usedClassroom}
         setSearchOptions={setSearchOptions}
+        setSyllabiSubjectCode={setSyllabiSubjectCode}
       />
       <Footer filteredSubjects={filteredSubjects} />
       <Timetable
         termCode={timetableTermCode}
         usedBookmark={usedBookmark}
         setTermCode={setTimetableTermCode}
+      />
+      <Syllabi
+        subjectCode={syllabiSubjectCode}
+        setSubjectCode={setSyllabiSubjectCode}
       />
     </>
   );

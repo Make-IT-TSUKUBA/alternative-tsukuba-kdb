@@ -61,6 +61,7 @@ interface SubjectTrProps {
   subject: Subject;
   usedBookmark: ReturnType<typeof useBookmark>;
   setSearchOptions: React.Dispatch<React.SetStateAction<SearchOptions>>;
+  setSyllabiSubjectCode: React.Dispatch<React.SetStateAction<string | null>>;
   getClassroom: (subjectCode: string) => string | null;
 }
 
@@ -69,6 +70,7 @@ const SubjectTr = React.memo(
     subject,
     usedBookmark,
     setSearchOptions,
+    setSyllabiSubjectCode,
     getClassroom,
   }: SubjectTrProps) => {
     const { bookmarksHas, getBookmarkSubject, switchBookmark, updateBookmark } =
@@ -86,12 +88,9 @@ const SubjectTr = React.memo(
           <br />
           {subject.name}
           <BottomRow>
-            <Link href={subject.syllabusHref} target="_blank">
+            <Link onClick={() => setSyllabiSubjectCode(subject.code)}>
               <span>シラバス</span>
             </Link>
-            {/*TODO: <Link href="">
-							<span>ポップアップ</span>
-						</Link>*/}
             <Star
               enabled={bookmarksHas(subject.code)}
               onClick={() => switchBookmark(subject.code)}
