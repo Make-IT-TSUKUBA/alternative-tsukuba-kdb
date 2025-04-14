@@ -133,20 +133,23 @@ export const useBookmark = (
       if (termIndex === -1) {
         continue;
       }
+
       const subjectTimeslotTable = subject.timeslotTables[termIndex];
-      for (let day = 0; day < table.length; day++) {
-        for (let period = 0; period < table[day].length; period++) {
-          // 科目がコマを含めば追加
-          if (subjectTimeslotTable[day][period]) {
-            table[day][period] = true;
-            subjectTable[day][period].push(subject);
+      if (subjectTimeslotTable) {
+        for (let day = 0; day < table.length; day++) {
+          for (let period = 0; period < table[day].length; period++) {
+            // 科目がコマを含めば追加
+            if (subjectTimeslotTable[day][period]) {
+              table[day][period] = true;
+              subjectTable[day][period].push(subject);
+            }
           }
         }
+        timeslots += getTimeslotsLength(subjectTimeslotTable);
       }
       if (!bookmarkSubject.ta) {
         credits += subject.credit;
       }
-      timeslots += getTimeslotsLength(subjectTimeslotTable);
     }
     return [table, subjectTable, credits, timeslots];
   }, [bookmarks, timetableTermCode]);

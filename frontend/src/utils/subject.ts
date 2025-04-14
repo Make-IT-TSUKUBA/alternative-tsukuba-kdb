@@ -73,7 +73,15 @@ export class Subject {
     this._termCodes = Subject.parseTerm(this.termStr);
 
     // 時限
-    const termStrArray = this.timeslotStr.split(" ");
+    // タームとコマのグループ長は稀に一致しない場合がある
+    // タームのグループが 1 つしかない場合は、すべてのコマを統合
+    const tempTimeslotStr =
+      this._termCodes.length === 1
+        ? this.timeslotStr.replace(/ /g, ",")
+        : this.timeslotStr;
+
+    // グループ毎に処理
+    const termStrArray = tempTimeslotStr.split(" ");
     for (const str of termStrArray) {
       this._timeslotTables.push(createTimeslotTable(str));
       this.concentration ||= str.includes("集中");
@@ -83,6 +91,13 @@ export class Subject {
     }
     for (const table of this._timeslotTables) {
       this._timeslotTableBits |= timeslotTableToBits(table);
+    }
+
+    // コマのグループが 1 つしかない場合は、すべてのタームを統合
+    if (this._timeslotTables.length === 1) {
+      this._termCodes = [
+        this._termCodes.flatMap((codes, prev) => [...codes, prev], []),
+      ];
     }
 
     this.classMethods = classMethods.filter((it) => this.note.indexOf(it) > -1);
@@ -127,7 +142,7 @@ export class Subject {
     // 初めにスペースで分割
     const termGroups = termStr.split(" ");
     for (const groupStr of termGroups) {
-      // タームコードのグループはコマのグループと一致する
+      // ほとんどの科目にて、タームコードのグループはコマのグループと一致する
       const group: number[] = [];
       const charArray = Array.from(groupStr);
 
