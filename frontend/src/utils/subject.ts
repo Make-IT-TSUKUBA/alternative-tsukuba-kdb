@@ -95,9 +95,7 @@ export class Subject {
 
     // コマのグループが 1 つしかない場合は、すべてのタームを統合
     if (this._timeslotTables.length === 1) {
-      this._termCodes = [
-        this._termCodes.flatMap((codes, prev) => [...codes, prev], []),
-      ];
+      this._termCodes = [[...new Set(this._termCodes.flat())]];
     }
 
     this.classMethods = classMethods.filter((it) => this.note.indexOf(it) > -1);
