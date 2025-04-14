@@ -41,6 +41,7 @@ export const createTimeslotTable = (value: string): TimeslotTable => {
   const table = fillTimetable(false);
   let dayArray: number[] = [];
 
+  // ｛曜日 + 数字（ハイフン含む）｝がコンマ区切りで繰り返される
   // コンマで分割
   // TODO: check
   const slotStrArray = (value as string).split(",");
@@ -59,6 +60,7 @@ export const createTimeslotTable = (value: string): TimeslotTable => {
     const periodArray: number[] = [];
     const periodStr = slotStr.replace(/[^0-9\\-]/g, "");
 
+    // - が含まれる場合は範囲選択
     if (periodStr.indexOf("-") > -1) {
       const periodStrArray = periodStr.split("-");
       const startPeriod = Number(periodStrArray[0]);
