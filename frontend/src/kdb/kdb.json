@@ -1,5 +1,5 @@
 {
-  "updated": "2025/10/07",
+  "updated": "2025/10/08",
   "subject": [
     [
       "1101102",
@@ -22279,7 +22279,7 @@
       "秋AB",
       "火5",
       "",
-      "長谷川 悦示,宮崎 明世,三田部 勇,阿部 隆行",
+      "長谷川 悦示,宮崎 明世,三田部 勇,國川 聖子",
       "体育授業づくりのための基礎的知識を得るとともに、教材づくり、指導計画づくり等の実習を通して実践的な能力を習得する。",
       "対面. オンライン(同時双方向型) 対面またはオンライン（同時双方向型）"
     ],
@@ -22292,7 +22292,7 @@
       "秋AB",
       "火5",
       "",
-      "長谷川 悦示,宮崎 明世,三田部 勇,阿部 隆行",
+      "長谷川 悦示,宮崎 明世,三田部 勇,國川 聖子",
       "指導計画や学習資料を作成するとともに、模擬授業及び授業分析の実践を通してよい体育授業を実現するための実践的な能力を習得する。",
       "体育授業理論・実習Iの単位を修得済みであること。 対面. オンライン(同時双方向型) 対面またはオンライン（同時双方向型）"
     ],
@@ -39964,6 +39964,19 @@
       "社会学類以外の学生については,受講者の制限を行うことがあります。 日本語での講義です。"
     ],
     [
+      "BB410A1",
+      "現代金融概論",
+      "1",
+      " 1.0",
+      "1・2",
+      "秋C",
+      "集中",
+      "",
+      "高橋 秀直,福住 多一",
+      "",
+      ""
+    ],
+    [
       "BB41101",
       "基礎経済数学",
       "1",
@@ -40365,6 +40378,19 @@
       "鈴木 博之,山内 勝間",
       "公的年金制度・企業年金制度そして年金資産運用の基礎を講義する。SDGsの概念が年金運用においても注目を浴びている背景やその投資手法との関係も学ぶ。",
       "オンライン(オンデマンド型)"
+    ],
+    [
+      "BB41A01",
+      "経済数学II",
+      "1",
+      " 2.0",
+      "2・3",
+      "秋C",
+      "集中",
+      "",
+      "",
+      "",
+      ""
     ],
     [
       "BB45342",
@@ -76604,7 +76630,7 @@
       " 3.0",
       "1",
       "秋C",
-      "火3,4,木1,2 応談",
+      "火3,4 火5,6,木1,2",
       "",
       "秋山 肇",
       "This course focuses on specific approaches to the global issues of social diversity-inclusion as well as human health-wellbeing. Taking concrete examples, students can deepen basic knowledge of the global governance and well-being.",
@@ -76633,7 +76659,7 @@
       "火3,4,応談",
       "",
       "矢田 竣太郎",
-      "These courses will provide experiences of tackling global issues. Students will conduct, individually or on a team, a practical activity in order to understand causes, backgrounds, processes of the global issues and seek solutions. Students also use a variety of methods for this purpose, including group discussions, data collection, field research, and experimentation. It will be important to derive feasible solutions based on objective evidences. In the end, students will make a presentation of the research and obtain critical feedback on the project.",
+      "This practical training provides foundational experience in research methodology through systematically organized classroom-based PBL (Problem-Based Learning) focused on global issues, especially on the topics of Social Issues and Health & Wellness Issues. Students engage in intensive classroom exercises covering both theme areas: BPGI faculty guide students through comprehensive methodology training using prepared datasets and structured analytical tasks. The course primarily focuses on learning and practicing essential research methodologies through guided group work and desk-based analysis. Students conduct methodology surveys using introductory resources and apply learned techniques through hands-on classroom exercises, building core methodological competencies for global issues research.",
       "Students must follow this course at the same time as or after having accomplished the Seminars on Global Issues B-I (VB30012). 英語で授業。 主専攻必修科目. 対面"
     ],
     [
@@ -76643,10 +76669,10 @@
       " 6.0",
       "3",
       "秋ABC",
-      "月・木3,4",
+      "応談",
       "",
       "矢田 竣太郎",
-      "These seminars will approach a wide range of academic knowledge, evaluation methods, and coping and preventive strategies related to the issues of social diversity-inclusion as well as human health-wellbeing. For the former part, you will learn a variety of global issues concerning the disciplines of humanities and social sciences. You will learn what are problems and discuss how we can resolve them. As for the latter part, the course will approach the health matters of aged people, as contemporary society requires information literacy and care of the elderly. You will learn basic concepts and techniques of a survey to grasp problems in a real situation, processing methods, and interpretative strategies for gathered information (documents, data). In the end, you will come up with an action plan and/or original research project aiming at finding and solving problems of a real situation.",
+      "This seminar provides intensive theoretical foundation through laboratory seminars focused on Global Issues, especially on the topics of Social Issues and Health & Wellness Issues. Students engage in laboratory seminars: under the direct guidance of faculty members, students join research laboratories to conduct comprehensive literature reviews, participate in research discussions, and engage in theoretical analysis related to their chosen seminar themes. The course emphasizes deep understanding of theoretical frameworks and research methodologies through real laboratory environments, enabling students to develop solid academic foundations from literature review to critical analysis.",
       "Students who have completed the Seminars on Global Issues B-I (VB30012). 英語で授業。 主専攻必修科目. 対面"
     ],
     [
@@ -76656,10 +76682,10 @@
       " 3.0",
       "3",
       "秋ABC",
-      "金3,4,応談",
+      "応談",
       "",
       "矢田 竣太郎",
-      "This practical training enhances skills of problem formation and solution development through PBL (Problem Based Learning) to understand and solve global issues. The goal of this class is for students to deepen and improve their own study and research plans developed on the previous practical training classes. Through workshops and presentations, the students will learn improving research questions, developing hypothes and observable implications and designing research methodologies to prove their hypotheses.",
+      "This practical training provides hands-on research experience through laboratory internships focused on Global Issues, especially on the topics of Social Issues and Health & Wellness Issues. Students engage in laboratory internships: under the direct guidance of faculty members, students join research laboratories to conduct experiments, investigations, and field work related to their chosen PBL themes. The course emphasizes practical application of research skills through real laboratory environments, enabling students to experience authentic research processes from problem identification to solution development. Students present their findings and research outcomes, demonstrating their ability to contribute meaningfully to ongoing research projects of the target topics.",
       "Lectures are conducted in English. Students must follow this course at the same time as or after having accomplished the Seminars on Global Issues B-II (VB30022).In principle, only BPGI students are allowed. Students other programmes may be accepted after consultation. 英語で授業。 主専攻必修科目. 対面"
     ],
     [
@@ -77659,7 +77685,7 @@
       "秋AB",
       "火5",
       "",
-      "宮崎 明世,中村 剛",
+      "宮崎 明世,寺山 由美",
       "体育・スポーツの専門家として社会で活躍するために、どのようなキャリアの選択肢があるか、どのような学習をすればそのキャリアたどり着くのか、を具体的かつ多面的に概説し、将来のキャリアに関心を向けるとともに、体育専門学群での学習内容の位置づけ及び体育・スポーツに関する理論と実践の関連を理解する。",
       "必修 体育専門学群生のみ受講可 CDP. 対面"
     ],
@@ -77685,7 +77711,7 @@
       "秋AB",
       "水2",
       "",
-      "三田部 勇",
+      "川村 卓",
       "スポーツ・体育・健康に関する多様な専門領域で活躍している社会人との交流と、具体的な進路の検討および就職への準備を通して、自己と社会に関する理解を深め、自分の将来やキャリアについて実践的に考える。",
       "必修 授業の後半は3クラスに分かれる。体育専門学群生のみ受講可 CDP. 対面(オンライン併用型)"
     ],
@@ -79466,7 +79492,7 @@
       "秋C",
       "水3,4",
       "",
-      "中村 剛,松井 崇",
+      "寺山 由美,坂本 拓弥",
       "体育、スポーツ、健康に関連する諸科学について、その現状、社会貢献活動、将来展望などをめぐってシンポジウムを展開する。ディスカッションなどの協同的な営みを通じて関係諸領域の知と本学群の可能性や意義について理解を深める。",
       "必修，体育専門学群生に限る 対面"
     ],
@@ -80285,7 +80311,7 @@
       "秋AB",
       "火1,2",
       "",
-      "池田 英治",
+      "池田 英治,仲澤 翔大",
       "バスケットボールの技術構造、ルールを理解し、技術、戦術習得を中心にゲーム展開の方法とそれらの指導法を実習する。",
       "男子前半クラス 対面"
     ],
