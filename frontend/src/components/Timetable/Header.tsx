@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 
 import { shadow } from "@/utils/style";
-import { modules, normalSeasons } from "@/utils/subject";
-import { years } from "@/components/Main/parts";
+import { modules, normalSeasons, years } from "@/utils/subject";
 
 const Wrapper = styled.header`
   height: 24px;

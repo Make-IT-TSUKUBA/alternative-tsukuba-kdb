@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 
 import { colorPurple, shallowShadow } from "@/utils/style";
-import { CURRENT_YEAR } from "@/utils/subject";
+import { years } from "@/utils/subject";
 
-export const years = [...Array(9)].map((_, i) => CURRENT_YEAR + i - 4);
+export { years };
 
 export const Td = styled.td`
   vertical-align: top;
