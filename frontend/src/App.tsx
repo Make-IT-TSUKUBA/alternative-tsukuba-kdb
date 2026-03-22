@@ -11,7 +11,7 @@ import {
   createSearchOptions,
   searchSubjects,
 } from "./utils/search";
-import { type Subject, kdb } from "./utils/subject";
+import { CURRENT_YEAR, type Subject, kdb } from "./utils/subject";
 import { useBookmark } from "./utils/useBookmark";
 import { useClassroom } from "./utils/useClassroom";
 
@@ -57,8 +57,9 @@ const App = () => {
   const [syllabiSubjectCode, setSyllabiSubjectCode] = useState<string | null>(
     null,
   );
+  const [timetableYear, setTimetableYear] = useState(CURRENT_YEAR);
 
-  const usedBookmark = useBookmark(timetableTermCode, setTimetableTermCode);
+  const usedBookmark = useBookmark(timetableTermCode, setTimetableTermCode, timetableYear);
   const { bookmarkTimeslotTable, bookmarksHas } = usedBookmark;
 
   const usedClassroom = useClassroom();
@@ -110,8 +111,10 @@ const App = () => {
       <Footer filteredSubjects={filteredSubjects} />
       <Timetable
         termCode={timetableTermCode}
+        timetableYear={timetableYear}
         usedBookmark={usedBookmark}
         setTermCode={setTimetableTermCode}
+        setTimetableYear={setTimetableYear}
       />
       <Syllabi
         subjectCode={syllabiSubjectCode}
