@@ -70,14 +70,15 @@ export const useClassroom = () => {
       if (!firstSheetName) {
         throw new Error("Excel ファイルにシートが存在しません");
       }
-      const data = xlsx.utils.sheet_to_json(worksheet);
 
+      // 冒頭 4 行はヘッダのためスキップ
+      const data = xlsx.utils.sheet_to_json(worksheet, { header: 1 }).slice(5);
       const newClassrooms = createEmptyClassrooms();
 
       for (const row of data) {
         const rowRecord = row as Record<string, string>;
-        const subjectCode = rowRecord.科目番号;
-        const classroom = rowRecord.教室;
+        const subjectCode = rowRecord[0];
+        const classroom = rowRecord[7];
         if (subjectCode && classroom) {
           newClassrooms.subjects[subjectCode] = classroom;
         }
