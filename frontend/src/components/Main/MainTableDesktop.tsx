@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "@emotion/styled";
 
 import type { SearchOptions } from "@/utils/search";
@@ -108,7 +109,7 @@ interface MainTableDesktopProps {
   getClassroom: (subjectCode: string) => string | null;
 }
 
-const MainTableDesktop = ({
+const MainTableDesktop = React.memo(({
   subjects,
   hasMore,
   loadingRef,
@@ -159,6 +160,6 @@ const MainTableDesktop = ({
       </tbody>
     </Table>
   );
-};
+});
 
 export default MainTableDesktop;

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   colorPurple,
@@ -119,7 +119,7 @@ interface MobileProps {
   switchBookmark: (subjectCode: string) => void;
 }
 
-const Mobile = ({
+const Mobile = React.memo(({
   subjects,
   hasMore,
   loadingRef,
@@ -127,6 +127,10 @@ const Mobile = ({
   switchBookmark,
 }: MobileProps) => {
   const [displayed, setDisplayed] = useState(new Set<string>());
+
+  useEffect(() => {
+    setDisplayed(new Set<string>());
+  }, [subjects]);
 
   return (
     <Wrapper>
@@ -188,6 +192,6 @@ const Mobile = ({
       </Loading>
     </Wrapper>
   );
-};
+});
 
 export default Mobile;
