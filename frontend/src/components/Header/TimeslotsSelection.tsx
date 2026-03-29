@@ -8,7 +8,7 @@ import {
   shadow,
   shallowShadow,
 } from "@/utils/style";
-import { type TimeslotTable, daysofweek, maxPeriod } from "@/utils/timetable";
+import { daysofweek, maxPeriod, type TimeslotTable } from "@/utils/timetable";
 
 const Wrapper = styled.div`
   width: 180px;

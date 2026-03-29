@@ -1,4 +1,4 @@
-"""Convert a CSV file of KdB data to a JSON file with configure file defines types."""
+"""KdB データの CSV ファイルを JSON ファイルに変換する。"""
 
 import argparse
 import csv
@@ -8,13 +8,11 @@ from typing import Any, Dict, List, Tuple
 
 
 class KdbCSVtoJSON:
-    """Convert a CSV file of KdB data to a JSON file with configure file defines types."""
+    """KdB データの CSV ファイルを JSON ファイルに変換するクラス。"""
 
     def __init__(self, csvpath: str) -> None:
-        """Initializer.
-
-        Args:
-            csvpath (str): A KdB data CSV path.
+        """Args:
+            csvpath (str): KdB データの CSV ファイルパス。
         """
         self.csvpath = csvpath
 
@@ -29,89 +27,37 @@ class KdbCSVtoJSON:
         }
 
     def get_output(self) -> Dict[str, Any]:
-        """Get an output to convert data CSV to JSON.
+        """学群科目の一覧を返す。
 
         Returns:
-            Dict[str, Any]: An output to convert data CSV to JSON.
+            Dict[str, Any]: 科目番号をキーとする学群科目の辞書。
         """
         return self.output
 
     def get_grad_output(self) -> Dict[str, Any]:
-        """Get an output to convert data CSV for graduated school to JSON.
+        """大学院科目の一覧を返す。
 
         Returns:
-            Dict[str, Any]: An output to convert data CSV for graduated school to JSON.
+            Dict[str, Any]: 科目番号をキーとする大学院科目の辞書。
         """
         return self.grad_output
 
-    def __get_subjectcode(self, s: str) -> Tuple[List[str], List[str]]:
-        """Get subject code.
-
-        Args:
-            s (str): An subject name.
-
-        Returns:
-            Tuple[List[str], List[str]]: Codes and except codes which are defined in given config text.
-        """
-        code = s.replace("]", "").split("[")
-        if len(code) == 2:
-            except_codes = code[1].split("/")
-        else:
-            except_codes = []
-
-        codes = code[0].split("/")
-        return (codes, except_codes)
-
-    def __search_type(
-        self, code: str, target_types: Dict[str, Any], types: List[str] = []
-    ) -> List[str]:
-        """Search the type.
-
-        Args:
-            code (str): A target code.
-            target_types (Dict): Dictionary contains info of target types.
-            types (List[str]): Found types.
-
-        Returns:
-            List[str]: found types.
-        """
-        for key in target_types:
-            target_codes = target_types[key]["codes"]
-            target_excepts = target_types[key]["except-codes"]
-
-            for target_code in target_codes:
-                is_grad = any(
-                    [code.find(target_except) == 0 for target_except in target_excepts]
-                )
-                if code.find(target_code) == 0 and not is_grad:
-                    types.append(key)
-                    if len(types) <= 2:
-                        target_childs = target_types[key]["childs"]
-                        self.__search_type(code, target_childs, types)
-                    else:
-                        return types
-
-        return types
-
     def __get_subjects(self, grad: bool) -> List[List[str]]:
-        """Get subjects.
+        """科目一覧を取得する。
 
         Args:
-            csvpath (str): A CSV file path.
+            grad (bool): 大学院科目を取得するかどうか。true の場合は大学院科目を、false の場合は学群科目を取得する。
 
         Returns:
-            List: A list of subjects.
+            List: 科目のリスト。
         """
         subjects = []
         lines = [line for line in csv.reader(open(self.csvpath))]
 
         for line in lines:
-            for _ in range(8):
-                line.pop(11)
-
             code = line[0]
 
-            # skip the header and empty lines
+            # ヘッダー行と空行をスキップ
             is_grad = len(code) > 0 and code[0] == "0"
             if (
                 code in ["科目番号", ""]
@@ -120,32 +66,59 @@ class KdbCSVtoJSON:
             ):
                 continue
 
+            # 現行 CSVに含まれる 17 列：
+            # 0. 科目番号
+            # 1. 科目名
+            # 2. 授業方法
+            # 3. 単位数
+            # 4. 標準履修年次
+            # 5. 実施学期
+            # 6. 曜時限
+            # 7. 担当教員
+            # 8. 授業概要
+            # 9. 備考
+            # 10. 科目等履修生
+            # 11. 短期留学生申請可否
+            # 12. 申請条件
+            # 13. 英語科目名
+            # 14. 科目コード
+            # 15. 要件科目名
+            # 16. データ更新日
+            #
+            # フロントエンドの JSON が期待する 11 列：
+            # 0. 科目番号
+            # 1. 科目名
+            # 2. 授業方法
+            # 3. 単位数
+            # 4. 標準履修年次
+            # 5. 実施学期
+            # 6. 曜時限
+            # 7. 教室
+            # 8. 担当教員
+            # 9. 授業概要
+            # 10. 備考
+
+            # メタデータ列（10–16）を削除
+            line = line[:10]
+            # 教室列（旧形式の 7）が現行 CSV にはないため空文字を挿入
+            line.insert(7, "")
+            # 備考内の改行をスペースに正規化
+            line[10] = line[10].replace("\n", " ").strip()
             subjects.append(line)
 
         return subjects
 
 
-def parse_args() -> argparse.Namespace:
-    """Parse given cmdargs.
-
-    Returns:
-        argparse.Namespace: Parsed arguments.
-    """
+def main() -> None:
+    """エントリーポイント。"""
     parser = argparse.ArgumentParser()
     parser.add_argument("csv", help="an input csv file")
     parser.add_argument(
-        "output_dir", help="the output directory of kdb.json and code-types.json"
+        "output_dir", help="the output directory of kdb.json and kdb-grad.json"
     )
-
-    return parser.parse_args()
-
-
-def main() -> None:
-    """Main."""
-    args = parse_args()
+    args = parser.parse_args()
     k = KdbCSVtoJSON(args.csv)
 
-    # output
     with open(f"{args.output_dir}/kdb.json", "w", encoding="utf-8") as fp:
         json.dump(k.get_output(), fp, indent="  ", ensure_ascii=False)
 

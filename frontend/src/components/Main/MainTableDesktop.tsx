@@ -3,10 +3,10 @@ import React from "react";
 
 import type { SearchOptions } from "@/utils/search";
 import { colorPurple, colorPurpleDark, mobileMedia } from "@/utils/style";
-import { type Subject, kdb } from "@/utils/subject";
+import { kdb, type Subject } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
-import SubjectTr from "./SubjectTr";
 import { BottomTd } from "./parts";
+import SubjectTr from "./SubjectTr";
 
 const Table = styled.table`
   width: 100%;

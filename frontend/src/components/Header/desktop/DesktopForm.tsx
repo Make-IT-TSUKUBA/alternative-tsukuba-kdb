@@ -5,22 +5,22 @@ import type { SearchOptions } from "@/utils/search";
 import { colorPurple, inputSize } from "@/utils/style";
 import { classMethods, kdb } from "@/utils/subject";
 import {
-  type TimeslotTable,
   daysofweek,
   getTimeslotsLength,
+  type TimeslotTable,
 } from "@/utils/timetable";
-import TimeslotsSelection from "../TimeslotsSelection";
 import {
   Form,
   MainButtonAnchor,
-  SubButtonAnchor,
   rounded,
   roundedHeightExceptInput,
+  SubButtonAnchor,
 } from "../header-parts";
+import TimeslotsSelection from "../TimeslotsSelection";
 import { KeywordOptions } from "./KeywordOptions";
+import { desktopButtonAnchor, Headline, Left, Line, Options } from "./parts";
 import SecondLine from "./SecondLine";
 import ThirdLine from "./ThirdLine";
-import { Headline, Left, Line, Options, desktopButtonAnchor } from "./parts";
 
 const Wrapper = styled(Form)`
   gap: 6px;

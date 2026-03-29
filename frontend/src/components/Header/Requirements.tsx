@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
-
+import { useMemo } from "react";
 import {
+  allCodeTypes,
   type MidCodeArray,
   type SmallCodeArray,
-  allCodeTypes,
 } from "@/kdb/code-types";
 import type { SearchOptions } from "@/utils/search";
-import { useMemo } from "react";
 import { rounded, roundedHeightExceptInput } from "./header-parts";
 
 const Wrapper = styled.div`

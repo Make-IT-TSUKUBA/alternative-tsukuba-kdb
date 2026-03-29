@@ -1,27 +1,31 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.9/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
     "useIgnoreFile": false
   },
   "files": {
-    "include": ["package.json", "biome.json", "src/"],
-    "ignoreUnknown": false,
-    "ignore": [
-      "tsconfig.*.json",
-      "src/kdb/code-types-grad.json",
-      "src/kdb/code-types.json",
-      "src/kdb/kdb-grad.json",
-      "src/kdb/kdb.json"
-    ]
+    "includes": [
+      "package.json",
+      "biome.json",
+      "src/**",
+      "!tsconfig.*.json",
+      "!src/kdb/code-types-grad.json",
+      "!src/kdb/code-types.json",
+      "!src/kdb/kdb-grad.json",
+      "!src/kdb/kdb.json"
+    ],
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space"
   },
-  "organizeImports": {
-    "enabled": true
+  "assist": {
+    "actions": {
+      "source": { "organizeImports": "on" }
+    }
   },
   "linter": {
     "enabled": true,

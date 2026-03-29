@@ -1,9 +1,9 @@
-import kdbGradData from "@/kdb/kdb-grad.json";
 import kdbData from "@/kdb/kdb.json";
+import kdbGradData from "@/kdb/kdb-grad.json";
 import type { KdbData } from "../kdb/kdb";
 import {
-  type TimeslotTable,
   createTimeslotTable,
+  type TimeslotTable,
   timeslotTableToBits,
 } from "./timetable";
 

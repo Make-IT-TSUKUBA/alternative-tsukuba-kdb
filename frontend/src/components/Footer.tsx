@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React, { useRef } from "react";
 
 import { mobileMedia } from "@/utils/style";
-import { type Subject, outputSubjectsToCSV } from "@/utils/subject";
+import { outputSubjectsToCSV, type Subject } from "@/utils/subject";
 
 const Wrapper = styled.footer`
   line-height: 1.8;
@@ -60,6 +60,7 @@ const Footer = React.memo(({ filteredSubjects }: FooterProps) => {
           <a href="https://github.com/Mimori256">Mimori256</a> et al.
           <Slash>/</Slash>
           <a
+            href="javascript:void(0)"
             ref={anchorRef}
             onClick={() =>
               outputSubjectsToCSV(filteredSubjects, anchorRef.current)

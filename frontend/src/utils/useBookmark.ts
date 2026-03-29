@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { z } from "zod";
 
-import { CURRENT_YEAR, type Subject, kdb } from "./subject";
+import { CURRENT_YEAR, kdb, type Subject } from "./subject";
 import {
   createEmptyTimeslotTable,
   fillTimetable,

@@ -1,0 +1,33 @@
+[project]
+name = "tools"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = []
+
+[tool.ruff]
+
+[tool.mypy]
+disallow_untyped_calls = false
+disallow_any_unimported = false
+python_version = "3.9"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_subclassing_any = true
+warn_no_return = true
+strict_optional = true
+strict_equality = true
+no_implicit_optional = true
+disallow_any_generics = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_unused_configs = true
+show_traceback = true
+show_error_codes = true
+pretty = true
+
+[dependency-groups]
+dev = [
+    "ruff==0.3.5",
+    "mypy",
+]

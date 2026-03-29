@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-
+import { useMedia } from "react-use";
 import type { SearchOptions } from "@/utils/search";
 import { mobileMedia, mobileWidth } from "@/utils/style";
 import type { TimeslotTable } from "@/utils/timetable";
-import { useMedia } from "react-use";
 import DesktopForm from "./desktop/DesktopForm";
 import MobileForm from "./mobile/MobileForm";
 
