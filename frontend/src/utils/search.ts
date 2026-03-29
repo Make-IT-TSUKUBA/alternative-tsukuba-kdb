@@ -1,5 +1,3 @@
-/* eslint no-irregular-whitespace: 0 */
-
 import { matchesCodeRequirement } from "../kdb/code-types";
 import type { ClassMethod, Module, NormalSeason, Subject } from "./subject";
 import { getTermCode } from "./subject";
