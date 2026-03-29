@@ -119,79 +119,82 @@ interface MobileProps {
   switchBookmark: (subjectCode: string) => void;
 }
 
-const Mobile = React.memo(({
-  subjects,
-  hasMore,
-  loadingRef,
-  bookmarksHas,
-  switchBookmark,
-}: MobileProps) => {
-  const [displayed, setDisplayed] = useState(new Set<string>());
+const Mobile = React.memo(
+  ({
+    subjects,
+    hasMore,
+    loadingRef,
+    bookmarksHas,
+    switchBookmark,
+  }: MobileProps) => {
+    const [displayed, setDisplayed] = useState(new Set<string>());
 
-  useEffect(() => {
-    setDisplayed(new Set<string>());
-  }, [subjects]);
+    // biome-ignore lint/correctness/useExhaustiveDependencies: reset displayed when subjects changes
+    useEffect(() => {
+      setDisplayed(new Set<string>());
+    }, [subjects]);
 
-  return (
-    <Wrapper>
-      {subjects.map((subject) => (
-        <SubjectWrapper
-          key={subject.code}
-          onClick={() =>
-            setDisplayed((prev) => new Set([...prev, subject.code]))
-          }
-        >
-          <Abstract>
-            <Left>
-              <div className="first">
-                {subject.code}
-                <span className="class-method">
-                  {subject.classMethods.join("、")}
-                </span>
-              </div>
-              <Title>{subject.name}</Title>
-              {subject.person.split(",").join("、")}
-            </Left>
-            <Right>
-              {subject.termStr} {subject.timeslotStr} <br />
-              {subject.credit.toFixed(1)}
-              <span className="sub">単位</span>
-              <br />
-              {subject.year}
-              <span className="sub">年次</span>
-            </Right>
-          </Abstract>
-          <Details displays={displayed.has(subject.code)}>
-            <p>{subject.abstract}</p>
-            <AnchorWrapper>
-              <Anchor
-                data-bookmark={bookmarksHas(subject.code)}
-                onClick={() => switchBookmark(subject.code)}
-              >
-                <span>
-                  {bookmarksHas(subject.code)
-                    ? "★ お気に入り"
-                    : "★ お気に入りに追加"}
-                </span>
-              </Anchor>
-              <Anchor
-                href={subject.syllabusHref}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>シラバス</span>
-              </Anchor>
-            </AnchorWrapper>
-          </Details>
-        </SubjectWrapper>
-      ))}
-      <Loading ref={loadingRef}>
-        {hasMore
-          ? "Loading..."
-          : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
-      </Loading>
-    </Wrapper>
-  );
-});
+    return (
+      <Wrapper>
+        {subjects.map((subject) => (
+          <SubjectWrapper
+            key={subject.code}
+            onClick={() =>
+              setDisplayed((prev) => new Set([...prev, subject.code]))
+            }
+          >
+            <Abstract>
+              <Left>
+                <div className="first">
+                  {subject.code}
+                  <span className="class-method">
+                    {subject.classMethods.join("、")}
+                  </span>
+                </div>
+                <Title>{subject.name}</Title>
+                {subject.person.split(",").join("、")}
+              </Left>
+              <Right>
+                {subject.termStr} {subject.timeslotStr} <br />
+                {subject.credit.toFixed(1)}
+                <span className="sub">単位</span>
+                <br />
+                {subject.year}
+                <span className="sub">年次</span>
+              </Right>
+            </Abstract>
+            <Details displays={displayed.has(subject.code)}>
+              <p>{subject.abstract}</p>
+              <AnchorWrapper>
+                <Anchor
+                  data-bookmark={bookmarksHas(subject.code)}
+                  onClick={() => switchBookmark(subject.code)}
+                >
+                  <span>
+                    {bookmarksHas(subject.code)
+                      ? "★ お気に入り"
+                      : "★ お気に入りに追加"}
+                  </span>
+                </Anchor>
+                <Anchor
+                  href={subject.syllabusHref}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>シラバス</span>
+                </Anchor>
+              </AnchorWrapper>
+            </Details>
+          </SubjectWrapper>
+        ))}
+        <Loading ref={loadingRef}>
+          {hasMore
+            ? "Loading..."
+            : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
+        </Loading>
+      </Wrapper>
+    );
+  },
+);
 
 export default Mobile;
