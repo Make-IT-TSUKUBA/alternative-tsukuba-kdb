@@ -1,4 +1,4 @@
-import { Global, css } from "@emotion/react";
+import { css, Global } from "@emotion/react";
 import { useEffect, useState } from "react";
 
 import Footer from "./components/Footer";
@@ -7,11 +7,11 @@ import Main from "./components/Main/Main";
 import Syllabi from "./components/Syllabi";
 import Timetable from "./components/Timetable/Index";
 import {
-  type SearchOptions,
   createSearchOptions,
+  type SearchOptions,
   searchSubjects,
 } from "./utils/search";
-import { type Subject, kdb } from "./utils/subject";
+import { kdb, type Subject } from "./utils/subject";
 import { useBookmark } from "./utils/useBookmark";
 import { useClassroom } from "./utils/useClassroom";
 

@@ -1,31 +1,31 @@
 import styled from "@emotion/styled";
 import React from "react";
 
-import { type SearchOptions, createSearchOptions } from "@/utils/search";
+import { createSearchOptions, type SearchOptions } from "@/utils/search";
 import {
   colorPurpleDark,
   colorPurpleGradient,
   shallowShadow,
 } from "@/utils/style";
 import {
-  type Module,
-  type NormalSeason,
   classMethods,
   kdb,
+  type Module,
   modules,
+  type NormalSeason,
   normalSeasons,
 } from "@/utils/subject";
 import type { TimeslotTable } from "@/utils/timetable";
-import Requirements from "../Requirements";
-import TimeslotsSelection from "../TimeslotsSelection";
 import {
   Form,
-  MainButtonAnchor,
-  SubButtonAnchor,
   keywordContainOptions,
+  MainButtonAnchor,
   rounded,
   roundedHeightExceptInput,
+  SubButtonAnchor,
 } from "../header-parts";
+import Requirements from "../Requirements";
+import TimeslotsSelection from "../TimeslotsSelection";
 import { Headline } from "./parts";
 
 const Wrapper = styled(Form)`

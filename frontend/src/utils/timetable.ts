@@ -47,7 +47,7 @@ export const createTimeslotTable = (value: string): TimeslotTable => {
   const slotStrArray = (value as string).split(",");
   for (const slotStr of slotStrArray) {
     // 曜日を取得
-    const dayStr = slotStr.replace(/[0-9\\-]/g, "");
+    const dayStr = slotStr.replace(/[0-9-]/g, "");
     const days = dayStr
       .split("・")
       .filter((day) => daysofweek.includes(day))
@@ -58,7 +58,7 @@ export const createTimeslotTable = (value: string): TimeslotTable => {
 
     // 時限を取得
     const periodArray: number[] = [];
-    const periodStr = slotStr.replace(/[^0-9\\-]/g, "");
+    const periodStr = slotStr.replace(/[^0-9-]/g, "");
 
     // - が含まれる場合は範囲選択
     if (periodStr.indexOf("-") > -1) {

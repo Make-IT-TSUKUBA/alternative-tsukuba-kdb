@@ -103,7 +103,7 @@ const SubjectTr = React.memo(
                   value={bookmarkSubject.year}
                   onChange={(e) =>
                     updateBookmark(subject.code, {
-                      year: Number.parseInt(e.currentTarget.value),
+                      year: Number.parseInt(e.currentTarget.value, 10),
                     })
                   }
                 >

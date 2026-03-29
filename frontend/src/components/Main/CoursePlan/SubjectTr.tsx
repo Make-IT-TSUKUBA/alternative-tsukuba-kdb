@@ -53,7 +53,7 @@ const SubjectTr = ({ subject, usedBookmark }: SubjectTrProps) => {
     [getBookmarkSubject, subject.code],
   );
   if (!bookmarkSubject) {
-    return <></>;
+    return null;
   }
 
   const isSpring = subject.termStr.includes("春");
@@ -97,7 +97,7 @@ const SubjectTr = ({ subject, usedBookmark }: SubjectTrProps) => {
             value={bookmarkSubject.year}
             onChange={(e) =>
               updateBookmark(subject.code, {
-                year: Number.parseInt(e.currentTarget.value),
+                year: Number.parseInt(e.currentTarget.value, 10),
               })
             }
           >

@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-
+import DOMPurify from "dompurify";
+import { useEffect, useState } from "react";
 import { colorPurpleDark, shadow } from "@/utils/style";
 import { kdb } from "@/utils/subject";
-import { useEffect, useState } from "react";
 
 const Wrapper = styled.div`
   width: 400px;
@@ -109,7 +109,7 @@ const Syllabi = ({ subjectCode, setSubjectCode }: SyllabiProps) => {
       const response = await fetch(
         `https://kdb-backend.yokohama.dev/syllabi/${subjectCode}`,
       );
-      let data = await response.text();
+      let data = DOMPurify.sanitize(await response.text());
 
       // 不要な要素を除去
       data = data
@@ -130,7 +130,7 @@ const Syllabi = ({ subjectCode, setSubjectCode }: SyllabiProps) => {
   }, [subjectCode]);
 
   if (!subjectCode || !subject) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -152,8 +152,7 @@ const Syllabi = ({ subjectCode, setSubjectCode }: SyllabiProps) => {
         </SyllabusLink>
         <Close onClick={() => setSubjectCode(null)}>×</Close>
       </Header>
-      {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
-      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: to display the syllabus HTML */}
       <Content dangerouslySetInnerHTML={{ __html: content }}></Content>
     </Wrapper>
   );

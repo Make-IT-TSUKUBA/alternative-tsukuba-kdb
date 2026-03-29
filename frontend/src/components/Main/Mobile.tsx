@@ -8,7 +8,7 @@ import {
   mobileMedia,
   shallowShadow,
 } from "@/utils/style";
-import { type Subject, kdb } from "@/utils/subject";
+import { kdb, type Subject } from "@/utils/subject";
 
 const Wrapper = styled.div`
   display: none;

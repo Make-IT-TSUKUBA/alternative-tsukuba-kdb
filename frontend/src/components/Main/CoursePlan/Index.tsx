@@ -172,7 +172,8 @@ const CoursePlan = ({ subjects, usedBookmark }: CoursePlanProps) => {
             <React.Fragment key={key}>
               <tr>
                 <YearTd colSpan={2}>
-                  {key} 年度（{yearCredits[Number.parseInt(key)] ?? 0} 単位）
+                  {key} 年度（{yearCredits[Number.parseInt(key, 10)] ?? 0}{" "}
+                  単位）
                 </YearTd>
               </tr>
               {subjects.map((subject) => (

@@ -2,10 +2,10 @@ import { matchesCodeRequirement } from "../kdb/code-types";
 import type { ClassMethod, Module, NormalSeason, Subject } from "./subject";
 import { getTermCode } from "./subject";
 import {
-  type TimeslotTable,
   createEmptyTimeslotTable,
   getTimeslotsLength,
   matchesTimeslots,
+  type TimeslotTable,
   timeslotTableToBits,
 } from "./timetable";
 
@@ -116,8 +116,14 @@ const matchesSearchOptions = (
         subject.year.includes(year.toString()),
       );
     }
-    const minYear = Number.parseInt(subject.year.replace(/\s-\s[1-6]/g, ""));
-    const maxYear = Number.parseInt(subject.year.replace(/[1-6]\s-\s/g, ""));
+    const minYear = Number.parseInt(
+      subject.year.replace(/\s-\s[1-6]/g, ""),
+      10,
+    );
+    const maxYear = Number.parseInt(
+      subject.year.replace(/[1-6]\s-\s/g, ""),
+      10,
+    );
     return [...options.years].some(
       (year) => minYear <= year && year <= maxYear,
     );
