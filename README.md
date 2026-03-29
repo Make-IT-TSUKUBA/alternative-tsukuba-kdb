@@ -1,8 +1,8 @@
 # alternative-tsukuba-kdb
 
-[![CSV scheduled update](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/actions/workflows/main.yml/badge.svg)](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/actions/workflows/main.yml)
+[![CSV scheduled update](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/actions/workflows/update-syllabus.yml/badge.svg)](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/actions/workflows/update-syllabus.yml)
 
-筑波大学の教育課程編成支援システム「KdB」の非公式代替サイトです。  
+筑波大学の教育課程編成支援システム（KdB）の非公式代替サイトです。  
 An unofficial website of the alternative of KdB, a curriculum planning support system used in University of Tsukuba.  
 
 <https://make-it-tsukuba.github.io/alternative-tsukuba-kdb/>
@@ -31,4 +31,4 @@ git checkout
 
 ## ライセンス
 
-This application is released under the MIT License, see [LICENSE](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/blob/main/LICENSE).
+This application is released under the MPL License, see [LICENSE](https://github.com/Make-IT-TSUKUBA/alternative-tsukuba-kdb/blob/main/LICENSE).
