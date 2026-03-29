@@ -2,35 +2,35 @@
 
 ## ディレクトリ構成
 
-- `csv/`：取得した CSV データ
 - `python/`：シラバスのダウンロードに必要なツール群
 - `src/`：TypeScript ソースファイル
+- `../csv/`：取得した CSV データ
 
 ## 開発
 
 ```bash
 # インストール
-pip install -r requirements.txt
 yarn
 
 # フォーマット
-python -m ruff check
-python -m ruff format
+uvx ruff check
+uvx ruff format
 yarn run check
 ```
 
 ## シラバスデータの保存と変換
 
-KdB からシラバスデータを取得し、学群／大学院開設授業科目に分けて JSON ファイルに変換します。
+KdB からシラバスデータを一括取得した後、学群／大学院開設授業科目に分けて JSON ファイルに変換します。
 
 ```bash
 # /csv/kdb-YYYYMMDD.csv を保存
-python tools/python/download.py csv
+cd tools
+uv run python python/download.py ../csv
 
 # 以下のファイルを保存
 # - /frontend/src/kdb/kdb.json
 # - /frontend/src/kdb/kdb-grad.json
-python tools/python/csv-json.py csv/kdb-YYYYMMDD.csv frontend/src/kdb
+uv run python python/csv-json.py ../csv/kdb-YYYYMMDD.csv ../frontend/src/kdb
 ```
 
 保存した CSV ファイルおよび生成されたファイル群はコミットに含めてください。
