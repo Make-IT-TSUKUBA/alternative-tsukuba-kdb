@@ -88,6 +88,7 @@ const Main = React.memo(
       if (loadingMobileRef.current) {
         observer.observe(loadingMobileRef.current);
       }
+      return () => observer.disconnect();
     }, [hasMore]);
 
     return (
