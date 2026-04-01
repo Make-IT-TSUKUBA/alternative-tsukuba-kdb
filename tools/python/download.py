@@ -14,9 +14,9 @@ class KdbDownloader:
 
     KDB_URL = "https://kdb.tsukuba.ac.jp/"
 
-    def __init__(self, year: int = 2025) -> None:
+    def __init__(self, year: int = 2026) -> None:
         """Args:
-            year (int, optional): 取得する年度。デフォルトは 2025。
+            year (int, optional): 取得する年度。デフォルトは 2026。
         """
         self.year = year
 
