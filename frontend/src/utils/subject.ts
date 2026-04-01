@@ -9,7 +9,7 @@ import {
 
 // 現在の日付から年度を取得する場合、未公開のシラバスを参照してしまう可能性があるため、手動で年度を更新する。
 // シラバスは毎年 4 月上旬に更新される。
-export const CURRENT_YEAR = 2025;
+export const CURRENT_YEAR = 2026;
 
 const allSeasons = ["春", "夏", "秋", "冬"] as const;
 export const normalSeasons = ["春", "秋"] as const;
