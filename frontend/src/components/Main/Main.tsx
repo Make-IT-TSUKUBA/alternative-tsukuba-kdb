@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import type { SearchOptions } from "@/utils/search";
 import { mobileMedia } from "@/utils/style";
-import { ONCE_COUNT, type Subject, initialSubjects } from "@/utils/subject";
+import { initialSubjects, ONCE_COUNT, type Subject } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
 import type { useClassroom } from "@/utils/useClassroom";
 import ClassroomImport from "./ClassroomImport";
@@ -88,6 +88,7 @@ const Main = React.memo(
       if (loadingMobileRef.current) {
         observer.observe(loadingMobileRef.current);
       }
+      return () => observer.disconnect();
     }, [hasMore]);
 
     return (

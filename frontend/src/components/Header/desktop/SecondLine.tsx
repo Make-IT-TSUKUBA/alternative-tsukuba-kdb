@@ -1,8 +1,8 @@
-import { type SearchOptions, createSearchOptions } from "@/utils/search";
+import { createSearchOptions, type SearchOptions } from "@/utils/search";
 import { inputSize } from "@/utils/style";
-import Requirements from "../Requirements";
 import { SubButtonAnchor } from "../header-parts";
-import { Headline, Line, Options, desktopButtonAnchor } from "./parts";
+import Requirements from "../Requirements";
+import { desktopButtonAnchor, Headline, Line, Options } from "./parts";
 
 interface RequirementProps {
   options: SearchOptions;

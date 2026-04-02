@@ -1,15 +1,15 @@
-import kdbGradData from "@/kdb/kdb-grad.json";
 import kdbData from "@/kdb/kdb.json";
+import kdbGradData from "@/kdb/kdb-grad.json";
 import type { KdbData } from "../kdb/kdb";
 import {
-  type TimeslotTable,
   createTimeslotTable,
+  type TimeslotTable,
   timeslotTableToBits,
 } from "./timetable";
 
 // 現在の日付から年度を取得する場合、未公開のシラバスを参照してしまう可能性があるため、手動で年度を更新する。
 // シラバスは毎年 4 月上旬に更新される。
-export const CURRENT_YEAR = 2025;
+export const CURRENT_YEAR = 2026;
 export const years = [...Array(9)].map((_, i) => CURRENT_YEAR + i - 4);
 
 const allSeasons = ["春", "夏", "秋", "冬"] as const;

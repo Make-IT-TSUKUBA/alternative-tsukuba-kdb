@@ -1,4 +1,4 @@
-import { Global, css } from "@emotion/react";
+import { css, Global } from "@emotion/react";
 import { useEffect, useState } from "react";
 
 import Footer from "./components/Footer";
@@ -7,8 +7,8 @@ import Main from "./components/Main/Main";
 import Syllabi from "./components/Syllabi";
 import Timetable from "./components/Timetable/Index";
 import {
-  type SearchOptions,
   createSearchOptions,
+  type SearchOptions,
   searchSubjects,
 } from "./utils/search";
 import { CURRENT_YEAR, type Subject, kdb } from "./utils/subject";

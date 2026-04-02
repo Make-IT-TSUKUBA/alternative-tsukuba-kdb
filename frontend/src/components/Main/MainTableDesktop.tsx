@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
+import React from "react";
 
 import type { SearchOptions } from "@/utils/search";
 import { colorPurple, colorPurpleDark, mobileMedia } from "@/utils/style";
-import { type Subject, kdb } from "@/utils/subject";
+import { kdb, type Subject } from "@/utils/subject";
 import type { useBookmark } from "@/utils/useBookmark";
-import SubjectTr from "./SubjectTr";
 import { BottomTd } from "./parts";
+import SubjectTr from "./SubjectTr";
 
 const Table = styled.table`
   width: 100%;
@@ -108,57 +109,59 @@ interface MainTableDesktopProps {
   getClassroom: (subjectCode: string) => string | null;
 }
 
-const MainTableDesktop = ({
-  subjects,
-  hasMore,
-  loadingRef,
-  usedBookmark,
-  setSearchOptions,
-  setIsImporting,
-  setSyllabiSubjectCode,
-  getClassroom,
-}: MainTableDesktopProps) => {
-  return (
-    <Table>
-      <thead>
-        <tr>
-          <Th>科目番号／科目名</Th>
-          <Th>単位／年次</Th>
-          <Th>学期／時限</Th>
-          <Th>担当</Th>
-          <Th onClick={() => setIsImporting(true)}>
-            <Classrooms>
-              実施教室
-              <Plus>
-                <span>＋</span>
-              </Plus>
-            </Classrooms>
-          </Th>
-          <Th>概要</Th>
-          <Th>備考</Th>
-        </tr>
-      </thead>
-      <tbody>
-        {subjects.map((subject) => (
-          <SubjectTr
-            subject={subject}
-            usedBookmark={usedBookmark}
-            setSearchOptions={setSearchOptions}
-            setSyllabiSubjectCode={setSyllabiSubjectCode}
-            getClassroom={getClassroom}
-            key={subject.code}
-          />
-        ))}
-        <tr ref={loadingRef}>
-          <BottomTd>
-            {hasMore
-              ? "Loading..."
-              : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
-          </BottomTd>
-        </tr>
-      </tbody>
-    </Table>
-  );
-};
+const MainTableDesktop = React.memo(
+  ({
+    subjects,
+    hasMore,
+    loadingRef,
+    usedBookmark,
+    setSearchOptions,
+    setIsImporting,
+    setSyllabiSubjectCode,
+    getClassroom,
+  }: MainTableDesktopProps) => {
+    return (
+      <Table>
+        <thead>
+          <tr>
+            <Th>科目番号／科目名</Th>
+            <Th>単位／年次</Th>
+            <Th>学期／時限</Th>
+            <Th>担当</Th>
+            <Th onClick={() => setIsImporting(true)}>
+              <Classrooms>
+                実施教室
+                <Plus>
+                  <span>＋</span>
+                </Plus>
+              </Classrooms>
+            </Th>
+            <Th>概要</Th>
+            <Th>備考</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {subjects.map((subject) => (
+            <SubjectTr
+              subject={subject}
+              usedBookmark={usedBookmark}
+              setSearchOptions={setSearchOptions}
+              setSyllabiSubjectCode={setSyllabiSubjectCode}
+              getClassroom={getClassroom}
+              key={subject.code}
+            />
+          ))}
+          <tr ref={loadingRef}>
+            <BottomTd>
+              {hasMore
+                ? "Loading..."
+                : `全 ${kdb?.subjectCodeList.length} 件中 ${subjects.length} 件を表示しました`}
+            </BottomTd>
+          </tr>
+        </tbody>
+      </Table>
+    );
+  },
+);
 
 export default MainTableDesktop;

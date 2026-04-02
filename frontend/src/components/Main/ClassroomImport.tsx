@@ -106,8 +106,17 @@ const ClassroomImport = ({
       onRequestClose={() => setIsImporting(false)}
       style={customStyles}
     >
-      <H2>科目情報をインポート</H2>
+      <H2>教室情報をインポート</H2>
+      <p>
+        <Anchor href="https://www.tsukuba.ac.jp/education/pdf/how-to-check-the-classrooms-to-be-used-for-courses.pdf">
+          大学が提供している科目一覧データ
+        </Anchor>{" "}
+        から、
+        <br />
+        教室情報をインポートすることができます
+      </p>
       <Ul>
+        <li>kdb_YYYY-ja.xlsx をインポートしてください。</li>
         <li>インポートした情報はローカルにのみ保存されます。</li>
         <li>
           学外者やインターネット上に情報を共有する場合は、
@@ -132,7 +141,7 @@ const ClassroomImport = ({
         {isDragActive ? (
           <p>ファイルをドラッグ</p>
         ) : (
-          <p>ドラッグまたはクリックしてファイルを選択</p>
+          <p>ドラッグ＆ドロップまたはクリックしてファイルを選択</p>
         )}
       </Dropbox>
     </Modal>
