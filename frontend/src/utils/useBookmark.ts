@@ -284,7 +284,7 @@ export const useBookmark = (
   const exportToTwinte = useCallback(() => {
     // cf. https://github.com/twin-te/twinte-front/pull/529
     const baseUrl = "https://app.twinte.net/import?codes=";
-    const codes = Object.keys(bookmarks.subjects);
+    const codes = Object.keys(bookmarks.subjects).filter(key => {return bookmarks.subjects[key].year === CURRENT_YEAR;});
     window.open(baseUrl + codes.join(","));
   }, [bookmarks.subjects]);
 
