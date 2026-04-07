@@ -33,6 +33,17 @@ const isModule = (char: string): char is Module =>
 export const getTermCode = (season: NormalSeason, module: Module) =>
   (season === "春" ? 0 : 3) + (module === "A" ? 0 : module === "B" ? 1 : 2);
 
+const splitTimeslotGroups = (timeslotStr: string, termGroupCount: number) => {
+  const normalized = timeslotStr.trim().replace(/\s+/g, " ");
+  if (normalized === "") {
+    return [""];
+  }
+  if (termGroupCount <= 1) {
+    return [normalized.replace(/ /g, ",")];
+  }
+  return normalized.split(" ");
+};
+
 export class Subject {
   private _code: string;
   private _name: string;
@@ -75,14 +86,7 @@ export class Subject {
     // 時限
     // タームとコマのグループ長は稀に一致しない場合がある
     // タームのグループが 1 つしかない場合は、すべてのコマを統合
-    const tempTimeslotStr =
-      this._termCodes.length === 1
-        ? this.timeslotStr.replace(/ /g, ",")
-        : this.timeslotStr;
-
-    // グループ毎に処理
-    const termStrArray = tempTimeslotStr.split(" ");
-    for (const str of termStrArray) {
+    for (const str of splitTimeslotGroups(this.timeslotStr, this._termCodes.length)) {
       this._timeslotTables.push(createTimeslotTable(str));
       this.concentration ||= str.includes("集中");
       this.negotiable ||= str.includes("応談");
