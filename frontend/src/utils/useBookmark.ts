@@ -81,6 +81,7 @@ const saveBookmarks = (bookmarks: Bookmarks) => {
 export const useBookmark = (
   timetableTermCode: number,
   setTimetableTermCode: React.Dispatch<React.SetStateAction<number>>,
+  timetableYear: number,
 ) => {
   const [bookmarks, setBookmarks] = useState<Bookmarks>(localStorageBookmarks);
 
@@ -122,7 +123,7 @@ export const useBookmark = (
       if (!subject) {
         continue;
       }
-      if (bookmarkSubject.year !== CURRENT_YEAR) {
+      if (bookmarkSubject.year !== timetableYear) {
         continue;
       }
 
@@ -152,7 +153,7 @@ export const useBookmark = (
       }
     }
     return [table, subjectTable, credits, timeslots];
-  }, [bookmarks, timetableTermCode]);
+  }, [bookmarks, timetableTermCode, timetableYear]);
 
   const memoLength = 9;
 

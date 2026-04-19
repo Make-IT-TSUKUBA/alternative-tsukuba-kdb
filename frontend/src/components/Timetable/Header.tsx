@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import { shadow } from "@/utils/style";
-import { modules, normalSeasons } from "@/utils/subject";
+import { modules, normalSeasons, years } from "@/utils/subject";
 
 const Wrapper = styled.header`
   height: 24px;
@@ -57,6 +57,25 @@ const Move = styled.a`
   }
 `;
 
+const YearSelect = styled.select`
+  height: 22px;
+  color: #fff;
+  font-size: 12px;
+  font-family: inherit;
+  margin-right: 8px;
+  padding: 0 4px;
+  border: solid 1px rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+
+  option {
+    color: #000;
+    background: #fff;
+  }
+`;
+
 const Close = styled.a<{ opened: boolean }>`
   line-height: ${({ opened }) => (opened ? 10 : 32)}px;
   color: #fff;
@@ -70,21 +89,25 @@ const Close = styled.a<{ opened: boolean }>`
 interface HeaderProps {
   opened: boolean;
   termCode: number;
+  timetableYear: number;
   currentCredits: number;
   currentTimeslots: number;
   yearCredits: number;
   setOpened: React.Dispatch<React.SetStateAction<boolean>>;
   setTermCode: React.Dispatch<React.SetStateAction<number>>;
+  setTimetableYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Header = ({
   opened,
   termCode,
+  timetableYear,
   currentCredits,
   currentTimeslots,
   yearCredits,
   setOpened,
   setTermCode,
+  setTimetableYear,
 }: HeaderProps) => {
   const moveBefore = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -109,6 +132,15 @@ const Header = ({
   return (
     <Wrapper onClick={() => setOpened((prev) => !prev)}>
       <Left>
+        <YearSelect
+          value={timetableYear}
+          onClick={(e) => e.stopPropagation()}
+          onChange={(e) => setTimetableYear(Number.parseInt(e.currentTarget.value))}
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </YearSelect>
         <Move
           data-prev="true"
           onClick={moveBefore}

@@ -8,7 +8,7 @@ import {
   mobileWidth,
   shadow,
 } from "@/utils/style";
-import { CURRENT_YEAR, type Subject } from "@/utils/subject";
+import { type Subject } from "@/utils/subject";
 import { daysofweek, maxPeriod } from "@/utils/timetable";
 import type { useBookmark } from "@/utils/useBookmark";
 import Header from "./Header";
@@ -188,12 +188,14 @@ const times = [
 
 interface TimetableProps {
   termCode: number;
+  timetableYear: number;
   usedBookmark: ReturnType<typeof useBookmark>;
   setTermCode: React.Dispatch<React.SetStateAction<number>>;
+  setTimetableYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const TimetableElement = React.memo(
-  ({ usedBookmark, termCode, setTermCode }: TimetableProps) => {
+  ({ usedBookmark, termCode, timetableYear, setTermCode, setTimetableYear }: TimetableProps) => {
     const {
       bookmarkSubjectTable,
       yearCredits,
@@ -229,7 +231,9 @@ const TimetableElement = React.memo(
           termCode={termCode}
           currentCredits={currentCredits}
           currentTimeslots={currentTimeslots}
-          yearCredits={yearCredits[CURRENT_YEAR] ?? 0}
+          timetableYear={timetableYear}
+          yearCredits={yearCredits[timetableYear] ?? 0}
+          setTimetableYear={setTimetableYear}
           setOpened={setOpened}
           setTermCode={setTermCode}
         />
