@@ -1,5 +1,5 @@
 {
-  "updated": "2026/09/15",
+  "updated": "2026/09/16",
   "subject": [
     [
       "01KA051",
@@ -23935,6 +23935,32 @@
       "英語で授業。 授業形式はシラバスの「その他」欄で確認してください。"
     ],
     [
+      "0ABC421",
+      "農業経済学",
+      "1",
+      "2.0",
+      "2",
+      "秋AB",
+      "火1,2",
+      "",
+      "藤本 丈史",
+      "This course examines agricultural issues in developing countries. In many developing countries, agriculture is a major sector of the economy and plays an important role in food security. However, agricultural sectors in developing countries face a wide range of economic challenges. This course will cover topics such as risk and rural finance, technology adoption, farming strategies, resource management, and climate change. This course explores these issues, using microeconomic theory and microeconometric methods as the main analytical tools. Students are expected to have basic knowledge of statistics, econometrics, and microeconomics. Students who have not taken courses in these subjects should consult the instructor in advance. Students will be evaluated mainly based on their presentations of assigned research papers and a final research proposal. This course is conducted in English.",
+      "英語で授業。"
+    ],
+    [
+      "0ABC422",
+      "開発経済学",
+      "1",
+      "2.0",
+      "2",
+      "秋AB",
+      "水1,2",
+      "",
+      "ブオング ディン トゥアン グエン",
+      "This graduate course examines why living standards differ so much across countries, and what policy can do about it. The first half covers macro development, including growth theory, institutions, trade and industrial policy, and structural transformation. The second half covers micro development, including poverty and inequality, health and education, agriculture, and behavioral approaches. Each topic pairs a classic reference with recent empirical work, and the course puts substantial weight on the causal inference methods behind that work, including instrumental variables, difference in differences, and regression discontinuity. Assessment is based on a research proposal (80%), following the strict deadline on proposal development (10%) and class participation (10%). Students are expected to have basic knowledge of microeconomics, statistics, and econometrics. Students who have not taken courses in these subjects should consult the instructor in advance. This course is conducted in English.",
+      "英語で授業。"
+    ],
+    [
       "0ABC500",
       "国際公共政策リサーチワークショップA",
       "2",
@@ -42062,12 +42088,12 @@
       "1",
       "1.0",
       "1・2",
-      "秋AB",
+      "秋B",
       "集中",
       "",
       "市川 和芳",
       "発電電力量の約8割を化石燃料を用いた火力発電に頼る我が国において、気候変動の要因である温室効果ガスの削減は喫緊の課題である。本講義では、国内外の最新のエネルギー動向を踏まえ、低炭素化に挑む最新の火力発電技術の取り組みに焦点をあて、(1)最新のエネルギー情勢、(2)火力発電の基礎、(3)革新的高効率技術(A-USC、IGCC、燃料電池など)、(4)バイオマスエネルギー利用技術、(5)ゼロエミッション化技術(CO2回収・利用・固定化、水素利用など)について解説する。また、これらを踏まえ、今後の我が国のエネルギーシステムのあり方について、議論を行う。",
-      "世話人:金子 対面"
+      "世話人:金子 11/20,12/4,12/10,12/11,12/17,12/18 対面"
     ],
     [
       "0AL5619",
@@ -46592,6 +46618,19 @@
       "日下 博幸",
       "インターンシップ、砂防キャンプなどの各種講習の参加、資格試験の合格などを通して、地球環境科学の実践的活動を行う。特に、本人の専門を生かした内容を推奨している.実施前に訪問先および担当教員による指導を受け、実施計画書を提出する。また実践後は同様に訪問先および担当教員による指導をもとに実施報告書を提出し、それをもとに達成度の高い学習を行ったかの評価を行う。本実践実習により、知識と理解力および問題解決能力の向上を図る。",
       "報告書には、地球環境科学実践実習を受講した意見や感想を必ず記載する事。"
+    ],
+    [
+      "0ANC012",
+      "地球環境科学特別研究Ib",
+      "6",
+      "3.0",
+      "1",
+      "通年",
+      "応談",
+      "",
+      "山中 勤,浅沼 順,植田 宏昭,恩田 裕一,日下 博幸,呉羽 正昭,辻村 真貴,堤 純,津旨 大輔,松井 圭介,五十嵐 康記,池田 敦,加藤 弘亮,八反地 剛,松下 文経,関口 智寛,森本 健弘,久保 倫子,高橋 純子,山下 亜紀郎,パークナー トーマス,ドアン グアン ヴァン,石井 正好,梶野 瑞王,飯塚 聡,下川 信也,出世 ゆかり",
+      "指導教員やクラス、グループでのディスカッションをもとに、人文地理学、地誌学、地形学、水文科学、大気科学、空間情報科学、環境動態解析学、水災害科学、海洋大気相互システムに関する野外調査方法、論文の読み方・書き方、データ処理方法などの指導を受け、実践する。Ibでは、個々の研究テーマについて、今後必要な科学的な展開について、考察する。また、研究発表会に参加してプレゼンテーション技術や研究の方法論等に関して他者からの学びを得るとともに、分野横断的な理解の深化と視野の拡大を図る。この授業により、知識と理解力、企画力、問題解決能力、表現力、創造力の向上を図る。博士前期課程1年次に履修することが望ましい。",
+      "全プログラム出席・運営担当・レポート提出(R7年度以前の入学者に限る)"
     ],
     [
       "0ANC013",
